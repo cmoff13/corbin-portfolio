@@ -1,3 +1,17 @@
+:root {
+  color-scheme: light only;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: #ffffff !important;
+  color: #0f0f0f !important;
+}
+
+
 @import "tailwindcss";
 
 :root {
@@ -23,4 +37,284 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+/* ── Gate ───────────────────────────────────────── */
+.gate-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  gap: 0;
+}
+
+.gate-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 28px;
+}
+
+.gate-headline {
+  font-family: Georgia, serif;
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #0f0f0f;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.gate-subhead {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+  max-width: 400px;
+  margin-bottom: 48px;
+}
+
+.gate-options {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.gate-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px 20px;
+  min-width: 160px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.15s;
+  text-align: left;
+}
+
+.gate-option:hover {
+  border-color: var(--seg-accent);
+  transform: translateY(-2px);
+}
+
+.gate-option-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #0f0f0f;
+  margin-bottom: 4px;
+}
+
+.gate-option-sub {
+  font-size: 12px;
+  color: #999;
+}
+
+.gate-skip {
+  font-size: 13px;
+  color: #aaa;
+  background: none;
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: color 0.15s;
+}
+
+.gate-skip:hover { color: #555; }
+
+
+/* ── Switcher ────────────────────────────────────── */
+.switcher-root {
+  position: relative;
+}
+
+.switcher-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #0f0f0f;
+  transition: border-color 0.2s;
+}
+
+@media (prefers-color-scheme: dark) {
+  .switcher-pill {
+    background: #1a1a1a;
+    border-color: #333;
+    color: #fff;
+  }
+}
+
+.switcher-pill:hover { border-color: var(--seg-accent); }
+
+.switcher-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--seg-accent);
+  flex-shrink: 0;
+}
+
+.switcher-chevron {
+  font-size: 10px;
+  color: #aaa;
+  margin-left: 2px;
+}
+
+.switcher-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 200px;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 6px;
+  z-index: 50;
+}
+
+@media (prefers-color-scheme: dark) {
+  .switcher-popover {
+    background: #1a1a1a;
+    border-color: #333;
+  }
+}
+
+.switcher-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #0f0f0f;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+@media (prefers-color-scheme: dark) {
+  .switcher-item {
+    color: #fff;
+  }
+}
+
+.switcher-item:hover { background: #f5f5f5; }
+
+@media (prefers-color-scheme: dark) {
+  .switcher-item:hover { background: #2a2a2a; }
+}
+
+.switcher-item--active { background: #f9f9f9; }
+
+@media (prefers-color-scheme: dark) {
+  .switcher-item--active { background: #222; }
+}
+
+.switcher-item-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--seg-accent, #ccc);
+  flex-shrink: 0;
+}
+
+.switcher-item-label { flex: 1; }
+
+.switcher-item-all { color: #888; }
+
+.switcher-item-check {
+  font-size: 12px;
+  color: #888;
+}
+
+.switcher-divider {
+  height: 1px;
+  background: #f0f0f0;
+  margin: 4px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .switcher-divider { background: #333; }
+}
+
+/* ── Responsive breakpoints ────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Nav */
+  nav {
+    padding: 16px 20px !important;
+  }
+
+  /* Gate */
+  .gate-headline {
+    font-size: 36px;
+  }
+
+  .gate-options {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .gate-option {
+    min-width: unset;
+    width: 100%;
+  }
+
+  /* Segment pages & case studies */
+  main {
+    padding: 40px 20px !important;
+  }
+
+  /* Brand craft grid — 2 col on mobile */
+  .craft-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Case study 3-col → 1-col */
+  .case-study-cols {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Project cards */
+  .project-card-inner {
+    grid-template-columns: 1fr !important;
+  }
+
+  .project-card-arrow {
+    display: none;
+  }
+
+  /* Switcher popover */
+  .switcher-popover {
+    right: -8px;
+    min-width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gate-headline {
+    font-size: 28px;
+  }
+
+  .craft-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }

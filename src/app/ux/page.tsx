@@ -24,6 +24,15 @@ export default function UXSegment() {
         </p>
       </div>
 
+      <div style={{ marginBottom: '48px', padding: '32px', background: '#f7f6ff', borderRadius: '12px', borderLeft: '3px solid #534AB7' }}>
+        <p style={{ fontSize: '13px', fontWeight: 500, color: '#534AB7', marginBottom: '8px' }}>
+          How I approach product work
+        </p>
+        <p style={{ fontSize: '15px', color: '#555', lineHeight: 1.7 }}>
+          I start with the problem, not the interface. That means understanding user goals, mapping flows before pixels, and making decisions I can explain. Brand craft informs the output — systems thinking drives the process.
+        </p>
+      </div>
+
       <div style={{ display: 'grid', gap: '2px' }}>
         {projects.map((project) => (
           <div
@@ -34,46 +43,44 @@ export default function UXSegment() {
               background: '#fafafa',
               borderRadius: '12px',
               cursor: 'pointer',
-              display: 'grid',
-              gridTemplateColumns: '1fr auto',
-              alignItems: 'center',
-              gap: '24px',
               marginBottom: '2px',
             }}
             onMouseEnter={e => (e.currentTarget.style.background = '#f0f0f0')}
             onMouseLeave={e => (e.currentTarget.style.background = '#fafafa')}
           >
-            <div>
-              <div style={{ display: 'flex', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
-                {project.tags.map(tag => (
-                  <span key={tag} style={{
-                    fontSize: '11px',
-                    fontWeight: 500,
-                    letterSpacing: '0.06em',
-                    textTransform: 'uppercase',
-                    color: segment.accentColor,
-                    background: '#eeedfe',
-                    padding: '3px 8px',
-                    borderRadius: '4px',
-                  }}>
-                    {tag}
-                  </span>
-                ))}
+            <div className="project-card-inner" style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', gap: '24px' }}>
+              <div>
+                <div style={{ display: 'flex', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
+                  {project.tags.map(tag => (
+                    <span key={tag} style={{
+                      fontSize: '11px',
+                      fontWeight: 500,
+                      letterSpacing: '0.06em',
+                      textTransform: 'uppercase',
+                      color: segment.accentColor,
+                      background: '#eeedfe',
+                      padding: '3px 8px',
+                      borderRadius: '4px',
+                    }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <h2 style={{ fontSize: '22px', fontWeight: 500, marginBottom: '6px' }}>
+                  {project.title}
+                </h2>
+                <p style={{ fontSize: '15px', color: '#777', lineHeight: 1.5 }}>
+                  {project.subtitle}
+                </p>
               </div>
-              <h2 style={{ fontSize: '22px', fontWeight: 500, marginBottom: '6px', color: '#0f0f0f' }}>
-                {project.title}
-              </h2>
-              <p style={{ fontSize: '15px', color: '#777', lineHeight: 1.5 }}>
-                {project.subtitle}
-              </p>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
-              <span style={{ fontSize: '24px', color: '#ccc' }}>→</span>
-              {project.slug === 'portfolio-nav-system' && (
-                <span style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase', color: segment.accentColor, background: '#eeedfe', padding: '3px 8px', borderRadius: '4px' }}>
-                  Self-initiated
-                </span>
-              )}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
+                <span className="project-card-arrow" style={{ fontSize: '24px', color: '#ccc' }}>→</span>
+                {project.slug === 'portfolio-nav-system' && (
+                  <span style={{ fontSize: '10px', fontWeight: 500, letterSpacing: '0.06em', textTransform: 'uppercase', color: segment.accentColor, background: '#eeedfe', padding: '3px 8px', borderRadius: '4px' }}>
+                    Self-initiated
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         ))}

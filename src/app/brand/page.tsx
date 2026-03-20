@@ -28,7 +28,7 @@ export default function BrandSegment() {
         <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#aaa', marginBottom: '24px' }}>
           Craft archive — hover any piece
         </p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2px' }}>
+        <div className="craft-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2px' }}>
           {[
             { tag: 'Logomark / Geometric', name: 'Geometric mark series', detail: 'Marks constructed on strict geometric grids. Proportion-locked, scalable to any size.' },
             { tag: 'Type system', name: 'Brand type hierarchies', detail: 'Display, body, and mono pairings with usage rules across print and digital.' },
@@ -112,39 +112,38 @@ export default function BrandSegment() {
               background: '#fafafa',
               borderRadius: '12px',
               cursor: 'pointer',
-              display: 'grid',
-              gridTemplateColumns: '1fr auto',
-              alignItems: 'center',
-              gap: '24px',
+              marginBottom: '2px',
             }}
             onMouseEnter={e => (e.currentTarget.style.background = '#f0f0f0')}
             onMouseLeave={e => (e.currentTarget.style.background = '#fafafa')}
           >
-            <div>
-              <div style={{ display: 'flex', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
-                {project.tags.map(tag => (
-                  <span key={tag} style={{
-                    fontSize: '11px',
-                    fontWeight: 500,
-                    letterSpacing: '0.06em',
-                    textTransform: 'uppercase',
-                    color: segment.accentColor,
-                    background: '#faece7',
-                    padding: '3px 8px',
-                    borderRadius: '4px',
-                  }}>
-                    {tag}
-                  </span>
-                ))}
+            <div className="project-card-inner" style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', gap: '24px' }}>
+              <div>
+                <div style={{ display: 'flex', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
+                  {project.tags.map(tag => (
+                    <span key={tag} style={{
+                      fontSize: '11px',
+                      fontWeight: 500,
+                      letterSpacing: '0.06em',
+                      textTransform: 'uppercase',
+                      color: segment.accentColor,
+                      background: '#faece7',
+                      padding: '3px 8px',
+                      borderRadius: '4px',
+                    }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <h2 style={{ fontSize: '22px', fontWeight: 500, marginBottom: '6px' }}>
+                  {project.title}
+                </h2>
+                <p style={{ fontSize: '15px', color: '#777', lineHeight: 1.5 }}>
+                  {project.subtitle}
+                </p>
               </div>
-              <h2 style={{ fontSize: '22px', fontWeight: 500, marginBottom: '6px', color: '#0f0f0f' }}>
-                {project.title}
-              </h2>
-              <p style={{ fontSize: '15px', color: '#777', lineHeight: 1.5 }}>
-                {project.subtitle}
-              </p>
+              <span className="project-card-arrow" style={{ fontSize: '24px', color: '#ccc' }}>→</span>
             </div>
-            <span style={{ fontSize: '24px', color: '#ccc' }}>→</span>
           </div>
         ))}
       </div>

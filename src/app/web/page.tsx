@@ -34,40 +34,38 @@ export default function WebSegment() {
               background: '#fafafa',
               borderRadius: '12px',
               cursor: 'pointer',
-              transition: 'background 0.15s',
-              display: 'grid',
-              gridTemplateColumns: '1fr auto',
-              alignItems: 'center',
-              gap: '24px',
+              marginBottom: '2px',
             }}
             onMouseEnter={e => (e.currentTarget.style.background = '#f0f0f0')}
             onMouseLeave={e => (e.currentTarget.style.background = '#fafafa')}
           >
-            <div>
-              <div style={{ display: 'flex', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
-                {project.tags.map(tag => (
-                  <span key={tag} style={{
-                    fontSize: '11px',
-                    fontWeight: 500,
-                    letterSpacing: '0.06em',
-                    textTransform: 'uppercase',
-                    color: segment.accentColor,
-                    background: '#e8f5f0',
-                    padding: '3px 8px',
-                    borderRadius: '4px',
-                  }}>
-                    {tag}
-                  </span>
-                ))}
+            <div className="project-card-inner" style={{ display: 'grid', gridTemplateColumns: '1fr auto', alignItems: 'center', gap: '24px' }}>
+              <div>
+                <div style={{ display: 'flex', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
+                  {project.tags.map(tag => (
+                    <span key={tag} style={{
+                      fontSize: '11px',
+                      fontWeight: 500,
+                      letterSpacing: '0.06em',
+                      textTransform: 'uppercase',
+                      color: segment.accentColor,
+                      background: '#e8f5f0',
+                      padding: '3px 8px',
+                      borderRadius: '4px',
+                    }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <h2 style={{ fontSize: '22px', fontWeight: 500, marginBottom: '6px' }}>
+                  {project.title}
+                </h2>
+                <p style={{ fontSize: '15px', color: '#777', lineHeight: 1.5 }}>
+                  {project.subtitle}
+                </p>
               </div>
-              <h2 style={{ fontSize: '22px', fontWeight: 500, marginBottom: '6px', color: '#0f0f0f' }}>
-                {project.title}
-              </h2>
-              <p style={{ fontSize: '15px', color: '#777', lineHeight: 1.5 }}>
-                {project.subtitle}
-              </p>
+              <span className="project-card-arrow" style={{ fontSize: '24px', color: '#ccc' }}>→</span>
             </div>
-            <span style={{ fontSize: '24px', color: '#ccc' }}>→</span>
           </div>
         ))}
       </div>

@@ -63,7 +63,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2px', marginBottom: '64px' }}>
+      <div className="case-study-cols" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2px', marginBottom: '64px' }}>
         {[
           { label: 'Challenge', content: 'Describe the core problem this project was solving. What was broken, missing, or unclear before you got involved?' },
           { label: 'Solution', content: 'Explain your approach — the key decisions you made, why you made them, and how they addressed the problem.' },
