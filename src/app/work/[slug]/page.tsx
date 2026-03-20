@@ -11,7 +11,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
 
   if (!project) {
     return (
-      <main style={{ maxWidth: '960px', margin: '0 auto', padding: '64px 32px' }}>
+      <main className="segment-page">
         <p style={{ color: '#999' }}>Project not found.</p>
         <button onClick={() => router.back()} style={{ marginTop: '16px', fontSize: '14px', color: '#555', background: 'none', border: 'none', cursor: 'pointer' }}>
           ← Back
@@ -21,77 +21,59 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
   }
 
   const segment = SEGMENTS[project.primarySegment]
+  const tagBg = project.primarySegment === 'web' ? '#e8f5f0' : project.primarySegment === 'brand' ? '#faece7' : '#eeedfe'
 
   return (
-    <main style={{ maxWidth: '960px', margin: '0 auto', padding: '64px 32px' }}>
-
+    <main className="segment-page">
       <button
         onClick={() => router.back()}
-        style={{ fontSize: '13px', color: '#999', background: 'none', border: 'none', cursor: 'pointer', marginBottom: '48px', display: 'flex', alignItems: 'center', gap: '6px' }}
+        style={{ fontSize: '13px', color: '#999', background: 'none', border: 'none', cursor: 'pointer', marginBottom: '40px', display: 'flex', alignItems: 'center', gap: '6px' }}
       >
         ← Back
       </button>
 
-      <div style={{ marginBottom: '64px' }}>
-        <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', flexWrap: 'wrap' }}>
-          {project.tags.map(tag => (
-            <span key={tag} style={{
-              fontSize: '11px',
-              fontWeight: 500,
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-              color: segment.accentColor,
-              background: project.primarySegment === 'web' ? '#e8f5f0' : project.primarySegment === 'brand' ? '#faece7' : '#eeedfe',
-              padding: '3px 8px',
-              borderRadius: '4px',
-            }}>
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <h1 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 400, lineHeight: 1.15, marginBottom: '16px', letterSpacing: '-0.02em' }}>
-          {project.title}
-        </h1>
-
-        <p style={{ fontSize: '18px', color: '#777', lineHeight: 1.5, marginBottom: '48px' }}>
-          {project.subtitle}
-        </p>
-
-        <div style={{ width: '100%', aspectRatio: '16/9', background: '#f2f2f2', borderRadius: '12px', marginBottom: '64px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <span style={{ fontSize: '13px', color: '#bbb', letterSpacing: '0.05em' }}>PROJECT IMAGES GO HERE</span>
-        </div>
+      <div className="project-tags" style={{ marginBottom: '16px' }}>
+        {project.tags.map(tag => (
+          <span key={tag} className="project-tag" style={{ color: segment.accentColor, background: tagBg }}>
+            {tag}
+          </span>
+        ))}
       </div>
 
-      <div className="case-study-cols" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '2px', marginBottom: '64px' }}>
+      <h1 style={{ fontFamily: 'inherit', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: '12px', color: '#1a1a1a' }}>
+        {project.title}
+      </h1>
+
+      <p style={{ fontSize: '17px', color: '#9b9b9b', lineHeight: 1.5, marginBottom: '48px' }}>
+        {project.subtitle}
+      </p>
+
+      <div style={{ width: '100%', aspectRatio: '16/9', background: '#f7f7f5', borderRadius: '8px', marginBottom: '56px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #ebebе8' }}>
+        <span style={{ fontSize: '12px', color: '#ccc', letterSpacing: '0.05em', textTransform: 'uppercase', fontWeight: 600 }}>Project images go here</span>
+      </div>
+
+      <div className="case-study-cols">
         {[
           { label: 'Challenge', content: 'Describe the core problem this project was solving. What was broken, missing, or unclear before you got involved?' },
           { label: 'Solution', content: 'Explain your approach — the key decisions you made, why you made them, and how they addressed the problem.' },
           { label: 'Result', content: 'What changed after? Quantify where possible. If no hard metrics exist, describe the qualitative outcome.' },
-        ].map(section => (
-          <div key={section.label} style={{ padding: '32px', background: '#fafafa', borderRadius: '12px' }}>
-            <p style={{ fontSize: '11px', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: segment.accentColor, marginBottom: '12px' }}>
-              {section.label}
-            </p>
-            <p style={{ fontSize: '14px', color: '#888', lineHeight: 1.7, fontStyle: 'italic' }}>
-              {section.content}
-            </p>
+        ].map(s => (
+          <div key={s.label} className="case-col">
+            <p className="case-col-label" style={{ color: segment.accentColor }}>{s.label}</p>
+            <p className="case-col-text">{s.content}</p>
           </div>
         ))}
       </div>
 
-      <div style={{ borderTop: '1px solid #f0f0f0', paddingTop: '48px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ borderTop: '1px solid #f0f0f0', paddingTop: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <button
           onClick={() => router.push(`/${project.primarySegment}`)}
-          style={{ fontSize: '14px', color: segment.accentColor, background: 'none', border: 'none', cursor: 'pointer' }}
+          style={{ fontSize: '13px', color: segment.accentColor, background: 'none', border: 'none', cursor: 'pointer' }}
         >
           ← Back to {segment.label}
         </button>
-        <p style={{ fontSize: '13px', color: '#bbb' }}>
-          More projects coming
-        </p>
+        <p style={{ fontSize: '12px', color: '#ccc' }}>More projects coming</p>
       </div>
-
     </main>
   )
 }
