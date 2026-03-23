@@ -4,29 +4,44 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 
 const SEGMENTS = [
-  { id: 'brand', title: 'Brand identity', sub: 'Logos, systems, craft', accent: '#993C1D' },
-  { id: 'web', title: 'Web & digital', sub: 'Pages, CRO, performance', accent: '#0F6E56' },
-  { id: 'ux', title: 'UX & product', sub: 'Flows, IA, interaction', accent: '#534AB7' },
+  {
+    id: 'brand',
+    title: 'Brand identity',
+    sub: 'Logos, systems, craft',
+    accent: '#3B0764',
+    gradient: 'linear-gradient(135deg, #3B0764, #6D28D9)',
+  },
+  {
+    id: 'web',
+    title: 'Web & digital',
+    sub: 'Pages, CRO, performance',
+    accent: '#DC2626',
+    gradient: 'linear-gradient(135deg, #DC2626, #F87171)',
+  },
+  {
+    id: 'ux',
+    title: 'UX & product',
+    sub: 'Flows, IA, interaction',
+    accent: '#1D4ED8',
+    gradient: 'linear-gradient(135deg, #1D4ED8, #60A5FA)',
+  },
 ]
 
 const BLOBS = [
-  { ox: 0.15, oy: 0.25, r: 560, color: '#f5c8b0', rgb: [245, 200, 176] as [number,number,number], vx: 0.18, vy: 0.12 },
-  { ox: 0.82, oy: 0.72, r: 620, color: '#b0e8d4', rgb: [176, 232, 212] as [number,number,number], vx: -0.14, vy: -0.16 },
-  { ox: 0.55, oy: 0.15, r: 500, color: '#c8c4f4', rgb: [200, 196, 244] as [number,number,number], vx: 0.1, vy: 0.2 },
+  { ox: 0.15, oy: 0.25, r: 560, color: '#c4b5f4', rgb: [196, 181, 244] as [number, number, number], vx: 0.18, vy: 0.12 },
+  { ox: 0.82, oy: 0.72, r: 620, color: '#fca5a5', rgb: [252, 165, 165] as [number, number, number], vx: -0.14, vy: -0.16 },
+  { ox: 0.55, oy: 0.15, r: 500, color: '#93c5fd', rgb: [147, 197, 253] as [number, number, number], vx: 0.1, vy: 0.2 },
 ]
 
-const BLOB_ACCENTS = ['#c8603a', '#1d9e75', '#534AB7']
-const BRUSH_RADIUS = 18
-const STROKE_ALPHA = 0.55
-const FADE_SPEED = 0.012
+const BLOB_ACCENTS = ['#3B0764', '#DC2626', '#1D4ED8']
+const MAGNET_STRENGTH = 0.032
+const MAGNET_RADIUS = 680
 
 type Blob = {
   x: number; y: number; ox: number; oy: number
-  r: number; color: string; rgb: [number,number,number]
-  vx: number; vy: number; dragged: boolean
+  r: number; color: string; rgb: [number, number, number]
+  vx: number; vy: number
 }
-
-type Stroke = { x: number; y: number; r: number; g: number; b: number; alpha: number }
 
 function useWordReveal(text: string, started: boolean, baseDelay: number) {
   return text.split(' ').map((word, i) => ({
@@ -46,6 +61,25 @@ function useWordReveal(text: string, started: boolean, baseDelay: number) {
   }))
 }
 
+const ICONS: Record<string, React.ReactNode> = {
+  brand: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 20h20"/><path d="m7 17 2-6 3 4 2-3 3 5"/><path d="M4 3h16v10H4z"/>
+    </svg>
+  ),
+  web: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 3l14 9-14 9V3z"/>
+    </svg>
+  ),
+  ux: (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+      <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+    </svg>
+  ),
+}
+
 function SegmentButton({
   seg, onClick, visible, delay,
 }: {
@@ -55,6 +89,7 @@ function SegmentButton({
   delay: number
 }) {
   const [hovered, setHovered] = useState(false)
+
   return (
     <button
       onMouseEnter={() => setHovered(true)}
@@ -62,43 +97,54 @@ function SegmentButton({
       onClick={onClick}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? 'translateY(0)' : 'translateY(14px)',
+        transform: visible
+          ? hovered ? 'translateY(-2px)' : 'translateY(0)'
+          : 'translateY(16px)',
         transition: [
           `opacity 0.55s ease ${delay}ms`,
-          `transform 0.55s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
-          'background 0.2s ease',
+          `transform 0.55s cubic-bezier(0.23,1,0.32,1) ${visible ? '0ms' : delay + 'ms'}`,
           'border-color 0.2s ease',
           'box-shadow 0.2s ease',
         ].join(', '),
-        padding: '14px 20px',
-        minWidth: '160px',
+        padding: '16px 20px',
+        minWidth: '170px',
         textAlign: 'left',
-        border: `1px solid ${hovered ? seg.accent : 'rgba(0,0,0,0.1)'}`,
-        borderRadius: '8px',
-        background: hovered ? seg.accent : 'rgba(255,255,255,0.7)',
+        border: `1.5px solid ${hovered ? seg.accent + '60' : 'rgba(0,0,0,0.08)'}`,
+        borderRadius: '14px',
+        background: 'rgba(255,255,255,0.92)',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
         cursor: 'none',
-        boxShadow: hovered ? `0 6px 28px ${seg.accent}44` : '0 1px 3px rgba(0,0,0,0.06)',
+        boxShadow: hovered
+          ? '0 4px 20px rgba(0,0,0,0.10)'
+          : '0 1px 4px rgba(0,0,0,0.06)',
         position: 'relative',
         zIndex: 10,
       }}
     >
       <div style={{
-        fontWeight: 600,
-        fontSize: '14px',
-        marginBottom: '3px',
-        color: hovered ? '#fff' : '#1a1a1a',
-        transition: 'color 0.2s ease',
-        letterSpacing: '-0.01em',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '7px',
+        marginBottom: '5px',
+        color: seg.accent,
       }}>
-        {seg.title}
+        {ICONS[seg.id]}
+        <span style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontWeight: 400,
+          fontSize: '15px',
+          letterSpacing: '-0.02em',
+          color: '#1a1a1a',
+        }}>
+          {seg.title}
+        </span>
       </div>
       <div style={{
+        fontFamily: "'Inter', sans-serif",
         fontSize: '11px',
-        color: hovered ? 'rgba(255,255,255,0.65)' : '#999',
-        transition: 'color 0.2s ease',
-        letterSpacing: '0.01em',
+        color: '#555',
+        paddingLeft: '21px',
       }}>
         {seg.sub}
       </div>
@@ -114,16 +160,11 @@ export default function SegmentGate() {
   const cursorDotRef = useRef<HTMLDivElement>(null)
   const cursorRingRef = useRef<HTMLDivElement>(null)
 
-  const mouse = useRef({ x: -500, y: -500 })
-  const prevMouse = useRef({ x: -500, y: -500 })
-  const ringPos = useRef({ x: -500, y: -500 })
+  const mouse = useRef({ x: -1000, y: -1000 })
+  const ringPos = useRef({ x: -1000, y: -1000 })
   const cursorAccent = useRef('#1a1a1a')
   const cursorRaf = useRef<number>(0)
-  const isDragging = useRef(false)
-  const draggedIndex = useRef<number | null>(null)
-  const dragOffset = useRef({ x: 0, y: 0 })
   const blobsRef = useRef<Blob[]>([])
-  const strokesRef = useRef<Stroke[]>([])
 
   useEffect(() => {
     const w = window.innerWidth
@@ -132,7 +173,7 @@ export default function SegmentGate() {
       x: b.ox * w, y: b.oy * h,
       ox: b.ox * w, oy: b.oy * h,
       r: b.r, color: b.color, rgb: b.rgb,
-      vx: b.vx, vy: b.vy, dragged: false,
+      vx: b.vx, vy: b.vy,
     }))
   }, [])
 
@@ -172,19 +213,34 @@ export default function SegmentGate() {
       ctx.fillRect(0, 0, W, H)
 
       blobsRef.current.forEach(blob => {
-        if (blob.dragged) {
-          blob.x = mx - dragOffset.current.x
-          blob.y = my - dragOffset.current.y
-          blob.ox = blob.x
-          blob.oy = blob.y
-        } else {
-          blob.ox += blob.vx
-          blob.oy += blob.vy
-          if (blob.ox < -blob.r || blob.ox > W + blob.r) blob.vx *= -1
-          if (blob.oy < -blob.r || blob.oy > H + blob.r) blob.vy *= -1
-          blob.x += (blob.ox - blob.x) * 0.06
-          blob.y += (blob.oy - blob.y) * 0.06
+        const dx = mx - blob.x
+        const dy = my - blob.y
+        const dist = Math.hypot(dx, dy)
+
+        // Magnet pull toward cursor
+        if (dist < MAGNET_RADIUS && mx > -500) {
+          const strength = MAGNET_STRENGTH * (1 - dist / MAGNET_RADIUS)
+          blob.vx += dx * strength * 0.1
+          blob.vy += dy * strength * 0.1
         }
+
+        // Drift back toward origin
+        blob.vx += (blob.ox - blob.x) * 0.001
+        blob.vy += (blob.oy - blob.y) * 0.001
+
+        // Dampen
+        blob.vx *= 0.96
+        blob.vy *= 0.96
+
+        // Clamp speed
+        const speed = Math.hypot(blob.vx, blob.vy)
+        if (speed > 3.5) {
+          blob.vx = (blob.vx / speed) * 3.5
+          blob.vy = (blob.vy / speed) * 3.5
+        }
+
+        blob.x += blob.vx
+        blob.y += blob.vy
 
         const g = ctx.createRadialGradient(blob.x, blob.y, 0, blob.x, blob.y, blob.r)
         g.addColorStop(0, blob.color + 'cc')
@@ -195,6 +251,7 @@ export default function SegmentGate() {
         ctx.fill()
       })
 
+      // Cursor accent based on nearest blob
       let nearest = -1
       let minD = Infinity
       blobsRef.current.forEach((blob, i) => {
@@ -203,36 +260,15 @@ export default function SegmentGate() {
       })
       cursorAccent.current = nearest >= 0 ? BLOB_ACCENTS[nearest] : '#1a1a1a'
 
-      const moved = Math.hypot(mx - prevMouse.current.x, my - prevMouse.current.y) > 3
-      if (moved) {
-        if (nearest >= 0) {
-          const [r, g, b] = blobsRef.current[nearest].rgb
-          strokesRef.current.push({ x: mx, y: my, r, g, b, alpha: STROKE_ALPHA })
-        }
-        prevMouse.current = { x: mx, y: my }
-      }
-
-      strokesRef.current = strokesRef.current.filter(s => s.alpha > 0.005)
-      strokesRef.current.forEach(s => {
-        const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, BRUSH_RADIUS)
-        g.addColorStop(0, `rgba(${s.r},${s.g},${s.b},${s.alpha})`)
-        g.addColorStop(0.5, `rgba(${s.r},${s.g},${s.b},${s.alpha * 0.4})`)
-        g.addColorStop(1, `rgba(${s.r},${s.g},${s.b},0)`)
-        ctx.fillStyle = g
-        ctx.beginPath()
-        ctx.arc(s.x, s.y, BRUSH_RADIUS, 0, Math.PI * 2)
-        ctx.fill()
-        s.alpha -= FADE_SPEED
-      })
-
+      // Grain every other frame
       if (frame % 2 === 0) {
         const img = ctx.getImageData(0, 0, W, H)
         const d = img.data
         for (let i = 0; i < d.length; i += 4) {
-          const n = (Math.random() - 0.5) * 22
+          const n = (Math.random() - 0.5) * 18
           d[i] = Math.min(255, Math.max(0, d[i] + n))
-          d[i+1] = Math.min(255, Math.max(0, d[i+1] + n))
-          d[i+2] = Math.min(255, Math.max(0, d[i+2] + n))
+          d[i + 1] = Math.min(255, Math.max(0, d[i + 1] + n))
+          d[i + 2] = Math.min(255, Math.max(0, d[i + 2] + n))
         }
         ctx.putImageData(img, 0, 0)
       }
@@ -249,41 +285,11 @@ export default function SegmentGate() {
   }, [])
 
   const onMouseMove = useCallback((e: MouseEvent) => {
-    if (prevMouse.current.x === -500) prevMouse.current = { x: e.clientX, y: e.clientY }
     mouse.current = { x: e.clientX, y: e.clientY }
-  }, [])
-
-  const onMouseDown = useCallback((e: MouseEvent) => {
-    const { clientX: mx, clientY: my } = e
-    for (let i = blobsRef.current.length - 1; i >= 0; i--) {
-      const b = blobsRef.current[i]
-      if (Math.hypot(mx - b.x, my - b.y) < b.r * 0.5) {
-        isDragging.current = true
-        draggedIndex.current = i
-        dragOffset.current = { x: mx - b.x, y: my - b.y }
-        b.dragged = true
-        break
-      }
-    }
-  }, [])
-
-  const onMouseUp = useCallback(() => {
-    if (draggedIndex.current !== null) {
-      const b = blobsRef.current[draggedIndex.current]
-      b.vx = Math.max(-2, Math.min(2, (mouse.current.x - prevMouse.current.x) * 0.3))
-      b.vy = Math.max(-2, Math.min(2, (mouse.current.y - prevMouse.current.y) * 0.3))
-      b.ox = b.x
-      b.oy = b.y
-      b.dragged = false
-    }
-    isDragging.current = false
-    draggedIndex.current = null
   }, [])
 
   useEffect(() => {
     window.addEventListener('mousemove', onMouseMove)
-    window.addEventListener('mousedown', onMouseDown)
-    window.addEventListener('mouseup', onMouseUp)
 
     function animCursor() {
       const dot = cursorDotRef.current
@@ -297,7 +303,6 @@ export default function SegmentGate() {
         ring.style.left = `${ringPos.current.x}px`
         ring.style.top = `${ringPos.current.y}px`
         ring.style.borderColor = cursorAccent.current
-        ring.style.transform = `translate(-50%,-50%) scale(${isDragging.current ? 1.8 : 1})`
       }
       cursorRaf.current = requestAnimationFrame(animCursor)
     }
@@ -305,11 +310,9 @@ export default function SegmentGate() {
     animCursor()
     return () => {
       window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('mousedown', onMouseDown)
-      window.removeEventListener('mouseup', onMouseUp)
       cancelAnimationFrame(cursorRaf.current)
     }
-  }, [onMouseMove, onMouseDown, onMouseUp])
+  }, [onMouseMove])
 
   function choose(id: string) {
     localStorage.setItem('segment', id)
@@ -379,7 +382,7 @@ export default function SegmentGate() {
           pointerEvents: 'none',
           zIndex: 99,
           transform: 'translate(-50%,-50%)',
-          transition: 'border-color 0.25s ease, transform 0.2s cubic-bezier(0.23,1,0.32,1)',
+          transition: 'border-color 0.25s ease',
           mixBlendMode: 'multiply',
           opacity: 0.4,
         }}
@@ -398,24 +401,22 @@ export default function SegmentGate() {
       >
         <p style={{
           ...fadeUp(0),
+          fontFamily: "'Inter', sans-serif",
           fontSize: '10px',
           fontWeight: 600,
           letterSpacing: '0.12em',
           textTransform: 'uppercase',
-          color: '#aaa',
+          color: '#666',
           marginBottom: '32px',
         }}>
           Corbin Moffitt — Designer
         </p>
 
-        <div style={{
-          width: '100%',
-          textAlign: 'center',
-          marginBottom: '20px',
-        }}>
+        <div style={{ width: '100%', textAlign: 'center', marginBottom: '20px' }}>
           <div style={{
+            fontFamily: "'Outfit', sans-serif",
             fontSize: 'clamp(36px, 5.5vw, 60px)',
-            fontWeight: 700,
+            fontWeight: 400,
             lineHeight: 1.1,
             letterSpacing: '-0.03em',
             color: '#1a1a1a',
@@ -429,8 +430,9 @@ export default function SegmentGate() {
             ))}
           </div>
           <div style={{
+            fontFamily: "'Outfit', sans-serif",
             fontSize: 'clamp(36px, 5.5vw, 60px)',
-            fontWeight: 700,
+            fontWeight: 400,
             lineHeight: 1.1,
             letterSpacing: '-0.03em',
             color: '#1a1a1a',
@@ -446,8 +448,9 @@ export default function SegmentGate() {
 
         <p style={{
           ...fadeUp(700),
+          fontFamily: "'Inter', sans-serif",
           fontSize: '15px',
-          color: '#888',
+          color: '#444',
           textAlign: 'center',
           lineHeight: 1.6,
           marginBottom: '48px',
@@ -480,8 +483,9 @@ export default function SegmentGate() {
           <button
             onClick={() => router.push('/work')}
             style={{
+              fontFamily: "'Inter', sans-serif",
               fontSize: '12px',
-              color: '#bbb',
+              color: '#888',
               background: 'none',
               border: 'none',
               cursor: 'none',
@@ -489,8 +493,8 @@ export default function SegmentGate() {
               transition: 'color 0.2s',
               fontWeight: 500,
             }}
-            onMouseEnter={e => (e.currentTarget.style.color = '#555')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#bbb')}
+            onMouseEnter={e => (e.currentTarget.style.color = '#333')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#888')}
           >
             See everything →
           </button>

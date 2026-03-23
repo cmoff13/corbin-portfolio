@@ -1,28 +1,17 @@
-'use client'
-
-import { Geist } from 'next/font/google'
-import { usePathname } from 'next/navigation'
-import SegmentSwitcher from '@/components/SegmentSwitcher'
+import type { Metadata } from 'next'
 import './globals.css'
+import SegmentSwitcher from '@/components/SegmentSwitcher'
 
-const geist = Geist({ subsets: ['latin'] })
-
-function Nav() {
-  const pathname = usePathname()
-  if (pathname === '/') return null
-  return (
-    <nav className="nav">
-      <a href="/" className="nav-logo">Corbin Moffitt</a>
-      <SegmentSwitcher />
-    </nav>
-  )
+export const metadata: Metadata = {
+  title: 'Corbin Moffitt — Designer',
+  description: 'Seven years of design. Three ways to see it.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-theme="light">
-      <body className={geist.className} style={{ backgroundColor: '#ffffff', color: '#1a1a1a' }}>
-        <Nav />
+      <body style={{ backgroundColor: '#ffffff' }}>
+        <SegmentSwitcher />
         {children}
       </body>
     </html>
