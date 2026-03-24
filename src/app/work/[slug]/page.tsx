@@ -2,7 +2,6 @@
 
 import { use, useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
 import { CASE_STUDIES, SEGMENTS } from '@/lib/segments'
 
 // ── Content ────────────────────────────────────────────────────────────────
@@ -357,7 +356,11 @@ type SectionKey = typeof SECTION_KEYS[number]
 
 // ── Lightbox ───────────────────────────────────────────────────────────────
 
-function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
+function Lightbox({ src, alt, onClose }: {
+  src: string
+  alt: string
+  onClose: () => void
+}) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKey)
@@ -402,13 +405,13 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          transition: 'background 0.2s ease',
         }}
         onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
         onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
       >
         ×
       </button>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         alt={alt}
@@ -455,13 +458,12 @@ function ImageOrPlaceholder({ src, alt, style, label, clickable = false }: {
             ...style,
           }}
         >
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={src}
             alt={alt}
-            width={1600}
-            height={900}
-            style={{ width: '100%', height: 'auto', display: 'block' }}
             loading="lazy"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
           />
           {clickable && hovered && (
             <div style={{
@@ -471,7 +473,6 @@ function ImageOrPlaceholder({ src, alt, style, label, clickable = false }: {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              transition: 'opacity 0.2s ease',
             }}>
               <div style={{
                 background: 'rgba(0,0,0,0.7)',
@@ -587,23 +588,46 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
         @media (max-width: 768px) {
           .case-sidebar { display: none !important; }
           .case-mobile-nav { display: flex !important; }
+          .case-main { padding: 32px 20px 120px !important; }
+        }
+        @media (max-width: 600px) {
+          .tldr-grid { grid-template-columns: 1fr !important; }
+          .tldr-image { max-width: 240px; margin: 8px auto 0; }
         }
       `}</style>
 
-      {/* Mobile nav */}
+      {/* Mobile nav — sticky */}
       <div
         className="case-mobile-nav"
-        style={{ display: 'none', padding: '12px 20px', borderBottom: '1px solid #f0f0f0', overflowX: 'auto', gap: '4px' }}
+        style={{
+          display: 'none',
+          padding: '12px 20px',
+          borderBottom: '1px solid #f0f0f0',
+          overflowX: 'auto',
+          gap: '4px',
+          position: 'sticky',
+          top: '57px',
+          zIndex: 30,
+          background: 'rgba(255,255,255,0.95)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+        }}
       >
         {SECTION_KEYS.map(key => (
           <button
             key={key}
             onClick={() => sectionRefs.current[key]?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
             style={{
-              flexShrink: 0, padding: '5px 10px', borderRadius: '5px', border: 'none',
-              background: activeSection === key ? '#f5f5f2' : 'none', cursor: 'pointer',
-              fontSize: '12px', fontWeight: activeSection === key ? 600 : 400,
-              color: activeSection === key ? segment.accentColor : '#888', whiteSpace: 'nowrap',
+              flexShrink: 0,
+              padding: '5px 10px',
+              borderRadius: '5px',
+              border: 'none',
+              background: activeSection === key ? '#f5f5f2' : 'none',
+              cursor: 'pointer',
+              fontSize: '12px',
+              fontWeight: activeSection === key ? 600 : 400,
+              color: activeSection === key ? segment.accentColor : '#888',
+              whiteSpace: 'nowrap',
             }}
           >
             {content ? content[key].title : key}
@@ -617,20 +641,47 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
         <aside
           className="case-sidebar"
           style={{
-            width: '220px', flexShrink: 0, padding: '48px 24px 48px 32px',
-            position: 'sticky', top: '57px', height: 'calc(100vh - 57px)',
-            overflowY: 'auto', borderRight: '1px solid #f0f0f0',
-            display: 'flex', flexDirection: 'column', gap: '2px',
+            width: '220px',
+            flexShrink: 0,
+            padding: '48px 24px 48px 32px',
+            position: 'sticky',
+            top: '57px',
+            height: 'calc(100vh - 57px)',
+            overflowY: 'auto',
+            borderRight: '1px solid #f0f0f0',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2px',
           }}
         >
           <button
             onClick={() => router.back()}
-            style={{ fontSize: '12px', color: '#999', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: '0', marginBottom: '32px', display: 'flex', alignItems: 'center', gap: '4px' }}
+            style={{
+              fontSize: '12px',
+              color: '#999',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              textAlign: 'left',
+              padding: '0',
+              marginBottom: '32px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+            }}
           >
             ← Back
           </button>
 
-          <p style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#ccc', marginBottom: '12px', paddingLeft: '10px' }}>
+          <p style={{
+            fontSize: '10px',
+            fontWeight: 600,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            color: '#ccc',
+            marginBottom: '12px',
+            paddingLeft: '10px',
+          }}>
             On this page
           </p>
 
@@ -641,11 +692,17 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
                 key={key}
                 onClick={() => sectionRefs.current[key]?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                 style={{
-                  display: 'flex', alignItems: 'center', gap: '8px',
-                  width: '100%', textAlign: 'left', padding: '7px 10px',
-                  borderRadius: '6px', border: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  width: '100%',
+                  textAlign: 'left',
+                  padding: '7px 10px',
+                  borderRadius: '6px',
+                  border: 'none',
                   background: isActive ? '#f5f5f2' : 'none',
-                  cursor: 'pointer', fontSize: '13px',
+                  cursor: 'pointer',
+                  fontSize: '13px',
                   fontWeight: isActive ? 600 : 400,
                   color: isActive ? segment.accentColor : '#888',
                   transition: 'all 0.15s ease',
@@ -654,8 +711,12 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
               >
                 {isActive && (
                   <span style={{
-                    width: '6px', height: '6px', borderRadius: '50%',
-                    background: segment.gradient, flexShrink: 0, display: 'inline-block',
+                    width: '6px',
+                    height: '6px',
+                    borderRadius: '50%',
+                    background: segment.gradient,
+                    flexShrink: 0,
+                    display: 'inline-block',
                   }} />
                 )}
                 {content ? content[key].title : key.charAt(0).toUpperCase() + key.slice(1)}
@@ -665,31 +726,70 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
         </aside>
 
         {/* Main content */}
-        <main style={{ flex: 1, display: 'flex', justifyContent: 'center', padding: '48px 40px 120px' }}>
+        <main
+          className="case-main"
+          style={{
+            flex: 1,
+            display: 'flex',
+            justifyContent: 'center',
+            padding: '48px 40px 120px',
+          }}
+        >
           <div style={{ width: '100%', maxWidth: '680px' }}>
 
             {/* Header */}
             <div style={{ marginBottom: '56px' }}>
               <div className="project-tags" style={{ marginBottom: '16px' }}>
                 {project.tags.map(tag => (
-                  <span key={tag} className="project-tag" style={{ color: segment.accentColor, background: tagBg }}>
+                  <span
+                    key={tag}
+                    className="project-tag"
+                    style={{ color: segment.accentColor, background: tagBg }}
+                  >
                     {tag}
                   </span>
                 ))}
               </div>
 
-              <h1 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 400, letterSpacing: '-0.03em', lineHeight: 1.1, color: '#1a1a1a', marginBottom: '12px', fontFamily: "'Outfit', sans-serif" }}>
+              <h1 style={{
+                fontSize: 'clamp(28px, 4vw, 44px)',
+                fontWeight: 400,
+                letterSpacing: '-0.03em',
+                lineHeight: 1.1,
+                color: '#1a1a1a',
+                marginBottom: '12px',
+                fontFamily: "'Outfit', sans-serif",
+              }}>
                 {project.title}
               </h1>
 
-              <p style={{ fontSize: '16px', color: '#9b9b9b', lineHeight: 1.5, marginBottom: '32px' }}>
+              <p style={{
+                fontSize: '16px',
+                color: '#9b9b9b',
+                lineHeight: 1.5,
+                marginBottom: '32px',
+              }}>
                 {project.subtitle}
               </p>
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px 40px', padding: '20px 0', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0' }}>
+              <div style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '24px 40px',
+                padding: '20px 0',
+                borderTop: '1px solid #f0f0f0',
+                borderBottom: '1px solid #f0f0f0',
+              }}>
                 {meta.map(item => (
                   <div key={item.label}>
-                    <p style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#ccc', marginBottom: '4px' }}>
+                    <p style={{
+                      fontSize: '10px',
+                      fontWeight: 600,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      color: '#ccc',
+                      marginBottom: '4px',
+                    }}>
                       {item.label}
                     </p>
                     <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a1a1a' }}>
@@ -722,22 +822,46 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
                   ref={el => { sectionRefs.current[key] = el }}
                   style={{ marginBottom: '80px', scrollMarginTop: '80px' }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-                    <span style={{ fontSize: '10px', fontWeight: 700, color: segment.accentColor, background: tagBg, padding: '3px 8px', borderRadius: '4px', letterSpacing: '0.06em', textTransform: 'uppercase', flexShrink: 0 }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    marginBottom: '20px',
+                  }}>
+                    <span style={{
+                      fontSize: '10px',
+                      fontWeight: 700,
+                      color: segment.accentColor,
+                      background: tagBg,
+                      padding: '3px 8px',
+                      borderRadius: '4px',
+                      letterSpacing: '0.06em',
+                      textTransform: 'uppercase',
+                      flexShrink: 0,
+                    }}>
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    <h2 style={{ fontSize: '18px', fontWeight: 400, color: '#1a1a1a', letterSpacing: '-0.02em', fontFamily: "'Outfit', sans-serif" }}>
+                    <h2 style={{
+                      fontSize: '18px',
+                      fontWeight: 400,
+                      color: '#1a1a1a',
+                      letterSpacing: '-0.02em',
+                      fontFamily: "'Outfit', sans-serif",
+                    }}>
                       {section.title}
                     </h2>
                   </div>
 
                   {tldr ? (
-                    <div style={{
-                      display: 'grid',
-                      gridTemplateColumns: hasImage ? '1fr 180px' : '1fr',
-                      gap: '24px',
-                      alignItems: 'center',
-                    }}>
+                    <div
+                      className="tldr-grid"
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: hasImage ? '1fr 180px' : '1fr',
+                        gap: '24px',
+                        alignItems: 'center',
+                      }}
+                    >
                       <p style={{
                         fontSize: '16px',
                         color: '#1a1a1a',
@@ -750,19 +874,26 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
                         {section.tldr}
                       </p>
                       {hasImage && (
-                        <ImageOrPlaceholder
-                          src={images[key]}
-                          alt={`${project.title} — ${section.title}`}
-                          label={section.title}
-                          style={{ borderRadius: '6px' }}
-                          clickable
-                        />
+                        <div className="tldr-image">
+                          <ImageOrPlaceholder
+                            src={images[key]}
+                            alt={`${project.title} — ${section.title}`}
+                            label={section.title}
+                            style={{ borderRadius: '6px' }}
+                            clickable
+                          />
+                        </div>
                       )}
                     </div>
                   ) : (
                     <>
                       {section.content.split('\n\n').map((para, j) => (
-                        <p key={j} style={{ fontSize: '15px', color: '#4a4a4a', lineHeight: 1.85, marginBottom: '16px' }}>
+                        <p key={j} style={{
+                          fontSize: '15px',
+                          color: '#4a4a4a',
+                          lineHeight: 1.85,
+                          marginBottom: '16px',
+                        }}>
                           {para}
                         </p>
                       ))}
@@ -781,10 +912,22 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
             })}
 
             {/* Footer */}
-            <div style={{ borderTop: '1px solid #f0f0f0', paddingTop: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{
+              borderTop: '1px solid #f0f0f0',
+              paddingTop: '40px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
               <button
                 onClick={() => router.push(`/${project.primarySegment}`)}
-                style={{ fontSize: '13px', color: segment.accentColor, background: 'none', border: 'none', cursor: 'pointer' }}
+                style={{
+                  fontSize: '13px',
+                  color: segment.accentColor,
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
               >
                 ← Back to {segment.label}
               </button>
@@ -813,12 +956,19 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
           <button
             onClick={() => setTldr(false)}
             style={{
-              display: 'flex', alignItems: 'center', gap: '6px',
-              padding: '8px 16px', borderRadius: '999px', border: 'none',
-              cursor: 'pointer', fontSize: '12px', fontWeight: 600,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '8px 16px',
+              borderRadius: '999px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '12px',
+              fontWeight: 600,
               background: !tldr ? '#f5f5f2' : 'transparent',
               color: !tldr ? '#1a1a1a' : '#aaa',
-              transition: 'all 0.2s ease', letterSpacing: '0.01em',
+              transition: 'all 0.2s ease',
+              letterSpacing: '0.01em',
             }}
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -830,12 +980,19 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
           <button
             onClick={() => setTldr(true)}
             style={{
-              display: 'flex', alignItems: 'center', gap: '6px',
-              padding: '8px 16px', borderRadius: '999px', border: 'none',
-              cursor: 'pointer', fontSize: '12px', fontWeight: 600,
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '8px 16px',
+              borderRadius: '999px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '12px',
+              fontWeight: 600,
               background: tldr ? segment.accentColor : 'transparent',
               color: tldr ? '#fff' : '#aaa',
-              transition: 'all 0.2s ease', letterSpacing: '0.01em',
+              transition: 'all 0.2s ease',
+              letterSpacing: '0.01em',
             }}
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
