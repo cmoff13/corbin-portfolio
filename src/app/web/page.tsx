@@ -6,7 +6,9 @@ import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 const segment = SEGMENTS.web
 const projects = CASE_STUDIES.filter(c => c.primarySegment === 'web' || c.alsoIn?.includes('web'))
 
-const THUMBNAILS: Record<string, string> = {}
+const THUMBNAILS: Record<string, string> = {
+    'skygate-growth-strategies': '/images/skygate/thumbnail.jpg',
+  }
 
 export default function WebSegment() {
   const router = useRouter()

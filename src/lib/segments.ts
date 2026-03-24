@@ -27,14 +27,14 @@ export interface Segment {
 }
 
 export const CASE_STUDIES: CaseStudy[] = [
-  {
-    slug: 'skygate-growth-strategies',
-    title: 'Skygate Growth Strategies',
-    subtitle: 'Brand system + Webflow build, 0→1',
-    primarySegment: 'brand',
-    alsoIn: ['web'],
-    tags: ['Brand system', 'Webflow', 'Landing page', 'Design system'],
-  },
+    {
+        slug: 'skygate-growth-strategies',
+        title: 'Skygate Growth Strategies',
+        subtitle: 'Brand system + Webflow build, 0→1',
+        primarySegment: 'web',
+        alsoIn: [],
+        tags: ['Brand system', 'Webflow', 'Landing page', 'Design system'],
+      },
   {
     slug: 'rely-health',
     title: 'Rely Health',

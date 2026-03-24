@@ -337,16 +337,25 @@ const META_MAP: Record<string, { label: string; value: string }[]> = {
 }
 
 const IMAGE_MAP: Record<string, Record<string, string>> = {
-  'black-coast-estates': {
-    hero: '/images/black-coast/hero.jpg',
-    overview: '/images/black-coast/overview.jpg',
-    problem: '/images/black-coast/problem.jpg',
-    research: '/images/black-coast/research.jpg',
-    decisions: '/images/black-coast/decisions.jpg',
-    system: '/images/black-coast/system.jpg',
-    outcome: '/images/black-coast/outcome.jpg',
-  },
-}
+    'skygate-growth-strategies': {
+      hero: '/images/skygate/hero.jpg',
+      overview: '/images/skygate/overview.jpg',
+      problem: '/images/skygate/problem.jpg',
+      research: '/images/skygate/research.jpg',
+      decisions: '/images/skygate/decisions.jpg',
+      system: '/images/skygate/system.jpg',
+      outcome: '/images/skygate/outcome.jpg',
+    },
+    'black-coast-estates': {
+      hero: '/images/black-coast/hero.jpg',
+      overview: '/images/black-coast/overview.jpg',
+      problem: '/images/black-coast/problem.jpg',
+      research: '/images/black-coast/research.jpg',
+      decisions: '/images/black-coast/decisions.jpg',
+      system: '/images/black-coast/system.jpg',
+      outcome: '/images/black-coast/outcome.jpg',
+    },
+  }
 
 const SECTION_KEYS = [
   'overview', 'problem', 'research', 'decisions', 'system', 'outcome', 'reflections',
