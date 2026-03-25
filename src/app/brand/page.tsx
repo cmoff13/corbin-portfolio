@@ -1,6 +1,7 @@
 'use client'
 
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
+import PreFooter from '@/components/PreFooter'
 
 const segment = SEGMENTS.brand
 const projects = CASE_STUDIES.filter(c => c.primarySegment === 'brand' || c.alsoIn?.includes('brand'))
@@ -20,6 +21,7 @@ const CRAFT_ITEMS = [
 
 export default function BrandSegment() {
   return (
+    <>
     <main className="segment-page">
 
       <div className="segment-header" style={{ background: segment.gradientSubtle }}>
@@ -191,5 +193,7 @@ export default function BrandSegment() {
       </div>
 
     </main>
+    <PreFooter />
+    </>
   )
 }

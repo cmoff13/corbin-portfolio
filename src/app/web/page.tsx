@@ -1,6 +1,7 @@
 'use client'
 
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
+import PreFooter from '@/components/PreFooter'
 
 const segment = SEGMENTS.web
 const projects = CASE_STUDIES.filter(c => c.primarySegment === 'web' || c.alsoIn?.includes('web'))
@@ -11,6 +12,7 @@ const THUMBNAILS: Record<string, string> = {
 
 export default function WebSegment() {
   return (
+    <>
     <main className="segment-page">
 
       <div className="segment-header" style={{ background: segment.gradientSubtle }}>
@@ -157,5 +159,7 @@ export default function WebSegment() {
       </div>
 
     </main>
+    <PreFooter />
+    </>
   )
 }

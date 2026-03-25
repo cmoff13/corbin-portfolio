@@ -119,6 +119,12 @@ export default function SegmentSwitcher() {
       <nav className="nav" style={{ cursor: 'none' }}>
         <a href="/" className="nav-logo" style={{ cursor: 'none' }}>Corbin Moffitt</a>
 
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}>
+          <div className="nav-links">
+            <a href="/about" className="nav-link" style={{ cursor: 'none' }}>About</a>
+            <a href="/contact" className="nav-link" style={{ cursor: 'none' }}>Contact</a>
+          </div>
+
         <div style={{ position: 'relative' }} ref={containerRef}>
           <button
             className="switcher-pill"
@@ -183,27 +189,35 @@ export default function SegmentSwitcher() {
 
               <button
                 className="switcher-meta"
-                onClick={() => {
-                  router.push('/')
-                  setOpen(false)
-                }}
+                onClick={() => { router.push('/') ; setOpen(false) }}
                 style={{ cursor: 'none' }}
               >
                 <span aria-hidden="true">← </span>Back to gate
               </button>
-
               <button
                 className="switcher-meta"
-                onClick={() => {
-                  router.push('/work')
-                  setOpen(false)
-                }}
+                onClick={() => { router.push('/work') ; setOpen(false) }}
                 style={{ cursor: 'none' }}
               >
                 See everything<span aria-hidden="true"> →</span>
               </button>
+              <button
+                className="switcher-meta"
+                onClick={() => { router.push('/about') ; setOpen(false) }}
+                style={{ cursor: 'none' }}
+              >
+                About
+              </button>
+              <button
+                className="switcher-meta"
+                onClick={() => { router.push('/contact') ; setOpen(false) }}
+                style={{ cursor: 'none' }}
+              >
+                Contact
+              </button>
             </div>
           )}
+        </div>
         </div>
       </nav>
     </>
