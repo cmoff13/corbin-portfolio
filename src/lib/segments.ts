@@ -7,6 +7,7 @@ export interface CaseStudy {
   primarySegment: SegmentId
   alsoIn: SegmentId[]
   tags: string[]
+  hidden?: boolean
 }
 
 export interface Segment {
@@ -27,14 +28,14 @@ export interface Segment {
 }
 
 export const CASE_STUDIES: CaseStudy[] = [
-    {
-        slug: 'skygate-growth-strategies',
-        title: 'Skygate Growth Strategies',
-        subtitle: 'Brand system + Webflow build, 0→1',
-        primarySegment: 'web',
-        alsoIn: [],
-        tags: ['Brand system', 'Webflow', 'Landing page', 'Design system'],
-      },
+  {
+    slug: 'skygate-growth-strategies',
+    title: 'Skygate Growth Strategies',
+    subtitle: 'Brand system + Webflow build, 0→1',
+    primarySegment: 'web',
+    alsoIn: [],
+    tags: ['Brand system', 'Webflow', 'Landing page', 'Design system'],
+  },
   {
     slug: 'rely-health',
     title: 'Rely Health',
@@ -42,6 +43,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     primarySegment: 'web',
     alsoIn: [],
     tags: ['Visual identity', 'Website redesign', 'Healthcare'],
+    hidden: true,
   },
   {
     slug: 'black-coast-estates',
@@ -52,20 +54,13 @@ export const CASE_STUDIES: CaseStudy[] = [
     tags: ['UX/UI', 'App design', 'IA', 'Figma prototype'],
   },
   {
-    slug: 'printscan-cro-audit',
-    title: 'PrintScan CRO Audit',
-    subtitle: 'Conversion audit for Live Scan Fingerprinting landing page',
-    primarySegment: 'web',
-    alsoIn: [],
-    tags: ['CRO', 'Landing page', 'Conversion', 'Audit'],
-  },
-  {
     slug: 'portfolio-nav-system',
     title: 'This Portfolio',
     subtitle: 'Book navigation system — a self-initiated UX case study',
     primarySegment: 'ux',
     alsoIn: [],
     tags: ['UX', 'IA', 'Navigation design', 'Self-initiated'],
+    hidden: true,
   },
 ]
 
@@ -83,7 +78,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
     gradient: 'linear-gradient(135deg, #3B0764, #6D28D9)',
     gradientSubtle: 'linear-gradient(135deg, rgba(59,7,100,0.06), rgba(109,40,217,0.06))',
     icon: 'brush',
-    caseStudies: ['skygate-growth-strategies', 'rely-health'],
+    caseStudies: [],
     format: 'craft-grid',
   },
   web: {
@@ -99,7 +94,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
     gradient: 'linear-gradient(135deg, #DC2626, #F87171)',
     gradientSubtle: 'linear-gradient(135deg, rgba(220,38,38,0.06), rgba(248,113,113,0.06))',
     icon: 'cursor',
-    caseStudies: ['printscan-cro-audit', 'skygate-growth-strategies', 'rely-health'],
+    caseStudies: ['skygate-growth-strategies'],
     format: 'case-study',
   },
   ux: {
@@ -115,7 +110,7 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
     gradient: 'linear-gradient(135deg, #1D4ED8, #60A5FA)',
     gradientSubtle: 'linear-gradient(135deg, rgba(29,78,216,0.06), rgba(96,165,250,0.06))',
     icon: 'grid',
-    caseStudies: ['black-coast-estates', 'portfolio-nav-system'],
+    caseStudies: ['black-coast-estates'],
     format: 'process',
   },
 }
