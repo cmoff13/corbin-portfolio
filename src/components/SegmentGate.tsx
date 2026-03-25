@@ -207,10 +207,22 @@ export default function SegmentGate() {
     canvas.height = H
 
     const onResize = () => {
+      const prevW = W
+      const prevH = H
       W = window.innerWidth
       H = window.innerHeight
       canvas.width = W
       canvas.height = H
+      if (prevW <= 0 || prevH <= 0) return
+      blobsRef.current.forEach((blob, i) => {
+        const t = BLOBS[i]
+        if (t) {
+          blob.ox = t.ox * W
+          blob.oy = t.oy * H
+        }
+        blob.x = (blob.x / prevW) * W
+        blob.y = (blob.y / prevH) * H
+      })
     }
     window.addEventListener('resize', onResize)
 
