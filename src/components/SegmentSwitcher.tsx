@@ -4,22 +4,6 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { SEGMENTS, SegmentId } from '@/lib/segments'
 
-function usePopoverClose(open: boolean, setOpen: (v: boolean) => void, containerRef: React.RefObject<HTMLDivElement | null>) {
-  useEffect(() => {
-    if (!open) return
-    function onKey(e: KeyboardEvent) { if (e.key === 'Escape') setOpen(false) }
-    function onPointer(e: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) setOpen(false)
-    }
-    window.addEventListener('keydown', onKey)
-    window.addEventListener('pointerdown', onPointer)
-    return () => {
-      window.removeEventListener('keydown', onKey)
-      window.removeEventListener('pointerdown', onPointer)
-    }
-  }, [open, setOpen, containerRef])
-}
-
 function GlobalCursor() {
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
@@ -97,7 +81,20 @@ export default function SegmentSwitcher() {
   const [activeSegment, setActiveSegment] = useState<SegmentId | null>(null)
   const [mounted, setMounted] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
-  usePopoverClose(open, setOpen, containerRef)
+
+  useEffect(() => {
+    if (!open) return
+    function onKey(e: KeyboardEvent) { if (e.key === 'Escape') setOpen(false) }
+    function onPointer(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) setOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    window.addEventListener('pointerdown', onPointer)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('pointerdown', onPointer)
+    }
+  }, [open])
 
   useEffect(() => {
     setMounted(true)
@@ -106,8 +103,6 @@ export default function SegmentSwitcher() {
   }, [pathname])
 
   if (!mounted) return null
-
-  // Gate screen handles its own cursor
   if (pathname === '/') return null
 
   const current = activeSegment ? SEGMENTS[activeSegment] : null
@@ -119,18 +114,10 @@ export default function SegmentSwitcher() {
       <nav className="nav" style={{ cursor: 'none' }}>
         <a href="/" className="nav-logo" style={{ cursor: 'none' }}>Corbin Moffitt</a>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}>
-          <div className="nav-links">
-            <a href="/about" className="nav-link" style={{ cursor: 'none' }}>About</a>
-            <a href="/contact" className="nav-link" style={{ cursor: 'none' }}>Contact</a>
-          </div>
-
         <div style={{ position: 'relative' }} ref={containerRef}>
           <button
             className="switcher-pill"
             onClick={() => setOpen(o => !o)}
-            aria-expanded={open}
-            aria-haspopup="listbox"
             style={{ cursor: 'none' }}
           >
             {current ? (
@@ -145,7 +132,6 @@ export default function SegmentSwitcher() {
               'View by'
             )}
             <svg
-              aria-hidden="true"
               width="10"
               height="10"
               viewBox="0 0 24 24"
@@ -166,7 +152,7 @@ export default function SegmentSwitcher() {
           </button>
 
           {open && (
-            <div className="switcher-popover" role="listbox" aria-label="Select segment">
+            <div className="switcher-popover">
               {Object.values(SEGMENTS).map(seg => (
                 <button
                   key={seg.id}
@@ -192,32 +178,17 @@ export default function SegmentSwitcher() {
                 onClick={() => { router.push('/') ; setOpen(false) }}
                 style={{ cursor: 'none' }}
               >
-                <span aria-hidden="true">← </span>Back to gate
+                ← Back to gate
               </button>
               <button
                 className="switcher-meta"
                 onClick={() => { router.push('/work') ; setOpen(false) }}
                 style={{ cursor: 'none' }}
               >
-                See everything<span aria-hidden="true"> →</span>
-              </button>
-              <button
-                className="switcher-meta"
-                onClick={() => { router.push('/about') ; setOpen(false) }}
-                style={{ cursor: 'none' }}
-              >
-                About
-              </button>
-              <button
-                className="switcher-meta"
-                onClick={() => { router.push('/contact') ; setOpen(false) }}
-                style={{ cursor: 'none' }}
-              >
-                Contact
+                See everything →
               </button>
             </div>
           )}
-        </div>
         </div>
       </nav>
     </>
