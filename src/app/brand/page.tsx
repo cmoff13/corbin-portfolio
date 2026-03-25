@@ -12,7 +12,31 @@ const ARCHIVE_ITEMS = [
     name: 'Swift Powerwashing',
     detail: 'Primary mark for a residential and commercial powerwashing business. Built for signage, vehicles, and digital.',
     image: '/images/brand/swift-logo.jpg',
-    bg: '#0f0f0f',
+    bg: '#f5f0eb',
+  },
+  {
+    id: 'mypetdx-palette',
+    tag: 'Color palette',
+    name: 'MyPetDx — Color system',
+    detail: 'Brand color palette for a pet lab diagnostics platform. Warm, trustworthy, and approachable.',
+    image: '/images/brand/mypetdx-palette.jpg',
+    bg: '#f7f5f0',
+  },
+  {
+    id: 'poppy-palette',
+    tag: 'Color palette',
+    name: 'Poppy Mobile Notary — Color system',
+    detail: 'Color system for a mobile notary service. Professional yet warm — built to communicate trust.',
+    image: '/images/brand/poppy-palette.jpg',
+    bg: '#f7f5f0',
+  },
+  {
+    id: 'poppy-type',
+    tag: 'Type system',
+    name: 'Poppy Mobile Notary — Type system',
+    detail: 'Type scale and pairing for a mobile notary brand. Display, body, and label weights with usage rules.',
+    image: '/images/brand/poppy-type.jpg',
+    bg: '#f7f5f0',
   },
 ]
 
@@ -115,22 +139,21 @@ function ArchiveRow({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
                   inset: 0,
                   width: '100%',
                   height: '100%',
-                  objectFit: 'contain',
-                  padding: '28px',
+                  objectFit: 'cover',
                   display: 'block',
                   transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
                   transform: hovered ? 'scale(1.04)' : 'scale(1)',
                 }}
               />
               {hovered && (
-  <div style={{
-    position: 'absolute',
-    inset: 0,
-    background: 'rgba(0,0,0,0.15)',
-    zIndex: 1,
-    transition: 'opacity 0.2s ease',
-  }} />
-)}
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'rgba(0,0,0,0.15)',
+                  zIndex: 1,
+                  transition: 'opacity 0.2s ease',
+                }} />
+              )}
             </>
           ) : (
             <div style={{
