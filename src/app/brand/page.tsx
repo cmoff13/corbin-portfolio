@@ -12,7 +12,7 @@ const ARCHIVE_ITEMS = [
     name: 'Swift Powerwashing',
     detail: 'Primary mark for a residential and commercial powerwashing business. Built for signage, vehicles, and digital.',
     image: '/images/brand/swift-logo.jpg',
-    bg: '#f5f0eb',
+    bg: '#0f0f0f',
   },
 ]
 
@@ -84,28 +84,25 @@ function ArchiveRow({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
         style={{
           display: 'grid',
           gridTemplateColumns: '280px 1fr',
-          border: '1px solid #f0f0f0',
+          alignItems: 'stretch',
+          border: `1px solid ${hovered ? '#e0e0e0' : '#f0f0f0'}`,
           borderRadius: '12px',
           overflow: 'hidden',
           transition: 'box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease',
           cursor: item.image ? 'zoom-in' : 'default',
           boxShadow: hovered ? '0 8px 32px rgba(0,0,0,0.08)' : 'none',
           transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
-          borderColor: hovered ? '#e0e0e0' : '#f0f0f0',
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onClick={() => item.image && setLightboxOpen(true)}
       >
-        {/* Image */}
+        {/* Image column */}
         <div style={{
           background: item.bg,
-          height: '160px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
           position: 'relative',
           overflow: 'hidden',
+          minHeight: '180px',
         }}>
           {item.image ? (
             <>
@@ -114,62 +111,56 @@ function ArchiveRow({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
                 src={item.image}
                 alt={item.name}
                 style={{
+                  position: 'absolute',
+                  inset: 0,
                   width: '100%',
                   height: '100%',
-                  objectFit: 'cover',
+                  objectFit: 'contain',
+                  padding: '28px',
                   display: 'block',
                   transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
                   transform: hovered ? 'scale(1.04)' : 'scale(1)',
                 }}
               />
               {hovered && (
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'rgba(0,0,0,0.2)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <div style={{
-                    background: 'rgba(0,0,0,0.7)',
-                    borderRadius: '50%',
-                    width: '36px',
-                    height: '36px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="11" cy="11" r="8"/>
-                      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                      <line x1="11" y1="8" x2="11" y2="14"/>
-                      <line x1="8" y1="11" x2="14" y2="11"/>
-                    </svg>
-                  </div>
-                </div>
-              )}
+  <div style={{
+    position: 'absolute',
+    inset: 0,
+    background: 'rgba(0,0,0,0.15)',
+    zIndex: 1,
+    transition: 'opacity 0.2s ease',
+  }} />
+)}
             </>
           ) : (
-            <span style={{
-              fontSize: '10px',
-              fontWeight: 600,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'rgba(0,0,0,0.2)',
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}>
-              Coming soon
-            </span>
+              <span style={{
+                fontSize: '10px',
+                fontWeight: 600,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                color: 'rgba(0,0,0,0.2)',
+              }}>
+                Coming soon
+              </span>
+            </div>
           )}
         </div>
 
-        {/* Content */}
+        {/* Content column */}
         <div style={{
-          padding: '24px 28px',
+          padding: '28px 32px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           gap: '6px',
+          background: '#ffffff',
         }}>
           <div style={{
             display: 'flex',
@@ -181,7 +172,7 @@ function ArchiveRow({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
             letterSpacing: '0.08em',
             textTransform: 'uppercase',
             color: segment.accentColor,
-            marginBottom: '2px',
+            marginBottom: '4px',
           }}>
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M2 20h20"/><path d="m7 17 2-6 3 4 2-3 3 5"/><path d="M4 3h16v10H4z"/>
@@ -190,7 +181,7 @@ function ArchiveRow({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
           </div>
           <div style={{
             fontFamily: "'Outfit', sans-serif",
-            fontSize: '20px',
+            fontSize: '22px',
             fontWeight: 400,
             letterSpacing: '-0.02em',
             color: '#1a1a1a',
@@ -202,8 +193,9 @@ function ArchiveRow({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
             fontFamily: "'Inter', sans-serif",
             fontSize: '13px',
             color: '#9b9b9b',
-            lineHeight: 1.6,
+            lineHeight: 1.65,
             marginTop: '4px',
+            maxWidth: '320px',
           }}>
             {item.detail}
           </div>
@@ -240,7 +232,6 @@ export default function BrandSegment() {
         ))}
       </div>
 
-      {/* Empty state — more coming */}
       <div style={{
         marginTop: '32px',
         padding: '32px',
