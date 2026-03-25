@@ -81,12 +81,13 @@ const ICONS: Record<string, React.ReactNode> = {
 }
 
 function SegmentButton({
-  seg, onClick, visible, delay,
+  seg, onClick, visible, delay, fullWidth,
 }: {
   seg: typeof SEGMENTS[0]
   onClick: () => void
   visible: boolean
   delay: number
+  fullWidth: boolean
 }) {
   const [hovered, setHovered] = useState(false)
 
@@ -107,7 +108,9 @@ function SegmentButton({
           'box-shadow 0.2s ease',
         ].join(', '),
         padding: '16px 20px',
-        minWidth: '170px',
+        ...(fullWidth
+          ? { width: '100%', minWidth: 0 }
+          : { minWidth: '170px' }),
         textAlign: 'left',
         border: `1.5px solid ${hovered ? seg.accent + '60' : 'rgba(0,0,0,0.08)'}`,
         borderRadius: '14px',
@@ -155,6 +158,7 @@ function SegmentButton({
 export default function SegmentGate() {
   const router = useRouter()
   const [started, setStarted] = useState(false)
+  const [narrowSegmentCards, setNarrowSegmentCards] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animRef = useRef<number>(0)
   const cursorDotRef = useRef<HTMLDivElement>(null)
@@ -181,6 +185,14 @@ export default function SegmentGate() {
     localStorage.removeItem('segment')
     const t = setTimeout(() => setStarted(true), 100)
     return () => clearTimeout(t)
+  }, [])
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 499px)')
+    const sync = () => setNarrowSegmentCards(mq.matches)
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
   }, [])
 
   useEffect(() => {
@@ -260,20 +272,6 @@ export default function SegmentGate() {
       })
       cursorAccent.current = nearest >= 0 ? BLOB_ACCENTS[nearest] : '#1a1a1a'
 
-      // Grain every other frame
-      if (frame % 2 === 0) {
-        const img = ctx.getImageData(0, 0, W, H)
-        const d = img.data
-        for (let i = 0; i < d.length; i += 4) {
-          const n = (Math.random() - 0.5) * 18
-          d[i] = Math.min(255, Math.max(0, d[i] + n))
-          d[i + 1] = Math.min(255, Math.max(0, d[i + 1] + n))
-          d[i + 2] = Math.min(255, Math.max(0, d[i + 2] + n))
-        }
-        ctx.putImageData(img, 0, 0)
-      }
-
-      frame++
       animRef.current = requestAnimationFrame(tick)
     }
 
@@ -355,6 +353,8 @@ export default function SegmentGate() {
           zIndex: 0,
         }}
       />
+
+<div className="grain-overlay" aria-hidden="true" />
 
       <div
         ref={cursorDotRef}
@@ -464,9 +464,12 @@ export default function SegmentGate() {
         <div style={{
           ...fadeUp(820),
           display: 'flex',
+          flexDirection: narrowSegmentCards ? 'column' : 'row',
+          flexWrap: narrowSegmentCards ? 'nowrap' : 'wrap',
+          justifyContent: narrowSegmentCards ? 'stretch' : 'center',
+          alignItems: narrowSegmentCards ? 'stretch' : undefined,
           gap: '10px',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
+          width: '100%',
           marginBottom: '28px',
         }}>
           {SEGMENTS.map((seg, i) => (
@@ -476,6 +479,7 @@ export default function SegmentGate() {
               onClick={() => choose(seg.id)}
               visible={started}
               delay={820 + i * 70}
+              fullWidth={narrowSegmentCards}
             />
           ))}
         </div>
