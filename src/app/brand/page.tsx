@@ -1,31 +1,229 @@
 'use client'
 
-import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
+import { useState } from 'react'
+import { SEGMENTS } from '@/lib/segments'
 
 const segment = SEGMENTS.brand
-const projects = CASE_STUDIES.filter(c => c.primarySegment === 'brand' || c.alsoIn?.includes('brand'))
 
-const THUMBNAILS: Record<string, string> = {}
-
-const CRAFT_ITEMS = [
-  { tag: 'Logomark / Geometric', name: 'Geometric mark series', detail: 'Marks constructed on strict geometric grids. Proportion-locked, scalable to any size.' },
-  { tag: 'Type system', name: 'Brand type hierarchies', detail: 'Display, body, and mono pairings with usage rules across print and digital.' },
-  { tag: 'Icon system', name: 'UI icon sets', detail: 'Consistent stroke-weight icon systems built for scalability across web and product.' },
-  { tag: 'Color system', name: 'Brand palettes', detail: 'Multi-ramp systems mapped to semantic roles across primary, accent, and neutral.' },
-  { tag: 'Logomark / Organic', name: 'Organic mark series', detail: 'Continuous path marks communicating warmth and approachability.' },
-  { tag: 'Vector illustration', name: 'Editorial illustration', detail: 'Flat vector style. Limited palette, clean shapes, built for editorial and brand use.' },
-  { tag: 'Lettermark', name: 'Monogram series', detail: 'Single-stroke letterform explorations. Each mark constrained to one continuous path.' },
-  { tag: 'Brand guidelines', name: 'Guidelines & systems', detail: 'Full brand documentation covering voice, visual rules, and usage across touchpoints.' },
+const ARCHIVE_ITEMS = [
+  {
+    id: 'swift-powerwashing',
+    tag: 'Logo mark',
+    name: 'Swift Powerwashing',
+    detail: 'Primary mark for a residential and commercial powerwashing business. Built for signage, vehicles, and digital.',
+    image: '/images/brand/swift-logo.jpg',
+    bg: '#f5f0eb',
+  },
 ]
+
+function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 200,
+        background: 'rgba(0,0,0,0.85)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '32px',
+        cursor: 'zoom-out',
+        backdropFilter: 'blur(4px)',
+      }}
+    >
+      <button
+        onClick={onClose}
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '24px',
+          background: 'rgba(255,255,255,0.1)',
+          border: 'none',
+          borderRadius: '50%',
+          width: '36px',
+          height: '36px',
+          cursor: 'pointer',
+          color: '#fff',
+          fontSize: '18px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
+        onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
+      >
+        ×
+      </button>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt}
+        onClick={e => e.stopPropagation()}
+        style={{
+          maxWidth: '90vw',
+          maxHeight: '85vh',
+          borderRadius: '8px',
+          objectFit: 'contain',
+          cursor: 'default',
+          boxShadow: '0 24px 80px rgba(0,0,0,0.5)',
+        }}
+      />
+    </div>
+  )
+}
+
+function ArchiveRow({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
+  const [hovered, setHovered] = useState(false)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+
+  return (
+    <>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '280px 1fr',
+          border: '1px solid #f0f0f0',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          transition: 'box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease',
+          cursor: item.image ? 'zoom-in' : 'default',
+          boxShadow: hovered ? '0 8px 32px rgba(0,0,0,0.08)' : 'none',
+          transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
+          borderColor: hovered ? '#e0e0e0' : '#f0f0f0',
+        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onClick={() => item.image && setLightboxOpen(true)}
+      >
+        {/* Image */}
+        <div style={{
+          background: item.bg,
+          height: '160px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          overflow: 'hidden',
+        }}>
+          {item.image ? (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.image}
+                alt={item.name}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  display: 'block',
+                  transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
+                  transform: hovered ? 'scale(1.04)' : 'scale(1)',
+                }}
+              />
+              {hovered && (
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'rgba(0,0,0,0.2)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  <div style={{
+                    background: 'rgba(0,0,0,0.7)',
+                    borderRadius: '50%',
+                    width: '36px',
+                    height: '36px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="8"/>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                      <line x1="11" y1="8" x2="11" y2="14"/>
+                      <line x1="8" y1="11" x2="14" y2="11"/>
+                    </svg>
+                  </div>
+                </div>
+              )}
+            </>
+          ) : (
+            <span style={{
+              fontSize: '10px',
+              fontWeight: 600,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: 'rgba(0,0,0,0.2)',
+            }}>
+              Coming soon
+            </span>
+          )}
+        </div>
+
+        {/* Content */}
+        <div style={{
+          padding: '24px 28px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          gap: '6px',
+        }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '10px',
+            fontWeight: 600,
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            color: segment.accentColor,
+            marginBottom: '2px',
+          }}>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 20h20"/><path d="m7 17 2-6 3 4 2-3 3 5"/><path d="M4 3h16v10H4z"/>
+            </svg>
+            {item.tag}
+          </div>
+          <div style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: '20px',
+            fontWeight: 400,
+            letterSpacing: '-0.02em',
+            color: '#1a1a1a',
+            lineHeight: 1.2,
+          }}>
+            {item.name}
+          </div>
+          <div style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '13px',
+            color: '#9b9b9b',
+            lineHeight: 1.6,
+            marginTop: '4px',
+          }}>
+            {item.detail}
+          </div>
+        </div>
+      </div>
+
+      {lightboxOpen && item.image && (
+        <Lightbox src={item.image} alt={item.name} onClose={() => setLightboxOpen(false)} />
+      )}
+    </>
+  )
+}
 
 export default function BrandSegment() {
   return (
-    <>
     <main className="segment-page">
 
       <div className="segment-header" style={{ background: segment.gradientSubtle }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={segment.accentColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={segment.accentColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <path d="M2 20h20"/><path d="m7 17 2-6 3 4 2-3 3 5"/><path d="M4 3h16v10H4z"/>
           </svg>
           <p className="segment-eyebrow" style={{ color: segment.accentColor }}>Brand identity</p>
@@ -34,164 +232,32 @@ export default function BrandSegment() {
         <p className="segment-intro">{segment.intro}</p>
       </div>
 
-      <p className="craft-section-label">Craft archive — hover any piece</p>
-      <div className="craft-grid">
-        {CRAFT_ITEMS.map((item, i) => (
-          <div
-            key={i}
-            className="craft-cell"
-            tabIndex={0}
-            style={{ background: i % 2 === 0 ? '#0f0f0f' : '#f2ede6' }}
-          >
-            <div
-              className="craft-cell-label"
-              style={{ color: i % 2 === 0 ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.12)' }}
-            >
-              {item.tag.split(' / ')[0].toUpperCase()}
-            </div>
-            <div className="craft-overlay">
-              <div className="craft-overlay-tag">{item.tag}</div>
-              <div className="craft-overlay-name">{item.name}</div>
-              <div className="craft-overlay-detail">{item.detail}</div>
-            </div>
-          </div>
+      <p className="craft-section-label">Craft archive</p>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {ARCHIVE_ITEMS.map(item => (
+          <ArchiveRow key={item.id} item={item} />
         ))}
       </div>
 
-      <p className="craft-section-label">Selected projects</p>
-      <div className="project-list" style={{ gap: '16px' }}>
-        {projects.map(project => {
-          const thumbnail = THUMBNAILS[project.slug]
-          return (
-            <a
-              key={project.slug}
-              href={`/work/${project.slug}`}
-              className="project-card"
-              style={{
-                padding: 0,
-                overflow: 'hidden',
-                transition: 'box-shadow 0.2s ease, transform 0.2s ease',
-                cursor: 'none',
-                display: 'grid',
-                gridTemplateColumns: '250px 1fr',
-                textDecoration: 'none',
-                color: 'inherit',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.08)'
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                const img = e.currentTarget.querySelector('.card-img') as HTMLElement
-                if (img) img.style.transform = 'scale(1.04)'
-                const overlay = e.currentTarget.querySelector('.card-overlay-card') as HTMLElement
-                if (overlay) overlay.style.opacity = '1'
-                const cursor = e.currentTarget.querySelector('.card-cursor') as HTMLElement
-                if (cursor) cursor.style.opacity = '1'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.boxShadow = 'none'
-                e.currentTarget.style.transform = 'translateY(0)'
-                const img = e.currentTarget.querySelector('.card-img') as HTMLElement
-                if (img) img.style.transform = 'scale(1)'
-                const overlay = e.currentTarget.querySelector('.card-overlay-card') as HTMLElement
-                if (overlay) overlay.style.opacity = '0'
-                const cursor = e.currentTarget.querySelector('.card-cursor') as HTMLElement
-                if (cursor) cursor.style.opacity = '0'
-              }}
-              onMouseMove={e => {
-                const cursor = e.currentTarget.querySelector('.card-cursor') as HTMLElement
-                if (!cursor) return
-                const rect = e.currentTarget.getBoundingClientRect()
-                cursor.style.left = `${e.clientX - rect.left}px`
-                cursor.style.top = `${e.clientY - rect.top}px`
-              }}
-            >
-              <div className="card-cursor" style={{
-                position: 'absolute',
-                pointerEvents: 'none',
-                zIndex: 20,
-                opacity: 0,
-                transform: 'translate(-50%, -50%)',
-                transition: 'opacity 0.2s ease',
-                background: '#1a1a1a',
-                color: '#fff',
-                fontSize: '12px',
-                fontWeight: 600,
-                letterSpacing: '0.02em',
-                padding: '9px 16px',
-                borderRadius: '999px',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
-              }}>
-                View project →
-              </div>
-
-              <div style={{ position: 'relative', overflow: 'hidden', width: '100%', aspectRatio: '1/1', flexShrink: 0 }}>
-                {thumbnail ? (
-                  <img
-                    src={thumbnail}
-                    alt={project.title}
-                    loading="lazy"
-                    className="card-img"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      display: 'block',
-                      transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
-                    }}
-                  />
-                ) : (
-                  <div
-                    className="card-img"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      background: '#f7f7f5',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
-                    }}
-                  >
-                    <span style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#ccc' }}>
-                      {project.title}
-                    </span>
-                  </div>
-                )}
-                <div
-                  className="card-overlay-card"
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: `${segment.accentColor}18`,
-                    opacity: 0,
-                    transition: 'opacity 0.3s ease',
-                    pointerEvents: 'none',
-                  }}
-                />
-              </div>
-
-              <div style={{ padding: '24px 28px', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '4px' }}>
-                <div className="project-title">{project.title}</div>
-                <div className="project-subtitle" style={{ marginBottom: '12px' }}>{project.subtitle}</div>
-                <div className="project-tags">
-                  {project.tags.map(tag => (
-                    <span
-                      key={tag}
-                      className="project-tag"
-                      style={{ color: segment.accentColor, background: '#F3EEF8' }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </a>
-          )
-        })}
+      {/* Empty state — more coming */}
+      <div style={{
+        marginTop: '32px',
+        padding: '32px',
+        border: '1px dashed #e8e8e8',
+        borderRadius: '12px',
+        textAlign: 'center',
+      }}>
+        <p style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: '12px',
+          color: '#ccc',
+          letterSpacing: '0.04em',
+        }}>
+          More brand work coming — MyPetDx and others in progress
+        </p>
       </div>
 
     </main>
-    </>
   )
 }
