@@ -39,8 +39,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     slug: 'rely-health',
     title: 'Rely Health',
     subtitle: 'Humanizing healthcare AI with website redesign',
-    primarySegment: 'brand',
-    alsoIn: ['web'],
+    primarySegment: 'web',
+    alsoIn: [],
     tags: ['Visual identity', 'Website redesign', 'Healthcare'],
   },
   {

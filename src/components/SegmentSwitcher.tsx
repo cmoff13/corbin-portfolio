@@ -4,6 +4,22 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { SEGMENTS, SegmentId } from '@/lib/segments'
 
+function usePopoverClose(open: boolean, setOpen: (v: boolean) => void, containerRef: React.RefObject<HTMLDivElement | null>) {
+  useEffect(() => {
+    if (!open) return
+    function onKey(e: KeyboardEvent) { if (e.key === 'Escape') setOpen(false) }
+    function onPointer(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) setOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    window.addEventListener('pointerdown', onPointer)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('pointerdown', onPointer)
+    }
+  }, [open, setOpen, containerRef])
+}
+
 function GlobalCursor() {
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
@@ -80,6 +96,8 @@ export default function SegmentSwitcher() {
   const [open, setOpen] = useState(false)
   const [activeSegment, setActiveSegment] = useState<SegmentId | null>(null)
   const [mounted, setMounted] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  usePopoverClose(open, setOpen, containerRef)
 
   useEffect(() => {
     setMounted(true)
@@ -101,10 +119,12 @@ export default function SegmentSwitcher() {
       <nav className="nav" style={{ cursor: 'none' }}>
         <a href="/" className="nav-logo" style={{ cursor: 'none' }}>Corbin Moffitt</a>
 
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative' }} ref={containerRef}>
           <button
             className="switcher-pill"
             onClick={() => setOpen(o => !o)}
+            aria-expanded={open}
+            aria-haspopup="listbox"
             style={{ cursor: 'none' }}
           >
             {current ? (
@@ -119,6 +139,7 @@ export default function SegmentSwitcher() {
               'View by'
             )}
             <svg
+              aria-hidden="true"
               width="10"
               height="10"
               viewBox="0 0 24 24"
@@ -139,7 +160,7 @@ export default function SegmentSwitcher() {
           </button>
 
           {open && (
-            <div className="switcher-popover">
+            <div className="switcher-popover" role="listbox" aria-label="Select segment">
               {Object.values(SEGMENTS).map(seg => (
                 <button
                   key={seg.id}
@@ -168,7 +189,7 @@ export default function SegmentSwitcher() {
                 }}
                 style={{ cursor: 'none' }}
               >
-                ← Back to gate
+                <span aria-hidden="true">← </span>Back to gate
               </button>
 
               <button
@@ -179,7 +200,7 @@ export default function SegmentSwitcher() {
                 }}
                 style={{ cursor: 'none' }}
               >
-                See everything →
+                See everything<span aria-hidden="true"> →</span>
               </button>
             </div>
           )}

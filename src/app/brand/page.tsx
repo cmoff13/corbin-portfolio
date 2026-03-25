@@ -1,6 +1,5 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 
 const segment = SEGMENTS.brand
@@ -20,14 +19,12 @@ const CRAFT_ITEMS = [
 ]
 
 export default function BrandSegment() {
-  const router = useRouter()
-
   return (
     <main className="segment-page">
 
       <div className="segment-header" style={{ background: segment.gradientSubtle }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={segment.accentColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={segment.accentColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <path d="M2 20h20"/><path d="m7 17 2-6 3 4 2-3 3 5"/><path d="M4 3h16v10H4z"/>
           </svg>
           <p className="segment-eyebrow" style={{ color: segment.accentColor }}>Brand identity</p>
@@ -42,6 +39,7 @@ export default function BrandSegment() {
           <div
             key={i}
             className="craft-cell"
+            tabIndex={0}
             style={{ background: i % 2 === 0 ? '#0f0f0f' : '#f2ede6' }}
           >
             <div
@@ -64,10 +62,10 @@ export default function BrandSegment() {
         {projects.map(project => {
           const thumbnail = THUMBNAILS[project.slug]
           return (
-            <div
+            <a
               key={project.slug}
+              href={`/work/${project.slug}`}
               className="project-card"
-              onClick={() => router.push(`/work/${project.slug}`)}
               style={{
                 padding: 0,
                 overflow: 'hidden',
@@ -75,6 +73,8 @@ export default function BrandSegment() {
                 cursor: 'none',
                 display: 'grid',
                 gridTemplateColumns: '250px 1fr',
+                textDecoration: 'none',
+                color: 'inherit',
               }}
               onMouseEnter={e => {
                 e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.08)'
@@ -124,7 +124,7 @@ export default function BrandSegment() {
                 View project →
               </div>
 
-              <div style={{ position: 'relative', overflow: 'hidden', width: '250px', height: '250px', flexShrink: 0 }}>
+              <div style={{ position: 'relative', overflow: 'hidden', width: '100%', aspectRatio: '1/1', flexShrink: 0 }}>
                 {thumbnail ? (
                   <img
                     src={thumbnail}
@@ -132,8 +132,8 @@ export default function BrandSegment() {
                     loading="lazy"
                     className="card-img"
                     style={{
-                      width: '250px',
-                      height: '250px',
+                      width: '100%',
+                      height: '100%',
                       objectFit: 'cover',
                       display: 'block',
                       transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
@@ -143,8 +143,8 @@ export default function BrandSegment() {
                   <div
                     className="card-img"
                     style={{
-                      width: '250px',
-                      height: '250px',
+                      width: '100%',
+                      height: '100%',
                       background: '#f7f7f5',
                       display: 'flex',
                       alignItems: 'center',
@@ -185,7 +185,7 @@ export default function BrandSegment() {
                   ))}
                 </div>
               </div>
-            </div>
+            </a>
           )
         })}
       </div>

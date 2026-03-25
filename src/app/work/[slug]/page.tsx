@@ -370,7 +370,10 @@ function Lightbox({ src, alt, onClose }: {
   alt: string
   onClose: () => void
 }) {
+  const closeRef = useRef<HTMLButtonElement>(null)
+
   useEffect(() => {
+    closeRef.current?.focus()
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
     window.addEventListener('keydown', onKey)
     document.body.style.overflow = 'hidden'
@@ -382,6 +385,9 @@ function Lightbox({ src, alt, onClose }: {
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={alt}
       onClick={onClose}
       style={{
         position: 'fixed',
@@ -398,6 +404,8 @@ function Lightbox({ src, alt, onClose }: {
       }}
     >
       <button
+        ref={closeRef}
+        aria-label="Close image"
         onClick={onClose}
         style={{
           position: 'absolute',
@@ -406,8 +414,8 @@ function Lightbox({ src, alt, onClose }: {
           background: 'rgba(255,255,255,0.1)',
           border: 'none',
           borderRadius: '50%',
-          width: '36px',
-          height: '36px',
+          width: '44px',
+          height: '44px',
           cursor: 'pointer',
           color: '#fff',
           fontSize: '18px',
@@ -418,7 +426,7 @@ function Lightbox({ src, alt, onClose }: {
         onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
         onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
       >
-        ×
+        <span aria-hidden="true">×</span>
       </button>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -455,9 +463,13 @@ function ImageOrPlaceholder({ src, alt, style, label, clickable = false }: {
     return (
       <>
         <div
+          role={clickable ? 'button' : undefined}
+          tabIndex={clickable ? 0 : undefined}
           onMouseEnter={() => clickable && setHovered(true)}
           onMouseLeave={() => clickable && setHovered(false)}
           onClick={() => clickable && setLightboxOpen(true)}
+          onKeyDown={clickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLightboxOpen(true) } } : undefined}
+          aria-label={clickable ? `View full size: ${alt}` : undefined}
           style={{
             position: 'relative',
             width: '100%',
@@ -492,7 +504,7 @@ function ImageOrPlaceholder({ src, alt, style, label, clickable = false }: {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="8"/>
                   <line x1="21" y1="21" x2="16.65" y2="16.65"/>
                   <line x1="11" y1="8" x2="11" y2="14"/>
@@ -628,7 +640,8 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
             onClick={() => sectionRefs.current[key]?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
             style={{
               flexShrink: 0,
-              padding: '5px 10px',
+              padding: '12px 10px',
+              minHeight: '44px',
               borderRadius: '5px',
               border: 'none',
               background: activeSection === key ? '#f5f5f2' : 'none',
@@ -679,7 +692,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
               gap: '4px',
             }}
           >
-            ← Back
+            <span aria-hidden="true">← </span>Back
           </button>
 
           <p style={{
@@ -706,7 +719,8 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
                   gap: '8px',
                   width: '100%',
                   textAlign: 'left',
-                  padding: '7px 10px',
+                  padding: '10px 10px',
+                  minHeight: '44px',
                   borderRadius: '6px',
                   border: 'none',
                   background: isActive ? '#f5f5f2' : 'none',
@@ -938,7 +952,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
                   cursor: 'pointer',
                 }}
               >
-                ← Back to {segment.label}
+                <span aria-hidden="true">← </span>Back to {segment.label}
               </button>
               <p style={{ fontSize: '12px', color: '#ccc' }}>More projects coming</p>
             </div>
@@ -949,21 +963,26 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
 
       {/* Floating read mode toggle */}
       {content && (
-        <div style={{
-          position: 'fixed',
-          bottom: '32px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 50,
-          display: 'flex',
-          background: '#ffffff',
-          borderRadius: '999px',
-          padding: '4px',
-          gap: '2px',
-          boxShadow: '0 2px 16px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06)',
-        }}>
+        <div
+          role="group"
+          aria-label="Reading mode"
+          style={{
+            position: 'fixed',
+            bottom: 'max(32px, env(safe-area-inset-bottom, 32px))',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 50,
+            display: 'flex',
+            background: '#ffffff',
+            borderRadius: '999px',
+            padding: '4px',
+            gap: '2px',
+            boxShadow: '0 2px 16px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06)',
+          }}
+        >
           <button
             onClick={() => setTldr(false)}
+            aria-pressed={!tldr}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -980,7 +999,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
               letterSpacing: '0.01em',
             }}
           >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
             </svg>
@@ -988,6 +1007,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
           </button>
           <button
             onClick={() => setTldr(true)}
+            aria-pressed={tldr}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -1004,7 +1024,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
               letterSpacing: '0.01em',
             }}
           >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
             </svg>
             Key points

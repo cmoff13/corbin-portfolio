@@ -1,6 +1,5 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 
 const segment = SEGMENTS.ux
@@ -11,14 +10,12 @@ const THUMBNAILS: Record<string, string> = {
 }
 
 export default function UXSegment() {
-  const router = useRouter()
-
   return (
     <main className="segment-page">
 
       <div className="segment-header" style={{ background: segment.gradientSubtle }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={segment.accentColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={segment.accentColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
             <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
           </svg>
@@ -44,10 +41,10 @@ export default function UXSegment() {
         {projects.map(project => {
           const thumbnail = THUMBNAILS[project.slug]
           return (
-            <div
+            <a
               key={project.slug}
+              href={`/work/${project.slug}`}
               className="project-card"
-              onClick={() => router.push(`/work/${project.slug}`)}
               style={{
                 padding: 0,
                 overflow: 'hidden',
@@ -55,6 +52,8 @@ export default function UXSegment() {
                 cursor: 'none',
                 display: 'grid',
                 gridTemplateColumns: '250px 1fr',
+                textDecoration: 'none',
+                color: 'inherit',
               }}
               onMouseEnter={e => {
                 e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.08)'
@@ -104,7 +103,7 @@ export default function UXSegment() {
                 View project →
               </div>
 
-              <div style={{ position: 'relative', overflow: 'hidden', width: '250px', height: '250px', flexShrink: 0 }}>
+              <div style={{ position: 'relative', overflow: 'hidden', width: '100%', aspectRatio: '1/1', flexShrink: 0 }}>
                 {thumbnail ? (
                   <img
                     src={thumbnail}
@@ -112,8 +111,8 @@ export default function UXSegment() {
                     loading="lazy"
                     className="card-img"
                     style={{
-                      width: '250px',
-                      height: '250px',
+                      width: '100%',
+                      height: '100%',
                       objectFit: 'cover',
                       display: 'block',
                       transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
@@ -123,8 +122,8 @@ export default function UXSegment() {
                   <div
                     className="card-img"
                     style={{
-                      width: '250px',
-                      height: '250px',
+                      width: '100%',
+                      height: '100%',
                       background: '#f7f7f5',
                       display: 'flex',
                       alignItems: 'center',
@@ -167,7 +166,7 @@ export default function UXSegment() {
                   ))}
                 </div>
               </div>
-            </div>
+            </a>
           )
         })}
       </div>

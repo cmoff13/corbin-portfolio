@@ -63,17 +63,17 @@ function useWordReveal(text: string, started: boolean, baseDelay: number) {
 
 const ICONS: Record<string, React.ReactNode> = {
   brand: (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M2 20h20"/><path d="m7 17 2-6 3 4 2-3 3 5"/><path d="M4 3h16v10H4z"/>
     </svg>
   ),
   web: (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M5 3l14 9-14 9V3z"/>
     </svg>
   ),
   ux: (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
       <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
     </svg>
@@ -345,6 +345,7 @@ export default function SegmentGate() {
     >
       <canvas
         ref={canvasRef}
+        aria-hidden="true"
         style={{
           position: 'fixed',
           inset: 0,
@@ -415,12 +416,12 @@ export default function SegmentGate() {
         <div style={{ width: '100%', textAlign: 'center', marginBottom: '20px' }}>
           <div style={{
             fontFamily: "'Outfit', sans-serif",
-            fontSize: 'clamp(36px, 5.5vw, 60px)',
+            fontSize: 'clamp(28px, 5.5vw, 60px)',
             fontWeight: 400,
             lineHeight: 1.1,
             letterSpacing: '-0.03em',
             color: '#1a1a1a',
-            whiteSpace: 'nowrap',
+            overflowWrap: 'break-word',
             marginBottom: '6px',
           }}>
             {line1.map(({ word, wrapStyle, innerStyle }, i) => (
@@ -431,12 +432,12 @@ export default function SegmentGate() {
           </div>
           <div style={{
             fontFamily: "'Outfit', sans-serif",
-            fontSize: 'clamp(36px, 5.5vw, 60px)',
+            fontSize: 'clamp(28px, 5.5vw, 60px)',
             fontWeight: 400,
             lineHeight: 1.1,
             letterSpacing: '-0.03em',
             color: '#1a1a1a',
-            whiteSpace: 'nowrap',
+            overflowWrap: 'break-word',
           }}>
             {line2.map(({ word, wrapStyle, innerStyle }, i) => (
               <span key={i} style={wrapStyle}>
@@ -496,7 +497,7 @@ export default function SegmentGate() {
             onMouseEnter={e => (e.currentTarget.style.color = '#333')}
             onMouseLeave={e => (e.currentTarget.style.color = '#888')}
           >
-            See everything →
+            See everything<span aria-hidden="true"> →</span>
           </button>
         </div>
       </div>

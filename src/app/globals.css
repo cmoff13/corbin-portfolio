@@ -35,8 +35,8 @@
   /* Colors — neutral */
   --color-ink:       #1a1a1a;
   --color-ink-soft:  #4a4a4a;
-  --color-muted:     #9b9b9b;
-  --color-subtle:    #cccccc;
+  --color-muted:     #767676;
+  --color-subtle:    #767676;
   --color-hairline:  #f0f0f0;
   --color-surface:   #f7f7f5;
   --color-bg:        #ffffff;
@@ -556,4 +556,62 @@ p {
 
 body {
   cursor: none;
+}
+
+/* ── Focus visible ──────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.switcher-pill:focus-visible,
+.switcher-item:focus-visible,
+.switcher-meta:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+/* ── Craft cell keyboard focus ──────────────────────────────────────────── */
+
+.craft-cell:focus-visible .craft-overlay {
+  opacity: 1;
+}
+
+.craft-cell:focus-visible .craft-cell-label {
+  opacity: 0;
+}
+
+/* ── Touch device cursor restore ────────────────────────────────────────── */
+
+@media (pointer: coarse) {
+  body { cursor: auto; }
+}
+
+/* ── Work page text ─────────────────────────────────────────────────────── */
+
+.work-headline {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-2xl), 3.2vw, var(--text-3xl));
+  font-weight: 400;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  color: var(--color-ink);
+  margin-bottom: var(--space-3);
+}
+
+.work-intro {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-ink-soft);
+  line-height: var(--leading-loose);
+  margin-bottom: var(--space-10);
+}
+
+/* ── Mobile touch target minimum ────────────────────────────────────────── */
+
+.case-mobile-nav button {
+  min-height: 44px;
+  padding: 12px 10px;
 }

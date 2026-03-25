@@ -1,10 +1,8 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { CASE_STUDIES, SEGMENTS } from '@/lib/segments'
 
 export default function WorkPage() {
-  const router = useRouter()
   return (
     <main className="work-page">
       <h1 className="work-headline">All work</h1>
@@ -15,10 +13,11 @@ export default function WorkPage() {
           const segment = SEGMENTS[project.primarySegment]
           const tagBg = project.primarySegment === 'web' ? '#e8f5f0' : project.primarySegment === 'brand' ? '#faece7' : '#eeedfe'
           return (
-            <div
+            <a
               key={project.slug}
+              href={`/work/${project.slug}`}
               className="project-card"
-              onClick={() => router.push(`/work/${project.slug}`)}
+              style={{ textDecoration: 'none', color: 'inherit', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 24px' }}
             >
               <div>
                 <div className="project-tags">
@@ -35,8 +34,8 @@ export default function WorkPage() {
                 <div className="project-title">{project.title}</div>
                 <div className="project-subtitle">{project.subtitle}</div>
               </div>
-              <span className="project-arrow">→</span>
-            </div>
+              <span className="project-arrow" aria-hidden="true">→</span>
+            </a>
           )
         })}
       </div>
