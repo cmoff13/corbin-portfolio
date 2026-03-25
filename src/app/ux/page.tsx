@@ -1,7 +1,6 @@
 'use client'
 
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
-import PreFooter from '@/components/PreFooter'
 
 const segment = SEGMENTS.ux
 const projects = CASE_STUDIES.filter(c => c.primarySegment === 'ux' || c.alsoIn?.includes('ux'))
@@ -186,7 +185,6 @@ export default function UXSegment() {
       </div>
 
     </main>
-    <PreFooter />
     </>
   )
 }

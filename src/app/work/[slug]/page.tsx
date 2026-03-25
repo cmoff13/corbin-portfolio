@@ -3,7 +3,6 @@
 import { use, useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { CASE_STUDIES, SEGMENTS } from '@/lib/segments'
-import PreFooter from '@/components/PreFooter'
 
 // ── Content ────────────────────────────────────────────────────────────────
 
@@ -1033,7 +1032,6 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
         </div>
       )}
 
-      <PreFooter />
     </>
   )
 }
