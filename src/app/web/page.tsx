@@ -19,7 +19,7 @@ export default function WebSegment() {
   return (
     <main className="segment-page">
 
-      <div className="segment-header" style={{ background: segment.gradientSubtle }}>
+      <div className="segment-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={segment.accentColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
             <path d="M5 3l14 9-14 9V3z"/>

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import ContactCta from '@/components/ContactCta'
 
 const SEGMENTS = [
   {
@@ -77,10 +76,10 @@ const SEGMENT_GRADIENTS: Record<string, { c1: string; c2: string }> = {
 function BrandSVG() {
   return (
     <svg width={140} height={120} aria-hidden="true" style={{ position: 'absolute', inset: 0, margin: 'auto', display: 'block' }}>
-      <circle cx={58} cy={60} r={28} fill="#3B0764" fillOpacity={0.04} stroke="#3B0764" strokeWidth={0.75} opacity={0.35} />
-      <circle cx={82} cy={60} r={28} fill="#3B0764" fillOpacity={0.04} stroke="#3B0764" strokeWidth={0.75} opacity={0.35} />
+      <circle cx={54} cy={60} r={44} fill="#3B0764" fillOpacity={0.04} stroke="#3B0764" strokeWidth={0.75} opacity={0.35} />
+      <circle cx={86} cy={60} r={44} fill="#3B0764" fillOpacity={0.04} stroke="#3B0764" strokeWidth={0.75} opacity={0.35} />
       <path
-        d="M70,34.06 A28,28,0,0,1,70,85.94 A28,28,0,0,1,70,34.06 Z"
+        d="M70,19.01 A44,44,0,0,1,70,100.99 A44,44,0,0,0,70,19.01 Z"
         fill="#3B0764"
         opacity={0.08}
       />
@@ -89,30 +88,32 @@ function BrandSVG() {
 }
 
 function WebSVG() {
-  const xs = [28, 52, 76, 100, 124]
-  const ys = [20, 44, 68, 100]
+  const xs = Array.from({ length: 8 }, (_, i) => i * 18)
+  const ys = Array.from({ length: 7 }, (_, i) => i * 18)
   return (
     <svg width={140} height={120} aria-hidden="true" style={{ position: 'absolute', inset: 0, margin: 'auto', display: 'block' }}>
       {xs.map(x => (
-        <line key={x} x1={x} y1={20} x2={x} y2={100} stroke="#DC2626" strokeWidth={0.5} opacity={0.2} />
+        <line key={x} x1={x} y1={0} x2={x} y2={120} stroke="#DC2626" strokeWidth={0.5} opacity={0.2} />
       ))}
       {ys.map(y => (
-        <line key={y} x1={28} y1={y} x2={124} y2={y} stroke="#DC2626" strokeWidth={0.5} opacity={0.2} />
+        <line key={y} x1={0} y1={y} x2={140} y2={y} stroke="#DC2626" strokeWidth={0.5} opacity={0.2} />
       ))}
-      <rect x={28} y={40} width={48} height={40} rx={2} fill="#DC2626" fillOpacity={0.12} stroke="#DC2626" strokeWidth={0.5} strokeOpacity={0.4} />
-      <rect x={76} y={20} width={48} height={20} rx={2} fill="#DC2626" fillOpacity={0.08} />
-      <rect x={76} y={60} width={48} height={20} rx={2} fill="#DC2626" fillOpacity={0.08} />
+      <rect x={18} y={30} width={60} height={56} rx={2} fill="#DC2626" fillOpacity={0.12} stroke="#DC2626" strokeWidth={0.5} strokeOpacity={0.4} />
+      <rect x={76} y={20} width={56} height={24} rx={2} fill="#DC2626" fillOpacity={0.08} />
+      <rect x={76} y={60} width={56} height={24} rx={2} fill="#DC2626" fillOpacity={0.08} />
     </svg>
   )
 }
 
 function UxSVG() {
   const rects = [
-    { x: 18, y: 16, w: 104, h: 88, rx: 6, op: 0.2, filled: false },
-    { x: 26, y: 24, w:  88, h: 72, rx: 5, op: 0.28, filled: false },
-    { x: 34, y: 32, w:  72, h: 56, rx: 4, op: 0.36, filled: false },
-    { x: 42, y: 40, w:  56, h: 40, rx: 3, op: 0.43, filled: false },
-    { x: 50, y: 48, w:  40, h: 24, rx: 2, op: 0.5,  filled: true  },
+    { x:  8, y:  6, w: 124, h: 108, rx: 8, op: 0.20, filled: false },
+    { x: 14, y: 12, w: 112, h:  96, rx: 7, op: 0.25, filled: false },
+    { x: 20, y: 18, w: 100, h:  84, rx: 6, op: 0.30, filled: false },
+    { x: 26, y: 24, w:  88, h:  72, rx: 5, op: 0.35, filled: false },
+    { x: 32, y: 30, w:  76, h:  60, rx: 4, op: 0.40, filled: false },
+    { x: 38, y: 36, w:  64, h:  48, rx: 3, op: 0.45, filled: false },
+    { x: 44, y: 42, w:  52, h:  36, rx: 2, op: 0.50, filled: true  },
   ]
   return (
     <svg width={140} height={120} aria-hidden="true" style={{ position: 'absolute', inset: 0, margin: 'auto', display: 'block' }}>
@@ -432,7 +433,7 @@ export default function SegmentGate() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '48px 24px',
+        padding: '24px 24px',
         overflow: 'hidden',
         position: 'relative',
         cursor: 'none',
@@ -490,9 +491,11 @@ export default function SegmentGate() {
         aria-hidden="true"
         style={{
           position: 'absolute',
-          top: '-0.15em',
+          top: '-20px',
           left: '50%',
           transform: 'translateX(-50%)',
+          width: '100%',
+          textAlign: 'center',
           fontFamily: "'Climate Crisis', cursive",
           fontSize: 'clamp(70px, 10vw, 140px)',
           fontWeight: 400,
@@ -548,7 +551,7 @@ export default function SegmentGate() {
         <div style={{ width: '100%', textAlign: 'center', marginBottom: '20px' }}>
           <div style={{
             fontFamily: "'Outfit', sans-serif",
-            fontSize: 'clamp(28px, 5.5vw, 60px)',
+            fontSize: 'clamp(22px, 4vw, 44px)',
             fontWeight: 400,
             lineHeight: 1.1,
             letterSpacing: '-0.03em',
@@ -564,7 +567,7 @@ export default function SegmentGate() {
           </div>
           <div style={{
             fontFamily: "'Outfit', sans-serif",
-            fontSize: 'clamp(28px, 5.5vw, 60px)',
+            fontSize: 'clamp(22px, 4vw, 44px)',
             fontWeight: 400,
             lineHeight: 1.1,
             letterSpacing: '-0.03em',
@@ -636,14 +639,6 @@ export default function SegmentGate() {
           </button>
         </div>
 
-        <div style={{
-          ...fadeUp(1160),
-          marginTop: '40px',
-          width: '100%',
-          maxWidth: '400px',
-        }}>
-          <ContactCta variant="compact" accentColor="#1a1a1a" align="center" />
-        </div>
       </div>
     </main>
   )

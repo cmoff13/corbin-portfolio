@@ -43,7 +43,7 @@
   --color-hairline-strong: #e0e0de;
   --color-surface:   #f3f3f2;
   --color-bg:        #ffffff;
-  --color-bg-page:   #f7f7f8;
+  --color-bg-page:   #ffffff;
   /* Product-style layout (Linear-like: one max width, consistent rhythm) */
   --layout-max:      720px;
   --layout-gutter:   var(--space-6);
@@ -296,12 +296,8 @@ p {
 }
 
 .segment-header {
-  border-radius: var(--radius-md);
-  padding: var(--space-8);
+  padding-top: 64px;
   margin-bottom: var(--space-12);
-  border: 1px solid var(--color-hairline-strong);
-  background: var(--color-bg);
-  box-shadow: none;
 }
 
 .segment-eyebrow {
@@ -515,15 +511,12 @@ p {
 
 .ux-callout {
   border-left: 3px solid;
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
   padding: var(--space-5) var(--space-6);
   margin-bottom: var(--space-8);
-  transition: background var(--duration-base) var(--ease-out);
 }
 
 .ux-callout:hover {
   box-shadow: none;
-  background: var(--color-surface);
 }
 
 .ux-callout-title {
@@ -839,6 +832,13 @@ p {
 
 .craft-cell:focus-visible .craft-cell-label {
   opacity: 0;
+}
+
+/* ── Animations ─────────────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 /* ── Touch device cursor restore ────────────────────────────────────────── */

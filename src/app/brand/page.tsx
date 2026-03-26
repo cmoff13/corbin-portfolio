@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { SEGMENTS } from '@/lib/segments'
-import ContactCta from '@/components/ContactCta'
 
 const segment = SEGMENTS.brand
+const ACCENT = '#3B0764'
 
 const ARCHIVE_ITEMS = [
   {
@@ -41,10 +42,46 @@ const ARCHIVE_ITEMS = [
   },
 ]
 
+const FILTERS = [
+  { id: 'all', label: 'All' },
+  { id: 'logo', label: 'Logo' },
+  { id: 'color', label: 'Color' },
+  { id: 'type', label: 'Type' },
+]
+
+const TAG_MAP: Record<string, string> = {
+  logo: 'Logo mark',
+  color: 'Color palette',
+  type: 'Type system',
+}
+
+const PROCESS_STEPS = [
+  {
+    number: '01',
+    title: 'Discovery',
+    description: 'Understanding the business before touching a tool. Competitive audit, brand positioning, and what the mark needs to do in the world.',
+  },
+  {
+    number: '02',
+    title: 'Concept',
+    description: 'Three directions minimum. Each one a genuine bet, not a variation. Presented with rationale, not just visuals.',
+  },
+  {
+    number: '03',
+    title: 'Refine',
+    description: 'One direction taken to full system. Mark, color, type, and usage rules. Every decision defensible.',
+  },
+  {
+    number: '04',
+    title: 'Deliver',
+    description: 'Production-ready files, usage guidelines, and a brand that holds up beyond the handoff.',
+  },
+]
+
 function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
   return (
     <div
-      onClick={onClose}
+      onClick={e => { e.stopPropagation(); onClose() }}
       style={{
         position: 'fixed',
         inset: 0,
@@ -59,7 +96,7 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
       }}
     >
       <button
-        onClick={onClose}
+        onClick={e => { e.stopPropagation(); onClose() }}
         style={{
           position: 'absolute',
           top: '20px',
@@ -111,14 +148,15 @@ function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
         onClick={() => item.image && setLightboxOpen(true)}
         style={{
           position: 'relative',
-          aspectRatio: '1 / 1',
+          aspectRatio: '4 / 3',
           borderRadius: '16px',
           overflow: 'hidden',
           background: item.bg,
           cursor: item.image ? 'zoom-in' : 'default',
+          animation: 'fadeIn 0.25s ease',
         }}
       >
-        {item.image ? (
+        {item.image && (
           <img
             src={item.image}
             alt={item.name}
@@ -132,31 +170,13 @@ function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
               transform: hovered ? 'scale(1.05)' : 'scale(1)',
             }}
           />
-        ) : (
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <span style={{
-              fontSize: '10px',
-              fontWeight: 600,
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: 'rgba(0,0,0,0.2)',
-            }}>
-              Coming soon
-            </span>
-          </div>
         )}
 
         {/* Hover overlay */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(to top, rgba(10,0,20,0.88) 0%, rgba(10,0,20,0.2) 50%, transparent 100%)',
+          background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.1) 70%, transparent 100%)',
           opacity: hovered ? 1 : 0,
           transition: 'opacity 0.3s ease',
           display: 'flex',
@@ -170,7 +190,7 @@ function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
             fontWeight: 600,
             letterSpacing: '0.1em',
             textTransform: 'uppercase',
-            color: segment.accentColor,
+            color: '#A78BFA',
             marginBottom: '6px',
             opacity: hovered ? 1 : 0,
             transform: hovered ? 'translateY(0)' : 'translateY(6px)',
@@ -185,6 +205,7 @@ function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
             color: '#ffffff',
             lineHeight: 1.25,
             letterSpacing: '-0.02em',
+            textShadow: '0 1px 4px rgba(0,0,0,0.3)',
             marginBottom: '8px',
             opacity: hovered ? 1 : 0,
             transform: hovered ? 'translateY(0)' : 'translateY(8px)',
@@ -195,7 +216,7 @@ function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
           <span style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: '12px',
-            color: 'rgba(255,255,255,0.6)',
+            color: 'rgba(255,255,255,0.8)',
             lineHeight: 1.6,
             opacity: hovered ? 1 : 0,
             transform: hovered ? 'translateY(0)' : 'translateY(8px)',
@@ -213,42 +234,476 @@ function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
   )
 }
 
+function getProcessSVG(index: number, c: string) {
+  switch (index) {
+    case 0: return (
+      <svg width="100" height="90" viewBox="0 0 100 90" fill="none">
+        <circle cx="35" cy="45" r="22" stroke={c} strokeWidth="0.75" opacity="0.35"/>
+        <circle cx="65" cy="45" r="22" stroke={c} strokeWidth="0.75" opacity="0.35"/>
+        <path d="M50 24.6 A22 22 0 0 1 50 65.4 A22 22 0 0 1 50 24.6" fill={c} opacity="0.1"/>
+        <circle cx="35" cy="45" r="22" fill={c} fillOpacity="0.04"/>
+        <circle cx="65" cy="45" r="22" fill={c} fillOpacity="0.04"/>
+        <line x1="50" y1="8" x2="50" y2="82" stroke={c} strokeWidth="0.4" opacity="0.15" strokeDasharray="2 3"/>
+      </svg>
+    )
+    case 1: return (
+      <svg width="100" height="90" viewBox="0 0 100 90" fill="none">
+        <polygon points="50,10 88,72 12,72" stroke={c} strokeWidth="0.75" opacity="0.35" fill={c} fillOpacity="0.04"/>
+        <polygon points="50,24 76,68 24,68" stroke={c} strokeWidth="0.75" opacity="0.25" fill="none"/>
+        <polygon points="50,38 64,64 36,64" stroke={c} strokeWidth="0.75" opacity="0.4" fill={c} fillOpacity="0.08"/>
+        <circle cx="50" cy="56" r="3" fill={c} opacity="0.4"/>
+      </svg>
+    )
+    case 2: return (
+      <svg width="100" height="90" viewBox="0 0 100 90" fill="none">
+        <line x1="18" y1="45" x2="82" y2="45" stroke={c} strokeWidth="0.5" opacity="0.2"/>
+        <line x1="50" y1="13" x2="50" y2="77" stroke={c} strokeWidth="0.5" opacity="0.2"/>
+        <circle cx="50" cy="45" r="24" stroke={c} strokeWidth="0.75" opacity="0.3" fill={c} fillOpacity="0.04"/>
+        <circle cx="50" cy="45" r="14" stroke={c} strokeWidth="0.75" opacity="0.4" fill={c} fillOpacity="0.06"/>
+        <circle cx="50" cy="45" r="5" fill={c} opacity="0.5"/>
+        <circle cx="50" cy="21" r="2" fill={c} opacity="0.3"/>
+        <circle cx="74" cy="45" r="2" fill={c} opacity="0.3"/>
+        <circle cx="50" cy="69" r="2" fill={c} opacity="0.3"/>
+        <circle cx="26" cy="45" r="2" fill={c} opacity="0.3"/>
+      </svg>
+    )
+    default: return (
+      <svg width="100" height="90" viewBox="0 0 100 90" fill="none">
+        <rect x="16" y="14" width="68" height="52" rx="5" stroke={c} strokeWidth="0.75" opacity="0.3" fill={c} fillOpacity="0.03"/>
+        <rect x="24" y="22" width="52" height="7" rx="2" fill={c} opacity="0.15"/>
+        <rect x="24" y="33" width="36" height="4" rx="2" fill={c} opacity="0.1"/>
+        <rect x="24" y="41" width="44" height="4" rx="2" fill={c} opacity="0.1"/>
+        <rect x="24" y="49" width="28" height="4" rx="2" fill={c} opacity="0.1"/>
+        <line x1="50" y1="66" x2="50" y2="76" stroke={c} strokeWidth="0.75" opacity="0.3"/>
+        <path d="M42 76 L50 84 L58 76" stroke={c} strokeWidth="0.75" opacity="0.3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    )
+  }
+}
+
+function ProcessCard({ step, active, onClick, index }: {
+  step: typeof PROCESS_STEPS[0]
+  active: boolean
+  onClick: () => void
+  index: number
+}) {
+  const previewRef = useRef<HTMLDivElement>(null)
+  const rafRef = useRef<number>(0)
+  const tRef = useRef(Math.random() * Math.PI * 2)
+  const hoveredRef = useRef(false)
+  const [hovered, setHovered] = useState(false)
+
+  useEffect(() => { hoveredRef.current = hovered }, [hovered])
+
+  useEffect(() => {
+    if (active) {
+      cancelAnimationFrame(rafRef.current)
+      if (previewRef.current) previewRef.current.style.background = ACCENT
+      return
+    }
+    function frame() {
+      const speed = hoveredRef.current ? 0.006 * 3.5 : 0.006
+      tRef.current += speed
+      const t = tRef.current
+      const alpha = hoveredRef.current ? 0.26 : 0.12
+      const x = 50 + 30 * Math.sin(t)
+      const y = 50 + 20 * Math.cos(t * 0.7)
+      const a1 = Math.round(alpha * 255).toString(16).padStart(2, '0')
+      const a2 = Math.round(alpha * 0.4 * 255).toString(16).padStart(2, '0')
+      const bg = `#F5F0EB radial-gradient(ellipse at ${x}% ${y}%, ${ACCENT}${a1} 0%, ${ACCENT}${a2} 60%, transparent 100%)`
+      if (previewRef.current) previewRef.current.style.background = bg
+      rafRef.current = requestAnimationFrame(frame)
+    }
+    rafRef.current = requestAnimationFrame(frame)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [active])
+
+  const svgColor = active ? '#ffffff' : ACCENT
+
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        flex: 1,
+        padding: '3px',
+        borderRadius: '18px',
+        border: active ? `1px solid ${ACCENT}` : '1px solid rgba(0,0,0,0.06)',
+        background: active ? ACCENT : 'rgba(255,255,255,0.92)',
+        boxShadow: hovered ? '0 4px 24px rgba(0,0,0,0.08)' : '0 1px 4px rgba(0,0,0,0.06)',
+        cursor: 'pointer',
+        textAlign: 'left',
+        transition: 'all 0.25s ease',
+      }}
+    >
+      <div ref={previewRef} style={{
+        height: '120px',
+        borderRadius: '16px',
+        overflow: 'hidden',
+        position: 'relative',
+        background: '#F5F0EB',
+      }}>
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          opacity: active ? 1 : 0.85,
+          transition: 'opacity 0.25s ease',
+        }}>
+          {getProcessSVG(index, svgColor)}
+        </div>
+      </div>
+      <div style={{ padding: '14px 16px' }}>
+        <div style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: '10px',
+          fontWeight: 600,
+          letterSpacing: '0.1em',
+          textTransform: 'uppercase',
+          color: active ? 'rgba(255,255,255,0.5)' : ACCENT,
+          marginBottom: '4px',
+          transition: 'color 0.25s ease',
+        }}>
+          {step.number}
+        </div>
+        <div style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: '15px',
+          fontWeight: 400,
+          letterSpacing: '-0.02em',
+          color: active ? '#ffffff' : '#1a1a1a',
+          transition: 'color 0.25s ease',
+        }}>
+          {step.title}
+        </div>
+      </div>
+    </button>
+  )
+}
+
+const CTA_BLOBS = [
+  { ox: 0.2,  oy: 0.3,  r: 240, color: '#c4b5f4', vx: 0.18, vy: 0.12 },
+  { ox: 0.8,  oy: 0.7,  r: 260, color: '#fca5a5', vx: -0.14, vy: -0.16 },
+  { ox: 0.55, oy: 0.15, r: 220, color: '#93c5fd', vx: 0.1,  vy: 0.2 },
+]
+
+function CtaBand({ isMobile }: { isMobile: boolean }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const outerRef = useRef<HTMLDivElement>(null)
+  const rafRef = useRef<number>(0)
+  const mouse = useRef({ x: -1000, y: -1000 })
+  const blobsRef = useRef(CTA_BLOBS.map(b => ({ ...b, x: 0, y: 0 })))
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const outer = outerRef.current
+    if (!canvas || !outer) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth
+      canvas.height = canvas.offsetHeight
+      blobsRef.current.forEach((blob, i) => {
+        blob.x = CTA_BLOBS[i].ox * canvas.width
+        blob.y = CTA_BLOBS[i].oy * canvas.height
+      })
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = outer.getBoundingClientRect()
+      mouse.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
+    }
+    outer.addEventListener('mousemove', onMouseMove)
+
+    function tick() {
+      const W = canvas!.width
+      const H = canvas!.height
+      ctx!.fillStyle = '#f7f5f0'
+      ctx!.fillRect(0, 0, W, H)
+
+      blobsRef.current.forEach((blob, i) => {
+        const ox = CTA_BLOBS[i].ox * W
+        const oy = CTA_BLOBS[i].oy * H
+        const dx = mouse.current.x - blob.x
+        const dy = mouse.current.y - blob.y
+        const dist = Math.hypot(dx, dy)
+        const MAGNET_RADIUS = 200
+        if (dist < MAGNET_RADIUS && mouse.current.x > -500) {
+          const str = 0.008 * (1 - dist / MAGNET_RADIUS)
+          blob.vx += dx * str * 0.1
+          blob.vy += dy * str * 0.1
+        }
+        blob.vx += (ox - blob.x) * 0.001
+        blob.vy += (oy - blob.y) * 0.001
+        blob.vx *= 0.96
+        blob.vy *= 0.96
+        const speed = Math.hypot(blob.vx, blob.vy)
+        if (speed > 3.5) { blob.vx = blob.vx / speed * 3.5; blob.vy = blob.vy / speed * 3.5 }
+        blob.x += blob.vx
+        blob.y += blob.vy
+
+        const g = ctx!.createRadialGradient(blob.x, blob.y, 0, blob.x, blob.y, blob.r)
+        g.addColorStop(0, blob.color + 'cc')
+        g.addColorStop(1, blob.color + '00')
+        ctx!.fillStyle = g
+        ctx!.beginPath()
+        ctx!.arc(blob.x, blob.y, blob.r, 0, Math.PI * 2)
+        ctx!.fill()
+      })
+
+      rafRef.current = requestAnimationFrame(tick)
+    }
+    tick()
+
+    return () => {
+      cancelAnimationFrame(rafRef.current)
+      window.removeEventListener('resize', resize)
+      outer.removeEventListener('mousemove', onMouseMove)
+    }
+  }, [])
+
+  const [copied, setCopied] = useState(false)
+  const router = useRouter()
+
+  const GRAIN_BG = "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E\")"
+
+  function handleCopy() {
+    navigator.clipboard.writeText('cmoff13@gmail.com')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <div ref={outerRef} style={{
+      position: 'relative',
+      overflow: 'hidden',
+      background: '#f7f5f0',
+      borderRadius: '16px',
+      padding: isMobile ? '48px 24px' : '64px 48px',
+      marginTop: '80px',
+    }}>
+      {/* Blob canvas */}
+      <canvas
+        ref={canvasRef}
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
+      {/* Grain */}
+      <div aria-hidden="true" style={{
+        position: 'absolute',
+        inset: 0,
+        pointerEvents: 'none',
+        zIndex: 1,
+        opacity: 0.035,
+        backgroundImage: GRAIN_BG,
+        backgroundRepeat: 'repeat',
+        backgroundSize: '180px 180px',
+      }} />
+      {/* Content */}
+      <div style={{ maxWidth: '560px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 2, padding: '0 24px' }}>
+        <div style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '6px',
+          background: 'rgba(0,0,0,0.08)',
+          borderRadius: '999px',
+          padding: '4px 12px',
+          marginBottom: '24px',
+        }}>
+          <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#999' }} />
+          <span style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '11px',
+            fontWeight: 600,
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            color: 'rgba(0,0,0,0.5)',
+          }}>
+            Open to work
+          </span>
+        </div>
+        <h2 style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: isMobile ? '22px' : 'clamp(20px, 2.5vw, 28px)',
+          fontWeight: 400,
+          color: '#1a1a1a',
+          letterSpacing: '-0.03em',
+          lineHeight: 1.2,
+          marginBottom: '12px',
+          maxWidth: '480px',
+          margin: '0 auto 12px',
+        }}>
+          Let&apos;s build something worth looking at.
+        </h2>
+        <p style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: '15px',
+          color: '#767676',
+          marginBottom: '32px',
+        }}>
+          Senior design roles and select freelance.
+        </p>
+        <div style={{
+          display: 'flex',
+          gap: '12px',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+        }}>
+          <button
+            onClick={handleCopy}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px 24px',
+              background: '#1a1a1a',
+              color: '#ffffff',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: '13px',
+              fontWeight: 600,
+              borderRadius: '999px',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <rect x="5" y="1" width="9" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
+              <rect x="2" y="4" width="9" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.5" fill="#1a1a1a"/>
+            </svg>
+            {copied ? 'Copied!' : 'Copy email'}
+          </button>
+          <button
+            onClick={() => router.push('/web')}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '12px 24px',
+              background: 'transparent',
+              color: '#1a1a1a',
+              fontFamily: "'Inter', sans-serif",
+              fontSize: '13px',
+              fontWeight: 500,
+              borderRadius: '999px',
+              border: '1px solid rgba(0,0,0,0.15)',
+              cursor: 'pointer',
+              transition: 'border-color 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(0,0,0,0.3)')}
+            onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(0,0,0,0.15)')}
+          >
+            Web &amp; digital →
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function useWordReveal(text: string, started: boolean, baseDelay: number) {
+  return text.split(' ').map((word, i) => ({
+    word,
+    wrapStyle: {
+      display: 'inline-block',
+      overflow: 'hidden',
+      verticalAlign: 'bottom',
+      marginRight: '0.22em',
+    } as React.CSSProperties,
+    innerStyle: {
+      display: 'inline-block',
+      transform: started ? 'translateY(0)' : 'translateY(110%)',
+      opacity: started ? 1 : 0,
+      transition: `transform 0.75s cubic-bezier(0.16,1,0.3,1) ${baseDelay + i * 65}ms, opacity 0.5s ease ${baseDelay + i * 65}ms`,
+    } as React.CSSProperties,
+  }))
+}
+
+function useInView(delay = 0) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
+      { threshold: 0.15 }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [])
+  const style: React.CSSProperties = {
+    opacity: visible ? 1 : 0,
+    transform: visible ? 'translateY(0)' : 'translateY(16px)',
+    transition: `opacity 0.6s ease ${delay}ms, transform 0.6s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
+  }
+  return { ref, style }
+}
+
 export default function BrandSegment() {
+  const [activeFilter, setActiveFilter] = useState('all')
+  const [activeStep, setActiveStep] = useState(0)
+  const [activeStat, setActiveStat] = useState(-1)
+  const [isMobile, setIsMobile] = useState(false)
+  const [started, setStarted] = useState(false)
+
+  useEffect(() => {
+    const t = setTimeout(() => setStarted(true), 80)
+    return () => clearTimeout(t)
+  }, [])
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)')
+    const sync = () => setIsMobile(mq.matches)
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
+  }, [])
+
+  const fadeUp = (delay: number): React.CSSProperties => ({
+    opacity: started ? 1 : 0,
+    transform: started ? 'translateY(0)' : 'translateY(10px)',
+    transition: `opacity 0.55s ease ${delay}ms, transform 0.55s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
+  })
+
+  const line1 = useWordReveal(segment.headline[0], started, 80)
+  const line2 = useWordReveal(segment.headline[1], started, 320)
+
+  const inViewProcess = useInView(0)
+  const inViewStats   = useInView(0)
+  const inViewQuote   = useInView(0)
+  const inViewCta     = useInView(0)
+
   return (
     <main className="segment-page">
 
-      {/* Dark premium header */}
-      <div style={{
-        background: '#1A0030',
-        borderRadius: '16px',
-        padding: '48px',
-        marginBottom: '48px',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        {/* Subtle purple glow */}
-        <div style={{
-          position: 'absolute',
-          top: '-60px',
-          right: '-60px',
-          width: '300px',
-          height: '300px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(109,40,217,0.25) 0%, transparent 70%)',
-          pointerEvents: 'none',
-        }} />
-
+      {/* Editorial header */}
+      <div style={{ paddingTop: isMobile ? '48px' : '80px', marginBottom: '48px' }}>
         <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
           marginBottom: '20px',
+          ...fadeUp(0),
         }}>
           <div style={{
             width: '6px',
             height: '6px',
             borderRadius: '50%',
-            background: '#A78BFA',
+            background: ACCENT,
           }} />
           <span style={{
             fontFamily: "'Inter', sans-serif",
@@ -256,7 +711,7 @@ export default function BrandSegment() {
             fontWeight: 600,
             letterSpacing: '0.1em',
             textTransform: 'uppercase',
-            color: '#A78BFA',
+            color: ACCENT,
           }}>
             Brand identity
           </span>
@@ -268,37 +723,84 @@ export default function BrandSegment() {
           fontWeight: 400,
           letterSpacing: '-0.03em',
           lineHeight: 1.1,
-          color: '#FFFFFF',
-          marginBottom: '16px',
+          color: '#1a1a1a',
+          marginBottom: 0,
         }}>
-          {segment.headline[0]}<br />{segment.headline[1]}
+          <div>
+            {line1.map(({ word, wrapStyle, innerStyle }, i) => (
+              <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
+            ))}
+          </div>
+          <div>
+            {line2.map(({ word, wrapStyle, innerStyle }, i) => (
+              <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
+            ))}
+          </div>
         </h1>
 
         <p style={{
+          ...fadeUp(600),
           fontFamily: "'Inter', sans-serif",
           fontSize: '15px',
-          color: 'rgba(255,255,255,0.5)',
-          lineHeight: 1.7,
-          maxWidth: '480px',
-          margin: 0,
+          color: '#767676',
+          lineHeight: 1.75,
+          maxWidth: '520px',
+          marginTop: '20px',
+          marginBottom: 0,
         }}>
           {segment.intro}
         </p>
       </div>
 
-      {/* Section label */}
-      <p className="craft-section-label">Craft archive</p>
-
-      {/* 2x2 image grid */}
+      {/* Filter pills */}
       <div style={{
+        ...fadeUp(750),
+        display: 'flex',
+        gap: '8px',
+        marginBottom: '24px',
+        flexWrap: isMobile ? 'nowrap' : 'wrap',
+        overflowX: isMobile ? 'auto' : 'visible',
+        paddingBottom: isMobile ? '8px' : 0,
+      }}>
+        {FILTERS.map(f => (
+          <button
+            key={f.id}
+            onClick={() => setActiveFilter(f.id)}
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: '11px',
+              fontWeight: 600,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              padding: '6px 16px',
+              borderRadius: '999px',
+              border: activeFilter === f.id ? 'none' : '1px solid #e0e0e0',
+              background: activeFilter === f.id ? ACCENT : 'transparent',
+              color: activeFilter === f.id ? '#ffffff' : '#999',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Gallery grid */}
+      <div style={{
+        ...fadeUp(900),
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
         gap: '12px',
         marginBottom: '48px',
+        alignContent: 'start',
       }}>
-        {ARCHIVE_ITEMS.map(item => (
-          <GridCell key={item.id} item={item} />
-        ))}
+        {ARCHIVE_ITEMS
+          .filter(item => activeFilter === 'all' || item.tag === TAG_MAP[activeFilter])
+          .map(item => (
+            <GridCell key={`${activeFilter}-${item.id}`} item={item} />
+          ))
+        }
       </div>
 
       {/* More coming note */}
@@ -313,12 +815,201 @@ export default function BrandSegment() {
         More brand work coming — MyPetDx and others in progress
       </p>
 
-      {/* Contact */}
+      {/* Process section */}
+      <div ref={inViewProcess.ref} style={inViewProcess.style}>
       <div style={{
-        paddingTop: '40px',
-        borderTop: '1px solid var(--color-hairline)',
+        borderTop: '1px solid #f0f0f0',
+        paddingTop: '56px',
+        marginTop: '72px',
+        marginBottom: '64px',
       }}>
-        <ContactCta variant="full" accentColor={segment.accentColor} />
+        <h2 style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: '28px',
+          fontWeight: 400,
+          letterSpacing: '-0.02em',
+          color: '#1a1a1a',
+          marginBottom: '24px',
+        }}>
+          How I work
+        </h2>
+
+        {/* Step cards */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+          gap: '12px',
+        }}>
+          {PROCESS_STEPS.map((step, i) => (
+            <ProcessCard
+              key={i}
+              step={step}
+              active={activeStep === i}
+              onClick={() => setActiveStep(i)}
+              index={i}
+            />
+          ))}
+        </div>
+
+        {/* Active step description */}
+        <p
+          key={activeStep}
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '14px',
+            color: '#767676',
+            lineHeight: 1.75,
+            maxWidth: '560px',
+            marginTop: '20px',
+            marginBottom: 0,
+            animation: 'fadeIn 0.2s ease',
+          }}
+        >
+          {PROCESS_STEPS[activeStep].description}
+        </p>
+      </div>
+      </div>{/* /inViewProcess */}
+
+      {/* Stats row */}
+      <div ref={inViewStats.ref} style={inViewStats.style}>
+      <div style={{
+        borderTop: '1px solid #f0f0f0',
+        borderBottom: '1px solid #f0f0f0',
+        marginTop: '64px',
+        display: 'grid',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+      }}>
+        {[
+          { number: '7',   label: 'Years of practice',  detail: 'Working in brand, web, and product since 2017.' },
+          { number: '40+', label: 'Brands worked with',  detail: 'Across identity, digital, and product design.' },
+          { number: '3',   label: 'Disciplines',         detail: 'Brand identity, web design, and UX.' },
+        ].map((stat, i) => {
+          const desktopPadding = i === 0
+            ? '40px 40px 40px 0'
+            : i === 2
+              ? '40px 0 40px 40px'
+              : '40px 40px 40px 40px'
+          const mobilePadding = '28px 0'
+          const borderRight = !isMobile && i < 2 ? '1px solid #f0f0f0' : 'none'
+          const borderBottom = isMobile && i < 2 ? '1px solid #f0f0f0' : 'none'
+          return (
+            <div
+              key={stat.label}
+              onClick={() => setActiveStat(activeStat === i ? -1 : i)}
+              style={{
+                position: 'relative',
+                cursor: 'pointer',
+                padding: isMobile ? mobilePadding : desktopPadding,
+                borderRight,
+                borderBottom,
+              }}
+            >
+              <div style={{
+                fontFamily: "'Climate Crisis', cursive",
+                fontSize: '52px',
+                fontWeight: 400,
+                color: activeStat === i ? ACCENT : '#1a1a1a',
+                letterSpacing: '-0.02em',
+                lineHeight: 1,
+                transition: 'color 0.2s ease',
+              }}>
+                {stat.number}
+              </div>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: '12px',
+              }}>
+                <span style={{
+                  fontFamily: "'Inter', sans-serif",
+                  fontSize: '11px',
+                  color: activeStat === i ? ACCENT : '#767676',
+                  fontWeight: 400,
+                  letterSpacing: '0.04em',
+                  whiteSpace: 'nowrap',
+                  transition: 'color 0.2s ease',
+                }}>
+                  {stat.label}
+                </span>
+                <svg
+                  width="12" height="12" viewBox="0 0 12 12" fill="none"
+                  style={{
+                    flexShrink: 0,
+                    marginLeft: '8px',
+                    color: activeStat === i ? ACCENT : '#999',
+                    transform: activeStat === i ? 'rotate(180deg)' : 'rotate(0deg)',
+                    transition: 'transform 0.2s ease, color 0.2s ease',
+                  }}
+                >
+                  <polyline points="2,4 6,8 10,4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+              <div style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '13px',
+                color: '#767676',
+                lineHeight: 1.65,
+                maxHeight: activeStat === i ? '80px' : '0',
+                opacity: activeStat === i ? 1 : 0,
+                overflow: 'hidden',
+                transition: 'max-height 0.3s ease, opacity 0.3s ease',
+                marginTop: activeStat === i ? '10px' : 0,
+              }}>
+                {stat.detail}
+              </div>
+              <div style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: '2px',
+                background: ACCENT,
+                width: activeStat === i ? '100%' : '0',
+                transition: 'width 0.3s ease',
+              }} />
+            </div>
+          )
+        })}
+      </div>
+      </div>{/* /inViewStats */}
+
+      {/* Pull quote */}
+      <div ref={inViewQuote.ref} style={inViewQuote.style}>
+      <div style={{
+        borderTop: '1px solid #f0f0f0',
+        paddingTop: '64px',
+        marginTop: '80px',
+        textAlign: 'center',
+      }}>
+        <p style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: isMobile ? '22px' : 'clamp(22px, 3vw, 32px)',
+          fontWeight: 400,
+          color: '#1a1a1a',
+          letterSpacing: '-0.03em',
+          lineHeight: 1.3,
+          textAlign: 'center',
+          maxWidth: '520px',
+          margin: '0 auto',
+        }}>
+          "A logo that needs explaining has already failed."
+        </p>
+        <p style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: '12px',
+          color: '#999',
+          textAlign: 'center',
+          marginTop: '16px',
+        }}>
+          — on brand clarity
+        </p>
+      </div>
+      </div>{/* /inViewQuote */}
+
+      {/* Contact band */}
+      <div ref={inViewCta.ref} style={inViewCta.style}>
+        <CtaBand isMobile={isMobile} />
       </div>
 
     </main>
