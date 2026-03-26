@@ -761,7 +761,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
             padding: '48px 40px 120px',
           }}
         >
-          <div style={{ width: '100%', maxWidth: '680px' }}>
+          <div style={{ width: '100%', maxWidth: '720px' }}>
 
             {/* Header */}
             <div style={{ marginBottom: '56px' }}>
@@ -990,7 +990,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
             borderRadius: '999px',
             padding: '4px',
             gap: '2px',
-            boxShadow: '0 2px 16px rgba(0,0,0,0.10), 0 0 0 1px rgba(0,0,0,0.06)',
+            boxShadow: '0 4px 24px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.04)',
           }}
         >
           <button

@@ -248,35 +248,40 @@ export default function BrandSegment() {
         <p className="segment-intro">{segment.intro}</p>
       </div>
 
-      <p className="craft-section-label">Craft archive</p>
+      <div className="brand-archive-block">
+        <p className="craft-section-label">Craft archive</p>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        {ARCHIVE_ITEMS.map(item => (
-          <ArchiveRow key={item.id} item={item} />
-        ))}
-      </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {ARCHIVE_ITEMS.map(item => (
+            <ArchiveRow key={item.id} item={item} />
+          ))}
+        </div>
 
-      <div style={{
-        marginTop: '32px',
-        padding: '32px',
-        border: '1px dashed #e8e8e8',
-        borderRadius: '12px',
-        textAlign: 'center',
-      }}>
-        <p style={{
-          fontFamily: "'Inter', sans-serif",
-          fontSize: '12px',
-          color: '#ccc',
-          letterSpacing: '0.04em',
-        }}>
-          More brand work coming — MyPetDx and others in progress
-        </p>
+        <div
+          className="brand-muted-card"
+          style={{
+            marginTop: '32px',
+            padding: '32px',
+            border: '1px dashed var(--color-hairline-strong)',
+            borderRadius: '12px',
+            textAlign: 'center',
+          }}
+        >
+          <p style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '12px',
+            color: 'var(--color-meta)',
+            letterSpacing: '0.04em',
+          }}>
+            More brand work coming — MyPetDx and others in progress
+          </p>
+        </div>
       </div>
 
       <div style={{
         marginTop: '64px',
         paddingTop: '40px',
-        borderTop: '1px solid #f0f0f0',
+        borderTop: '1px solid var(--color-hairline)',
       }}>
         <ContactCta variant="full" accentColor={segment.accentColor} />
       </div>

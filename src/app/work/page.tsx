@@ -37,7 +37,7 @@ export default function WorkPage() {
     <main className="work-page">
 
       {/* Header */}
-      <div style={{ marginBottom: '56px' }}>
+      <div className="work-hero" style={{ marginBottom: '56px' }}>
         <p style={{
           fontFamily: "'Inter', sans-serif",
           fontSize: '11px',
@@ -89,14 +89,17 @@ export default function WorkPage() {
       </div>
 
       {/* Segment legend */}
-      <div style={{
-        display: 'flex',
-        gap: '24px',
-        marginBottom: '40px',
-        paddingBottom: '24px',
-        borderBottom: '1px solid #f0f0f0',
-        flexWrap: 'wrap',
-      }}>
+      <div
+        className="work-seg-legend"
+        style={{
+          display: 'flex',
+          gap: '24px',
+          marginBottom: '40px',
+          paddingBottom: '24px',
+          borderBottom: '1px solid var(--color-hairline)',
+          flexWrap: 'wrap',
+        }}
+      >
         {Object.values(SEGMENTS).map(seg => (
           <button
             key={seg.id}
@@ -137,7 +140,7 @@ export default function WorkPage() {
       </div>
 
       {/* Project list */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div className="work-project-stack" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {visibleProjects.map(project => {
           const segment = SEGMENTS[project.primarySegment]
           const thumbnail = THUMBNAILS[project.slug]
@@ -155,8 +158,8 @@ export default function WorkPage() {
                 display: 'grid',
                 gridTemplateColumns: '80px 1fr',
                 gap: '0',
-                background: '#fff',
-                border: '1px solid #f0f0f0',
+                background: 'var(--color-bg)',
+                border: '1px solid var(--color-hairline)',
                 borderRadius: '12px',
                 overflow: 'hidden',
                 cursor: 'none',
@@ -165,14 +168,14 @@ export default function WorkPage() {
               onMouseEnter={e => {
                 e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.08)'
                 e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.borderColor = '#e0e0e0'
+                e.currentTarget.style.borderColor = '#e4e4e1'
                 const thumb = e.currentTarget.querySelector('.work-thumb') as HTMLElement
                 if (thumb) thumb.style.transform = 'scale(1.05)'
               }}
               onMouseLeave={e => {
                 e.currentTarget.style.boxShadow = 'none'
                 e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.borderColor = '#f0f0f0'
+                e.currentTarget.style.borderColor = '#ededec'
                 const thumb = e.currentTarget.querySelector('.work-thumb') as HTMLElement
                 if (thumb) thumb.style.transform = 'scale(1)'
               }}
@@ -304,7 +307,7 @@ export default function WorkPage() {
       <div style={{
         marginTop: '64px',
         paddingTop: '40px',
-        borderTop: '1px solid #f0f0f0',
+        borderTop: '1px solid var(--color-hairline)',
       }}>
         <ContactCta variant="full" accentColor="#1a1a1a" />
       </div>
@@ -313,7 +316,7 @@ export default function WorkPage() {
       <div style={{
         marginTop: '32px',
         paddingTop: '32px',
-        borderTop: '1px solid #f0f0f0',
+        borderTop: '1px solid var(--color-hairline)',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',

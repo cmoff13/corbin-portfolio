@@ -44,7 +44,8 @@ export default function WebSegment() {
                 transition: 'box-shadow 0.2s ease, transform 0.2s ease',
                 cursor: 'none',
                 display: 'grid',
-                gridTemplateColumns: '250px 1fr',
+                gridTemplateColumns: 'minmax(180px, min(40vw, 300px)) 1fr',
+                alignItems: 'center',
               }}
               onMouseEnter={e => {
                 e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.08)'
@@ -94,7 +95,14 @@ export default function WebSegment() {
                 View project →
               </div>
 
-              <div style={{ position: 'relative', overflow: 'hidden', width: '250px', height: '250px', flexShrink: 0 }}>
+              <div style={{
+                position: 'relative',
+                overflow: 'hidden',
+                width: '100%',
+                aspectRatio: '16 / 10',
+                flexShrink: 0,
+              }}
+              >
                 {thumbnail ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -103,8 +111,10 @@ export default function WebSegment() {
                     loading="lazy"
                     className="card-img"
                     style={{
-                      width: '250px',
-                      height: '250px',
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
                       objectFit: 'cover',
                       display: 'block',
                       transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
@@ -114,16 +124,16 @@ export default function WebSegment() {
                   <div
                     className="card-img"
                     style={{
-                      width: '250px',
-                      height: '250px',
-                      background: '#f7f7f5',
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'var(--color-surface)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
                     }}
                   >
-                    <span style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#ccc' }}>
+                    <span style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-meta)' }}>
                       {project.title}
                     </span>
                   </div>
@@ -164,7 +174,7 @@ export default function WebSegment() {
       <div style={{
         marginTop: '64px',
         paddingTop: '40px',
-        borderTop: '1px solid #f0f0f0',
+        borderTop: '1px solid var(--color-hairline)',
       }}>
         <ContactCta variant="full" accentColor={segment.accentColor} />
       </div>
