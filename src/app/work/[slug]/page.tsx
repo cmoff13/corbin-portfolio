@@ -761,7 +761,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
             padding: '48px 40px 120px',
           }}
         >
-          <div style={{ width: '100%', maxWidth: 'var(--layout-max)' }}>
+          <div style={{ width: '100%', maxWidth: '720px' }}>
 
             {/* Header */}
             <div style={{ marginBottom: '56px' }}>

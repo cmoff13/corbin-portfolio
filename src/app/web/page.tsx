@@ -42,7 +42,7 @@ export default function WebSegment() {
                 padding: 0,
                 overflow: 'hidden',
                 transition: 'box-shadow 0.2s ease, transform 0.2s ease',
-                cursor: 'pointer',
+                cursor: 'none',
                 display: 'grid',
                 gridTemplateColumns: 'minmax(180px, min(40vw, 300px)) 1fr',
                 alignItems: 'center',

@@ -5,7 +5,7 @@ import GoogleAnalytics from '@/components/GoogleAnalytics'
 
 export const metadata: Metadata = {
   title: 'Corbin Moffitt — Designer',
-  description: 'Brand, web, and product design — case studies and selected work.',
+  description: 'Seven years of design. Three ways to see it.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
