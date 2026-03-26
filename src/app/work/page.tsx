@@ -110,7 +110,7 @@ export default function WorkPage() {
               gap: '6px',
               background: 'none',
               border: 'none',
-              cursor: 'none',
+              cursor: 'pointer',
               padding: 0,
               fontFamily: "'Inter', sans-serif",
               fontSize: '12px',
@@ -162,7 +162,7 @@ export default function WorkPage() {
                 border: '1px solid var(--color-hairline)',
                 borderRadius: '12px',
                 overflow: 'hidden',
-                cursor: 'none',
+                cursor: 'pointer',
                 transition: 'box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease',
               }}
               onMouseEnter={e => {
@@ -329,7 +329,7 @@ export default function WorkPage() {
             color: '#999',
             background: 'none',
             border: 'none',
-            cursor: 'none',
+            cursor: 'pointer',
           }}
           onMouseEnter={e => (e.currentTarget.style.color = '#1a1a1a')}
           onMouseLeave={e => (e.currentTarget.style.color = '#999')}

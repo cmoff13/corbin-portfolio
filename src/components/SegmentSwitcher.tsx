@@ -111,14 +111,14 @@ export default function SegmentSwitcher() {
     <>
       <GlobalCursor />
 
-      <nav className="nav" style={{ cursor: 'none' }}>
-        <a href="/" className="nav-logo" style={{ cursor: 'none' }}>Corbin Moffitt</a>
+      <nav className="nav">
+        <a href="/" className="nav-logo" style={{ cursor: 'pointer' }}>Corbin Moffitt</a>
 
         <div style={{ position: 'relative' }} ref={containerRef}>
           <button
             className="switcher-pill"
             onClick={() => setOpen(o => !o)}
-            style={{ cursor: 'none' }}
+            style={{ cursor: 'pointer' }}
           >
             {current ? (
               <>
@@ -161,7 +161,7 @@ export default function SegmentSwitcher() {
                     router.push(`/${seg.id}`)
                     setOpen(false)
                   }}
-                  style={{ cursor: 'none' }}
+                  style={{ cursor: 'pointer' }}
                 >
                   <span
                     className="switcher-dot"
@@ -176,14 +176,14 @@ export default function SegmentSwitcher() {
               <button
                 className="switcher-meta"
                 onClick={() => { router.push('/') ; setOpen(false) }}
-                style={{ cursor: 'none' }}
+                style={{ cursor: 'pointer' }}
               >
                 ← Back to gate
               </button>
               <button
                 className="switcher-meta"
                 onClick={() => { router.push('/work') ; setOpen(false) }}
-                style={{ cursor: 'none' }}
+                style={{ cursor: 'pointer' }}
               >
                 See everything →
               </button>

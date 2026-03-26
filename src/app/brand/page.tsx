@@ -139,21 +139,40 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
 function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
   const [hovered, setHovered] = useState(false)
   const [lightboxOpen, setLightboxOpen] = useState(false)
+  const previewRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = previewRef.current
+    if (!el) return
+    let t = Math.random() * Math.PI * 2
+    let animId: number
+    function tick() {
+      t += hovered ? 0.006 * 3.5 : 0.006
+      const mix = (Math.sin(t) + 1) / 2
+      const alpha = hovered ? 0.26 : 0.12 + mix * 0.06
+      const hex = Math.round(alpha * 255).toString(16).padStart(2, '0')
+      const x = 30 + mix * 40
+      const y = 20 + mix * 50
+      el.style.background = `radial-gradient(ellipse at ${x}% ${y}%, #3B0764${hex} 0%, #3B076422 50%, #F5F0EB 80%)`
+      animId = requestAnimationFrame(tick)
+    }
+    tick()
+    return () => cancelAnimationFrame(animId)
+  }, [hovered])
 
   return (
     <>
       <div
+        ref={previewRef}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        onClick={() => item.image && setLightboxOpen(true)}
+        onClick={() => { if (item.image) setLightboxOpen(true) }}
         style={{
-          position: 'relative',
-          aspectRatio: '4 / 3',
+          aspectRatio: '4/3',
           borderRadius: '16px',
           overflow: 'hidden',
-          background: item.bg,
+          position: 'relative',
           cursor: item.image ? 'zoom-in' : 'default',
-          animation: 'fadeIn 0.25s ease',
         }}
       >
         {item.image && (
@@ -171,18 +190,16 @@ function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
             }}
           />
         )}
-
-        {/* Hover overlay */}
         <div style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.1) 70%, transparent 100%)',
+          background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.1) 70%, transparent 100%)',
           opacity: hovered ? 1 : 0,
           transition: 'opacity 0.3s ease',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-end',
-          padding: '24px',
+          padding: '20px',
         }}>
           <span style={{
             fontFamily: "'Inter', sans-serif",
@@ -203,10 +220,10 @@ function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
             fontSize: '18px',
             fontWeight: 400,
             color: '#ffffff',
-            lineHeight: 1.25,
             letterSpacing: '-0.02em',
+            lineHeight: 1.25,
+            marginBottom: '6px',
             textShadow: '0 1px 4px rgba(0,0,0,0.3)',
-            marginBottom: '8px',
             opacity: hovered ? 1 : 0,
             transform: hovered ? 'translateY(0)' : 'translateY(8px)',
             transition: 'opacity 0.3s ease 0.08s, transform 0.3s ease 0.08s',
@@ -226,9 +243,12 @@ function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
           </span>
         </div>
       </div>
-
       {lightboxOpen && item.image && (
-        <Lightbox src={item.image} alt={item.name} onClose={() => setLightboxOpen(false)} />
+        <Lightbox
+          src={item.image}
+          alt={item.name}
+          onClose={() => setLightboxOpen(false)}
+        />
       )}
     </>
   )
