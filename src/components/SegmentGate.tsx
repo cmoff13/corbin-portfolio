@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import ContactCta from '@/components/ContactCta'
 
 const SEGMENTS = [
   {
@@ -64,18 +65,21 @@ function useWordReveal(text: string, started: boolean, baseDelay: number) {
 const ICONS: Record<string, React.ReactNode> = {
   brand: (
     <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M2 20h20"/><path d="m7 17 2-6 3 4 2-3 3 5"/><path d="M4 3h16v10H4z"/>
+      <path d="M12 2L2 7l10 5 10-5-10-5z" />
+      <path d="M2 17l10 5 10-5" />
+      <path d="M2 12l10 5 10-5" />
     </svg>
   ),
   web: (
     <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M5 3l14 9-14 9V3z"/>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M2 12h20" />
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
     </svg>
   ),
   ux: (
     <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
-      <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+      <path d="M4 4l7.07 17 2.51-7.39L21 11.07z" />
     </svg>
   ),
 }
@@ -515,6 +519,15 @@ export default function SegmentGate() {
           >
             See everything<span aria-hidden="true"> →</span>
           </button>
+        </div>
+
+        <div style={{
+          ...fadeUp(1160),
+          marginTop: '40px',
+          width: '100%',
+          maxWidth: '400px',
+        }}>
+          <ContactCta variant="compact" accentColor="#1a1a1a" align="center" />
         </div>
       </div>
     </main>

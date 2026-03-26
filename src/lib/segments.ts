@@ -48,7 +48,8 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: 'black-coast-estates',
     title: 'Black Coast Estates',
-    subtitle: 'Co-ownership property management app — Ocho',
+    subtitle:
+      'Shared luxury vacation homes — bookings, shared expenses, and a peak-weeks draft. Product: Ocho.',
     primarySegment: 'ux',
     alsoIn: [],
     tags: ['UX/UI', 'App design', 'IA', 'Figma prototype'],

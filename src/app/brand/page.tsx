@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { SEGMENTS } from '@/lib/segments'
+import ContactCta from '@/components/ContactCta'
 
 const segment = SEGMENTS.brand
 
@@ -270,6 +271,14 @@ export default function BrandSegment() {
         }}>
           More brand work coming — MyPetDx and others in progress
         </p>
+      </div>
+
+      <div style={{
+        marginTop: '64px',
+        paddingTop: '40px',
+        borderTop: '1px solid #f0f0f0',
+      }}>
+        <ContactCta variant="full" accentColor={segment.accentColor} />
       </div>
 
     </main>

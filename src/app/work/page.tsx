@@ -1,7 +1,9 @@
 'use client'
 
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { CASE_STUDIES, SEGMENTS } from '@/lib/segments'
+import ContactCta from '@/components/ContactCta'
 
 const THUMBNAILS: Record<string, string> = {
   'black-coast-estates': '/images/black-coast/thumbnail.jpg',
@@ -66,6 +68,23 @@ export default function WorkPage() {
           maxWidth: '480px',
         }}>
           All projects across brand identity, web and digital, and UX — in one place. Use the segment switcher above to filter by discipline.
+        </p>
+        <p style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: '13px',
+          color: '#b3b3b3',
+          lineHeight: 1.55,
+          maxWidth: '480px',
+          marginTop: '14px',
+        }}>
+          New here? Start from the{' '}
+          <Link
+            href="/"
+            style={{ color: '#767676', fontWeight: 600, textDecoration: 'none', borderBottom: '1px solid rgba(0,0,0,0.12)' }}
+          >
+            home gate
+          </Link>
+          {' '}to browse by discipline first — this page is the full archive.
         </p>
       </div>
 
@@ -282,9 +301,17 @@ export default function WorkPage() {
         })}
       </div>
 
-      {/* Footer */}
       <div style={{
         marginTop: '64px',
+        paddingTop: '40px',
+        borderTop: '1px solid #f0f0f0',
+      }}>
+        <ContactCta variant="full" accentColor="#1a1a1a" />
+      </div>
+
+      {/* Footer */}
+      <div style={{
+        marginTop: '32px',
         paddingTop: '32px',
         borderTop: '1px solid #f0f0f0',
         display: 'flex',

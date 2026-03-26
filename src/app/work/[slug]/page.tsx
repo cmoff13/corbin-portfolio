@@ -3,6 +3,7 @@
 import { use, useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { CASE_STUDIES, SEGMENTS } from '@/lib/segments'
+import ContactCta from '@/components/ContactCta'
 
 // ── Content ────────────────────────────────────────────────────────────────
 
@@ -151,12 +152,14 @@ The lesson I carry forward is about the difference between a clean handoff and a
 const BLACK_COAST_CONTENT = {
   overview: {
     title: 'Overview & context',
-    content: `Black Coast Estates is a luxury co-ownership property platform — fractional ownership of high-end vacation homes, managed collectively by a group of co-owners. The project came through Design Silk, a Creative-as-a-Service agency I freelance with, where I was brought in as the product designer on a tight timeline.
+    content: `In plain terms: multiple co-owners share one high-end vacation home and need a single place to book weeks, track shared costs, and settle who gets peak dates — not a patchwork of chats and spreadsheets.
+
+Black Coast Estates is a luxury co-ownership property platform — fractional ownership of high-end vacation homes, managed collectively by a group of co-owners. The project came through Design Silk, a Creative-as-a-Service agency I freelance with, where I was brought in as the product designer on a tight timeline.
 
 The ask was to design Ocho — a mobile app that gives co-owners a single place to manage their shared property. Booking visits, tracking shared expenses, coordinating ownership logistics, and a snake draft system (think fantasy football, but for booking weeks at a luxury home) all needed to live in one coherent product.
 
 This was an MVP engagement. The client had a real deadline — a fantasy draft was approaching — and needed a high-fidelity Figma prototype their dev team could build from, fast.`,
-    tldr: 'Designed Ocho — a luxury co-ownership app covering booking, expenses, and a fantasy-football-style draft for scheduling weeks — as a high-fi MVP under a real deadline.',
+    tldr: 'Co-owners, one home: Ocho is the app for bookings, expenses, and a fair peak-weeks draft — shipped as a high-fi MVP under a real deadline.',
   },
   problem: {
     title: 'Problem / challenge',
@@ -553,7 +556,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
   const router = useRouter()
   const project = CASE_STUDIES.find(c => c.slug === slug)
   const [activeSection, setActiveSection] = useState<SectionKey>('overview')
-  const [tldr, setTldr] = useState(false)
+  const [tldr, setTldr] = useState(true)
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
 
   useEffect(() => {
@@ -936,11 +939,21 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
 
             {/* Footer */}
             <div style={{
-              borderTop: '1px solid #f0f0f0',
+              marginTop: '48px',
               paddingTop: '40px',
+              borderTop: '1px solid #f0f0f0',
+            }}>
+              <ContactCta variant="compact" accentColor={segment.accentColor} />
+            </div>
+            <div style={{
+              marginTop: '32px',
+              paddingTop: '32px',
+              borderTop: '1px solid #f0f0f0',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: '16px',
             }}>
               <button
                 onClick={() => router.push(`/${project.primarySegment}`)}

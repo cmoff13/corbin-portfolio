@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
+import ContactCta from '@/components/ContactCta'
 
 const segment = SEGMENTS.web
 const projects = CASE_STUDIES.filter(c =>
@@ -158,6 +159,14 @@ export default function WebSegment() {
             </div>
           )
         })}
+      </div>
+
+      <div style={{
+        marginTop: '64px',
+        paddingTop: '40px',
+        borderTop: '1px solid #f0f0f0',
+      }}>
+        <ContactCta variant="full" accentColor={segment.accentColor} />
       </div>
 
     </main>

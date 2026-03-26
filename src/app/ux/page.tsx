@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
+import ContactCta from '@/components/ContactCta'
 
 const segment = SEGMENTS.ux
 const projects = CASE_STUDIES.filter(c =>
@@ -185,6 +186,14 @@ export default function UXSegment() {
         <p className="ux-callout-text">
           UX work informed by seven years of design craft. More projects coming — including a speculative redesign currently in progress.
         </p>
+      </div>
+
+      <div style={{
+        marginTop: '64px',
+        paddingTop: '40px',
+        borderTop: '1px solid #f0f0f0',
+      }}>
+        <ContactCta variant="full" accentColor={segment.accentColor} />
       </div>
 
     </main>
