@@ -99,130 +99,110 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
   )
 }
 
-function ArchiveRow({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
+function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
   const [hovered, setHovered] = useState(false)
   const [lightboxOpen, setLightboxOpen] = useState(false)
 
   return (
     <>
       <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '280px 1fr',
-          alignItems: 'stretch',
-          border: `1px solid ${hovered ? '#e0e0e0' : '#f0f0f0'}`,
-          borderRadius: '12px',
-          overflow: 'hidden',
-          transition: 'box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease',
-          cursor: item.image ? 'zoom-in' : 'default',
-          boxShadow: hovered ? '0 8px 32px rgba(0,0,0,0.08)' : 'none',
-          transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
-        }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         onClick={() => item.image && setLightboxOpen(true)}
-      >
-        {/* Image column */}
-        <div style={{
-          background: item.bg,
+        style={{
           position: 'relative',
+          aspectRatio: '1 / 1',
+          borderRadius: '16px',
           overflow: 'hidden',
-          minHeight: '180px',
-        }}>
-          {item.image ? (
-            <>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={item.image}
-                alt={item.name}
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  display: 'block',
-                  transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
-                  transform: hovered ? 'scale(1.04)' : 'scale(1)',
-                }}
-              />
-              {hovered && (
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'rgba(0,0,0,0.15)',
-                  zIndex: 1,
-                  transition: 'opacity 0.2s ease',
-                }} />
-              )}
-            </>
-          ) : (
-            <div style={{
+          background: item.bg,
+          cursor: item.image ? 'zoom-in' : 'default',
+        }}
+      >
+        {item.image ? (
+          <img
+            src={item.image}
+            alt={item.name}
+            style={{
               position: 'absolute',
               inset: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <span style={{
-                fontSize: '10px',
-                fontWeight: 600,
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                color: 'rgba(0,0,0,0.2)',
-              }}>
-                Coming soon
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Content column */}
-        <div style={{
-          padding: '28px 32px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          gap: '6px',
-          background: '#ffffff',
-        }}>
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              transition: 'transform 0.6s cubic-bezier(0.16,1,0.3,1)',
+              transform: hovered ? 'scale(1.05)' : 'scale(1)',
+            }}
+          />
+        ) : (
           <div style={{
+            position: 'absolute',
+            inset: 0,
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
+            justifyContent: 'center',
+          }}>
+            <span style={{
+              fontSize: '10px',
+              fontWeight: 600,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: 'rgba(0,0,0,0.2)',
+            }}>
+              Coming soon
+            </span>
+          </div>
+        )}
+
+        {/* Hover overlay */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to top, rgba(10,0,20,0.88) 0%, rgba(10,0,20,0.2) 50%, transparent 100%)',
+          opacity: hovered ? 1 : 0,
+          transition: 'opacity 0.3s ease',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+          padding: '24px',
+        }}>
+          <span style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: '10px',
             fontWeight: 600,
-            letterSpacing: '0.08em',
+            letterSpacing: '0.1em',
             textTransform: 'uppercase',
             color: segment.accentColor,
-            marginBottom: '4px',
+            marginBottom: '6px',
+            opacity: hovered ? 1 : 0,
+            transform: hovered ? 'translateY(0)' : 'translateY(6px)',
+            transition: 'opacity 0.3s ease 0.05s, transform 0.3s ease 0.05s',
           }}>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M2 20h20"/><path d="m7 17 2-6 3 4 2-3 3 5"/><path d="M4 3h16v10H4z"/>
-            </svg>
             {item.tag}
-          </div>
-          <div style={{
+          </span>
+          <span style={{
             fontFamily: "'Outfit', sans-serif",
-            fontSize: '22px',
+            fontSize: '18px',
             fontWeight: 400,
+            color: '#ffffff',
+            lineHeight: 1.25,
             letterSpacing: '-0.02em',
-            color: '#1a1a1a',
-            lineHeight: 1.2,
+            marginBottom: '8px',
+            opacity: hovered ? 1 : 0,
+            transform: hovered ? 'translateY(0)' : 'translateY(8px)',
+            transition: 'opacity 0.3s ease 0.08s, transform 0.3s ease 0.08s',
           }}>
             {item.name}
-          </div>
-          <div style={{
+          </span>
+          <span style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: '13px',
-            color: '#9b9b9b',
-            lineHeight: 1.65,
-            marginTop: '4px',
-            maxWidth: '320px',
+            fontSize: '12px',
+            color: 'rgba(255,255,255,0.6)',
+            lineHeight: 1.6,
+            opacity: hovered ? 1 : 0,
+            transform: hovered ? 'translateY(0)' : 'translateY(8px)',
+            transition: 'opacity 0.3s ease 0.11s, transform 0.3s ease 0.11s',
           }}>
             {item.detail}
-          </div>
+          </span>
         </div>
       </div>
 
@@ -237,49 +217,104 @@ export default function BrandSegment() {
   return (
     <main className="segment-page">
 
-      <div className="segment-header" style={{ background: segment.gradientSubtle }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={segment.accentColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M2 20h20"/><path d="m7 17 2-6 3 4 2-3 3 5"/><path d="M4 3h16v10H4z"/>
-          </svg>
-          <p className="segment-eyebrow" style={{ color: segment.accentColor }}>Brand identity</p>
-        </div>
-        <h1 className="segment-headline">{segment.headline[0]}<br />{segment.headline[1]}</h1>
-        <p className="segment-intro">{segment.intro}</p>
-      </div>
-
-      <div className="brand-archive-block">
-        <p className="craft-section-label">Craft archive</p>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {ARCHIVE_ITEMS.map(item => (
-            <ArchiveRow key={item.id} item={item} />
-          ))}
-        </div>
-
-        <div
-          className="brand-muted-card"
-          style={{
-            marginTop: '32px',
-            padding: '32px',
-            border: '1px dashed var(--color-hairline-strong)',
-            borderRadius: '12px',
-            textAlign: 'center',
-          }}
-        >
-          <p style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: '12px',
-            color: 'var(--color-meta)',
-            letterSpacing: '0.04em',
-          }}>
-            More brand work coming — MyPetDx and others in progress
-          </p>
-        </div>
-      </div>
-
+      {/* Dark premium header */}
       <div style={{
-        marginTop: '64px',
+        background: '#1A0030',
+        borderRadius: '16px',
+        padding: '48px',
+        marginBottom: '48px',
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        {/* Subtle purple glow */}
+        <div style={{
+          position: 'absolute',
+          top: '-60px',
+          right: '-60px',
+          width: '300px',
+          height: '300px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(109,40,217,0.25) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }} />
+
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          marginBottom: '20px',
+        }}>
+          <div style={{
+            width: '6px',
+            height: '6px',
+            borderRadius: '50%',
+            background: '#A78BFA',
+          }} />
+          <span style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '11px',
+            fontWeight: 600,
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            color: '#A78BFA',
+          }}>
+            Brand identity
+          </span>
+        </div>
+
+        <h1 style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: 'clamp(32px, 4vw, 48px)',
+          fontWeight: 400,
+          letterSpacing: '-0.03em',
+          lineHeight: 1.1,
+          color: '#FFFFFF',
+          marginBottom: '16px',
+        }}>
+          {segment.headline[0]}<br />{segment.headline[1]}
+        </h1>
+
+        <p style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: '15px',
+          color: 'rgba(255,255,255,0.5)',
+          lineHeight: 1.7,
+          maxWidth: '480px',
+          margin: 0,
+        }}>
+          {segment.intro}
+        </p>
+      </div>
+
+      {/* Section label */}
+      <p className="craft-section-label">Craft archive</p>
+
+      {/* 2x2 image grid */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '12px',
+        marginBottom: '48px',
+      }}>
+        {ARCHIVE_ITEMS.map(item => (
+          <GridCell key={item.id} item={item} />
+        ))}
+      </div>
+
+      {/* More coming note */}
+      <p style={{
+        fontFamily: "'Inter', sans-serif",
+        fontSize: '12px',
+        color: 'var(--color-muted)',
+        letterSpacing: '0.04em',
+        textAlign: 'center',
+        marginBottom: '64px',
+      }}>
+        More brand work coming — MyPetDx and others in progress
+      </p>
+
+      {/* Contact */}
+      <div style={{
         paddingTop: '40px',
         borderTop: '1px solid var(--color-hairline)',
       }}>

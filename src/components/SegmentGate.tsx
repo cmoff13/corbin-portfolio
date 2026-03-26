@@ -11,6 +11,8 @@ const SEGMENTS = [
     sub: 'Logos, systems, craft',
     accent: '#3B0764',
     gradient: 'linear-gradient(135deg, #3B0764, #6D28D9)',
+    previewBg: '#F5F0EB',
+    previewImage: '/images/brand/mypetdx-palette.png',
   },
   {
     id: 'web',
@@ -18,6 +20,8 @@ const SEGMENTS = [
     sub: 'Pages, CRO, performance',
     accent: '#DC2626',
     gradient: 'linear-gradient(135deg, #DC2626, #F87171)',
+    previewBg: '#F5F0EB',
+    previewImage: '/images/web/skygate-thumb.png',
   },
   {
     id: 'ux',
@@ -25,6 +29,8 @@ const SEGMENTS = [
     sub: 'Flows, IA, interaction',
     accent: '#1D4ED8',
     gradient: 'linear-gradient(135deg, #1D4ED8, #60A5FA)',
+    previewBg: '#F5F0EB',
+    previewImage: '/images/ux/blackcoast-thumb.png',
   },
 ]
 
@@ -62,26 +68,67 @@ function useWordReveal(text: string, started: boolean, baseDelay: number) {
   }))
 }
 
-const ICONS: Record<string, React.ReactNode> = {
-  brand: (
-    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 2L2 7l10 5 10-5-10-5z" />
-      <path d="M2 17l10 5 10-5" />
-      <path d="M2 12l10 5 10-5" />
+const SEGMENT_GRADIENTS: Record<string, { c1: string; c2: string }> = {
+  brand: { c1: '#6D28D9', c2: '#3B0764' },
+  web:   { c1: '#DC2626', c2: '#7f1d1d' },
+  ux:    { c1: '#3b82f6', c2: '#1D4ED8' },
+}
+
+function BrandSVG() {
+  return (
+    <svg width={140} height={120} aria-hidden="true" style={{ position: 'absolute', inset: 0, margin: 'auto', display: 'block' }}>
+      <circle cx={58} cy={60} r={28} fill="#3B0764" fillOpacity={0.04} stroke="#3B0764" strokeWidth={0.75} opacity={0.35} />
+      <circle cx={82} cy={60} r={28} fill="#3B0764" fillOpacity={0.04} stroke="#3B0764" strokeWidth={0.75} opacity={0.35} />
+      <path
+        d="M70,34.06 A28,28,0,0,1,70,85.94 A28,28,0,0,1,70,34.06 Z"
+        fill="#3B0764"
+        opacity={0.08}
+      />
     </svg>
-  ),
-  web: (
-    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <path d="M2 12h20" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+  )
+}
+
+function WebSVG() {
+  const xs = [28, 52, 76, 100, 124]
+  const ys = [20, 44, 68, 100]
+  return (
+    <svg width={140} height={120} aria-hidden="true" style={{ position: 'absolute', inset: 0, margin: 'auto', display: 'block' }}>
+      {xs.map(x => (
+        <line key={x} x1={x} y1={20} x2={x} y2={100} stroke="#DC2626" strokeWidth={0.5} opacity={0.2} />
+      ))}
+      {ys.map(y => (
+        <line key={y} x1={28} y1={y} x2={124} y2={y} stroke="#DC2626" strokeWidth={0.5} opacity={0.2} />
+      ))}
+      <rect x={28} y={40} width={48} height={40} rx={2} fill="#DC2626" fillOpacity={0.12} stroke="#DC2626" strokeWidth={0.5} strokeOpacity={0.4} />
+      <rect x={76} y={20} width={48} height={20} rx={2} fill="#DC2626" fillOpacity={0.08} />
+      <rect x={76} y={60} width={48} height={20} rx={2} fill="#DC2626" fillOpacity={0.08} />
     </svg>
-  ),
-  ux: (
-    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 4l7.07 17 2.51-7.39L21 11.07z" />
+  )
+}
+
+function UxSVG() {
+  const rects = [
+    { x: 18, y: 16, w: 104, h: 88, rx: 6, op: 0.2, filled: false },
+    { x: 26, y: 24, w:  88, h: 72, rx: 5, op: 0.28, filled: false },
+    { x: 34, y: 32, w:  72, h: 56, rx: 4, op: 0.36, filled: false },
+    { x: 42, y: 40, w:  56, h: 40, rx: 3, op: 0.43, filled: false },
+    { x: 50, y: 48, w:  40, h: 24, rx: 2, op: 0.5,  filled: true  },
+  ]
+  return (
+    <svg width={140} height={120} aria-hidden="true" style={{ position: 'absolute', inset: 0, margin: 'auto', display: 'block' }}>
+      {rects.map((r, i) => (
+        <rect
+          key={i}
+          x={r.x} y={r.y} width={r.w} height={r.h} rx={r.rx}
+          fill={r.filled ? '#1D4ED8' : 'none'}
+          fillOpacity={r.filled ? 0.15 : undefined}
+          stroke="#1D4ED8"
+          strokeWidth={0.75}
+          opacity={r.op}
+        />
+      ))}
     </svg>
-  ),
+  )
 }
 
 function SegmentButton({
@@ -94,6 +141,34 @@ function SegmentButton({
   fullWidth: boolean
 }) {
   const [hovered, setHovered] = useState(false)
+  const previewRef = useRef<HTMLDivElement>(null)
+  const rafRef = useRef<number>(0)
+  const tRef = useRef(Math.random() * Math.PI * 2)
+  const hoveredRef = useRef(false)
+
+  useEffect(() => {
+    hoveredRef.current = hovered
+  }, [hovered])
+
+  useEffect(() => {
+    const grad = SEGMENT_GRADIENTS[seg.id]
+    if (!grad) return
+
+    function frame() {
+      const speed = hoveredRef.current ? 0.006 * 3.5 : 0.006
+      tRef.current += speed
+      const t = tRef.current
+      const alpha = hoveredRef.current ? 0.26 : 0.12
+      const x = 50 + 30 * Math.sin(t)
+      const y = 50 + 20 * Math.cos(t * 0.7)
+      const bg = `${seg.previewBg} radial-gradient(ellipse at ${x}% ${y}%, ${grad.c1}${Math.round(alpha * 255).toString(16).padStart(2, '0')} 0%, ${grad.c2}${Math.round(alpha * 0.4 * 255).toString(16).padStart(2, '0')} 60%, transparent 100%)`
+      if (previewRef.current) previewRef.current.style.background = bg
+      rafRef.current = requestAnimationFrame(frame)
+    }
+
+    rafRef.current = requestAnimationFrame(frame)
+    return () => cancelAnimationFrame(rafRef.current)
+  }, [seg.id, seg.previewBg])
 
   return (
     <button
@@ -102,58 +177,64 @@ function SegmentButton({
       onClick={onClick}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible
-          ? hovered ? 'translateY(-2px)' : 'translateY(0)'
-          : 'translateY(16px)',
+        transform: visible ? 'translateY(0)' : 'translateY(16px)',
         transition: [
           `opacity 0.55s ease ${delay}ms`,
           `transform 0.55s cubic-bezier(0.23,1,0.32,1) ${visible ? '0ms' : delay + 'ms'}`,
-          'border-color 0.2s ease',
           'box-shadow 0.2s ease',
         ].join(', '),
-        padding: '16px 20px',
+        padding: '3px',
         ...(fullWidth
           ? { width: '100%', minWidth: 0 }
-          : { minWidth: '170px' }),
+          : { minWidth: '280px' }),
         textAlign: 'left',
-        border: `1.5px solid ${hovered ? seg.accent + '60' : 'rgba(0,0,0,0.08)'}`,
-        borderRadius: '14px',
+        border: '1px solid rgba(0,0,0,0.06)',
+        borderRadius: '18px',
         background: 'rgba(255,255,255,0.92)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
+        backdropFilter: 'blur(6px)',
+        WebkitBackdropFilter: 'blur(6px)',
         cursor: 'none',
         boxShadow: hovered
-          ? '0 4px 20px rgba(0,0,0,0.10)'
+          ? '0 4px 24px rgba(0,0,0,0.08)'
           : '0 1px 4px rgba(0,0,0,0.06)',
         position: 'relative',
         zIndex: 10,
       }}
     >
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '7px',
-        marginBottom: '5px',
-        color: seg.accent,
+      {/* Preview area */}
+      <div ref={previewRef} style={{
+        height: '200px',
+        borderRadius: '16px',
+        overflow: 'hidden',
+        position: 'relative',
+        background: seg.previewBg,
       }}>
-        {ICONS[seg.id]}
-        <span style={{
+        {seg.id === 'brand' && <BrandSVG />}
+        {seg.id === 'web'   && <WebSVG />}
+        {seg.id === 'ux'    && <UxSVG />}
+      </div>
+      {/* Label area */}
+      <div style={{
+        padding: '16px 20px',
+        background: 'transparent',
+      }}>
+        <div style={{
           fontFamily: "'Outfit', sans-serif",
           fontWeight: 400,
-          fontSize: '15px',
+          fontSize: '17px',
           letterSpacing: '-0.02em',
           color: '#1a1a1a',
+          marginBottom: '3px',
         }}>
           {seg.title}
-        </span>
-      </div>
-      <div style={{
-        fontFamily: "'Inter', sans-serif",
-        fontSize: '11px',
-        color: '#555',
-        paddingLeft: '21px',
-      }}>
-        {seg.sub}
+        </div>
+        <div style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: '12px',
+          color: '#767676',
+        }}>
+          {seg.sub}
+        </div>
       </div>
     </button>
   )
@@ -406,6 +487,54 @@ export default function SegmentGate() {
       />
 
       <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: '-0.15em',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          fontFamily: "'Climate Crisis', cursive",
+          fontSize: 'clamp(70px, 10vw, 140px)',
+          fontWeight: 400,
+          color: 'white',
+          opacity: 0.15,
+          mixBlendMode: 'overlay',
+          letterSpacing: '-0.04em',
+          textTransform: 'uppercase',
+          pointerEvents: 'none',
+          zIndex: 0,
+          whiteSpace: 'nowrap',
+          userSelect: 'none',
+        }}
+      >
+        Corbin Moffitt
+      </div>
+
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          bottom: '-0.15em',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          fontFamily: "'Climate Crisis', cursive",
+          fontSize: 'clamp(120px, 18vw, 260px)',
+          fontWeight: 400,
+          color: 'white',
+          opacity: 0.15,
+          mixBlendMode: 'overlay',
+          letterSpacing: '-0.04em',
+          textTransform: 'uppercase',
+          pointerEvents: 'none',
+          zIndex: 0,
+          whiteSpace: 'nowrap',
+          userSelect: 'none',
+        }}
+      >
+        Designer
+      </div>
+
+      <div
         style={{
           position: 'relative',
           zIndex: 1,
@@ -413,22 +542,9 @@ export default function SegmentGate() {
           flexDirection: 'column',
           alignItems: 'center',
           width: '100%',
-          maxWidth: '640px',
+          maxWidth: '900px',
         }}
       >
-        <p style={{
-          ...fadeUp(0),
-          fontFamily: "'Inter', sans-serif",
-          fontSize: '10px',
-          fontWeight: 600,
-          letterSpacing: '0.12em',
-          textTransform: 'uppercase',
-          color: '#666',
-          marginBottom: '32px',
-        }}>
-          Corbin Moffitt — Designer
-        </p>
-
         <div style={{ width: '100%', textAlign: 'center', marginBottom: '20px' }}>
           <div style={{
             fontFamily: "'Outfit', sans-serif",
@@ -474,7 +590,6 @@ export default function SegmentGate() {
           maxWidth: '340px',
         }}>
           Pick the work that's relevant to you.
-          Everything else stays out of the way.
         </p>
 
         <div style={{
