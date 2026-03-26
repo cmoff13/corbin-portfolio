@@ -4,7 +4,7 @@ import SegmentSwitcher from '@/components/SegmentSwitcher'
 
 export const metadata: Metadata = {
   title: 'Corbin Moffitt — Designer',
-  description: 'Seven years of design. Three ways to see it.',
+  description: 'Brand, web, and product design — case studies and selected work.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

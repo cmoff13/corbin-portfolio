@@ -1,7 +1,7 @@
 'use client'
 
-import SegmentGate from '../components/SegmentGate'
+import HomeLanding from '@/components/HomeLanding'
 
 export default function Home() {
-  return <SegmentGate />
+  return <HomeLanding />
 }
