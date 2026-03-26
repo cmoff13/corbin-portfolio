@@ -441,7 +441,6 @@ function Lightbox({ src, alt, onClose }: {
           maxHeight: '85vh',
           borderRadius: '8px',
           objectFit: 'contain',
-          cursor: 'default',
           boxShadow: '0 24px 80px rgba(0,0,0,0.5)',
           animation: 'scaleIn 0.25s cubic-bezier(0.16,1,0.3,1)',
         }}

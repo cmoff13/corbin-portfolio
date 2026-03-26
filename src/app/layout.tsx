@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import SegmentSwitcher from '@/components/SegmentSwitcher'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
+import CustomCursor from '@/components/CustomCursor'
 
 export const metadata: Metadata = {
   title: 'Corbin Moffitt — Designer',
@@ -11,8 +12,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-theme="light">
-      <body>
+      <body style={{ cursor: 'none' }}>
         <GoogleAnalytics />
+        <CustomCursor />
         <SegmentSwitcher />
         {children}
       </body>

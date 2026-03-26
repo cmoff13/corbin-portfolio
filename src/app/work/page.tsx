@@ -34,7 +34,7 @@ export default function WorkPage() {
   const visibleProjects = CASE_STUDIES.filter(p => !p.hidden)
 
   return (
-    <main className="work-page">
+    <main className="work-page" style={{ cursor: 'none' }}>
 
       {/* Header */}
       <div className="work-hero" style={{ marginBottom: '56px' }}>

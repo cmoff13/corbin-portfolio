@@ -128,7 +128,6 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
           maxHeight: '85vh',
           borderRadius: '8px',
           objectFit: 'contain',
-          cursor: 'default',
           boxShadow: '0 24px 80px rgba(0,0,0,0.5)',
         }}
       />
@@ -708,7 +707,7 @@ export default function BrandSegment() {
   const inViewCta     = useInView(0)
 
   return (
-    <main className="segment-page">
+    <main className="segment-page" style={{ cursor: 'none' }}>
 
       {/* Editorial header */}
       <div style={{ paddingTop: isMobile ? '48px' : '80px', marginBottom: '48px' }}>

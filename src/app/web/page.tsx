@@ -17,7 +17,7 @@ export default function WebSegment() {
   const router = useRouter()
 
   return (
-    <main className="segment-page">
+    <main className="segment-page" style={{ cursor: 'none' }}>
 
       <div className="segment-header">
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>

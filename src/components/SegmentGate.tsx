@@ -11,7 +11,6 @@ const SEGMENTS = [
     accent: '#3B0764',
     gradient: 'linear-gradient(135deg, #3B0764, #6D28D9)',
     previewBg: '#F5F0EB',
-    previewImage: '/images/brand/mypetdx-palette.png',
   },
   {
     id: 'web',
@@ -20,7 +19,6 @@ const SEGMENTS = [
     accent: '#DC2626',
     gradient: 'linear-gradient(135deg, #DC2626, #F87171)',
     previewBg: '#F5F0EB',
-    previewImage: '/images/web/skygate-thumb.png',
   },
   {
     id: 'ux',
@@ -29,7 +27,6 @@ const SEGMENTS = [
     accent: '#1D4ED8',
     gradient: 'linear-gradient(135deg, #1D4ED8, #60A5FA)',
     previewBg: '#F5F0EB',
-    previewImage: '/images/ux/blackcoast-thumb.png',
   },
 ]
 
@@ -39,7 +36,6 @@ const BLOBS = [
   { ox: 0.55, oy: 0.15, r: 500, color: '#93c5fd', rgb: [147, 197, 253] as [number, number, number], vx: 0.1, vy: 0.2 },
 ]
 
-const BLOB_ACCENTS = ['#3B0764', '#DC2626', '#1D4ED8']
 const MAGNET_STRENGTH = 0.032
 const MAGNET_RADIUS = 680
 
@@ -247,13 +243,8 @@ export default function SegmentGate() {
   const [narrowSegmentCards, setNarrowSegmentCards] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animRef = useRef<number>(0)
-  const cursorDotRef = useRef<HTMLDivElement>(null)
-  const cursorRingRef = useRef<HTMLDivElement>(null)
 
   const mouse = useRef({ x: -1000, y: -1000 })
-  const ringPos = useRef({ x: -1000, y: -1000 })
-  const cursorAccent = useRef('#1a1a1a')
-  const cursorRaf = useRef<number>(0)
   const blobsRef = useRef<Blob[]>([])
 
   useEffect(() => {
@@ -361,15 +352,6 @@ export default function SegmentGate() {
         ctx.fill()
       })
 
-      // Cursor accent based on nearest blob
-      let nearest = -1
-      let minD = Infinity
-      blobsRef.current.forEach((blob, i) => {
-        const d = Math.hypot(mx - blob.x, my - blob.y)
-        if (d < blob.r * 0.75 && d < minD) { minD = d; nearest = i }
-      })
-      cursorAccent.current = nearest >= 0 ? BLOB_ACCENTS[nearest] : '#1a1a1a'
-
       animRef.current = requestAnimationFrame(tick)
     }
 
@@ -386,28 +368,7 @@ export default function SegmentGate() {
 
   useEffect(() => {
     window.addEventListener('mousemove', onMouseMove)
-
-    function animCursor() {
-      const dot = cursorDotRef.current
-      const ring = cursorRingRef.current
-      if (dot && ring) {
-        dot.style.left = `${mouse.current.x}px`
-        dot.style.top = `${mouse.current.y}px`
-        dot.style.background = cursorAccent.current
-        ringPos.current.x += (mouse.current.x - ringPos.current.x) * 0.18
-        ringPos.current.y += (mouse.current.y - ringPos.current.y) * 0.18
-        ring.style.left = `${ringPos.current.x}px`
-        ring.style.top = `${ringPos.current.y}px`
-        ring.style.borderColor = cursorAccent.current
-      }
-      cursorRaf.current = requestAnimationFrame(animCursor)
-    }
-
-    animCursor()
-    return () => {
-      window.removeEventListener('mousemove', onMouseMove)
-      cancelAnimationFrame(cursorRaf.current)
-    }
+    return () => window.removeEventListener('mousemove', onMouseMove)
   }, [onMouseMove])
 
   function choose(id: string) {
@@ -453,39 +414,6 @@ export default function SegmentGate() {
       />
 
 <div className="grain-overlay" aria-hidden="true" />
-
-      <div
-        ref={cursorDotRef}
-        style={{
-          position: 'fixed',
-          width: '7px',
-          height: '7px',
-          borderRadius: '50%',
-          background: '#1a1a1a',
-          pointerEvents: 'none',
-          zIndex: 100,
-          transform: 'translate(-50%,-50%)',
-          transition: 'background 0.25s ease',
-          mixBlendMode: 'multiply',
-        }}
-      />
-
-      <div
-        ref={cursorRingRef}
-        style={{
-          position: 'fixed',
-          width: '32px',
-          height: '32px',
-          borderRadius: '50%',
-          border: '1.5px solid #1a1a1a',
-          pointerEvents: 'none',
-          zIndex: 99,
-          transform: 'translate(-50%,-50%)',
-          transition: 'border-color 0.25s ease',
-          mixBlendMode: 'multiply',
-          opacity: 0.4,
-        }}
-      />
 
       <div
         aria-hidden="true"
