@@ -14,7 +14,8 @@ const ARCHIVE_ITEMS = [
     name: 'Swift Powerwashing',
     detail: 'Primary mark for a residential and commercial powerwashing business. Built for signage, vehicles, and digital.',
     image: '/images/brand/swift-logo.jpg',
-    bg: '#f5f0eb',
+    bg: '#F5F0EB',
+    svg: null,
   },
   {
     id: 'mypetdx-palette',
@@ -22,7 +23,8 @@ const ARCHIVE_ITEMS = [
     name: 'MyPetDx — Color system',
     detail: 'Brand color palette for a pet lab diagnostics platform. Warm, trustworthy, and approachable.',
     image: '/images/brand/mypetdx-palette.jpg',
-    bg: '#f7f5f0',
+    bg: '#FDFAF7',
+    svg: null,
   },
   {
     id: 'poppy-palette',
@@ -30,7 +32,8 @@ const ARCHIVE_ITEMS = [
     name: 'Poppy Mobile Notary — Color system',
     detail: 'Color system for a mobile notary service. Professional yet warm — built to communicate trust.',
     image: '/images/brand/poppy-palette.jpg',
-    bg: '#f7f5f0',
+    bg: '#FFF8F5',
+    svg: null,
   },
   {
     id: 'poppy-type',
@@ -38,7 +41,8 @@ const ARCHIVE_ITEMS = [
     name: 'Poppy Mobile Notary — Type system',
     detail: 'Type scale and pairing for a mobile notary brand. Display, body, and label weights with usage rules.',
     image: '/images/brand/poppy-type.jpg',
-    bg: '#f7f5f0',
+    bg: '#F7F5F2',
+    svg: null,
   },
 ]
 
@@ -80,13 +84,9 @@ const PROCESS_STEPS = [
 
 function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
-    document.addEventListener('keydown', handleKey)
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.removeEventListener('keydown', handleKey)
-      document.body.style.overflow = ''
-    }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
   }, [onClose])
 
   return (
@@ -95,35 +95,35 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
       style={{
         position: 'fixed',
         inset: 0,
-        zIndex: 999999,
-        background: 'rgba(0,0,0,0.92)',
+        zIndex: 99999,
+        background: 'rgba(0,0,0,0.88)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '32px',
+        padding: '40px',
         backdropFilter: 'blur(8px)',
         WebkitBackdropFilter: 'blur(8px)',
       }}
     >
       <button
-        onMouseDown={(e) => { e.stopPropagation(); onClose() }}
+        onMouseDown={(e) => e.stopPropagation()}
+        onClick={onClose}
         style={{
           position: 'fixed',
-          top: '20px',
+          top: '24px',
           right: '24px',
-          zIndex: 1000001,
-          background: 'white',
-          border: 'none',
+          width: '40px',
+          height: '40px',
           borderRadius: '50%',
-          width: '44px',
-          height: '44px',
-          fontSize: '22px',
+          background: 'rgba(255,255,255,0.12)',
+          border: '1px solid rgba(255,255,255,0.2)',
+          color: '#fff',
+          fontSize: '20px',
           cursor: 'none',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#1a1a1a',
-          boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
+          zIndex: 100000,
         }}
       >
         ×
@@ -134,8 +134,8 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
         alt={alt}
         onMouseDown={(e) => e.stopPropagation()}
         style={{
-          maxWidth: '90vw',
-          maxHeight: '85vh',
+          maxWidth: '88vw',
+          maxHeight: '82vh',
           borderRadius: '12px',
           objectFit: 'contain',
           boxShadow: '0 24px 80px rgba(0,0,0,0.5)',
@@ -145,115 +145,85 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
   )
 }
 
-function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
+function GalleryCard({ item, onClick }: { item: typeof ARCHIVE_ITEMS[0], onClick: () => void }) {
   const [hovered, setHovered] = useState(false)
-  const [lightboxOpen, setLightboxOpen] = useState(false)
-  const previewRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const el = previewRef.current
-    if (!el) return
-    let t = Math.random() * Math.PI * 2
-    let animId: number
-    function tick() {
-      if (!el) return
-      t += hovered ? 0.006 * 3.5 : 0.006
-      const mix = (Math.sin(t) + 1) / 2
-      const alpha = hovered ? 0.26 : 0.12 + mix * 0.06
-      const hex = Math.round(alpha * 255).toString(16).padStart(2, '0')
-      const x = 30 + mix * 40
-      const y = 20 + mix * 50
-      el.style.background = `radial-gradient(ellipse at ${x}% ${y}%, #3B0764${hex} 0%, #3B076422 50%, #F5F0EB 80%)`
-      animId = requestAnimationFrame(tick)
-    }
-    tick()
-    return () => cancelAnimationFrame(animId)
-  }, [hovered])
 
   return (
-    <>
-      <div
-        ref={previewRef}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onClick={() => { if (item.image) setLightboxOpen(true) }}
-        style={{
-          aspectRatio: '4/3',
-          borderRadius: '16px',
-          overflow: 'hidden',
-          position: 'relative',
-          cursor: 'none',
-        }}
-      >
-        {item.image && (
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={onClick}
+      style={{
+        borderRadius: '18px',
+        background: 'rgba(255,255,255,0.92)',
+        border: '1px solid rgba(0,0,0,0.06)',
+        boxShadow: hovered ? '0 4px 24px rgba(0,0,0,0.10)' : '0 1px 4px rgba(0,0,0,0.06)',
+        padding: '3px',
+        cursor: 'none',
+        transition: 'box-shadow 0.3s ease',
+        overflow: 'hidden',
+      }}
+    >
+      <div style={{
+        borderRadius: '16px',
+        background: item.bg,
+        height: '200px',
+        overflow: 'hidden',
+        position: 'relative',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        {item.svg ? (
+          item.svg
+        ) : item.image ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={item.image}
             alt={item.name}
             style={{
-              position: 'absolute',
-              inset: 0,
               width: '100%',
               height: '100%',
               objectFit: 'cover',
               transition: 'transform 0.6s cubic-bezier(0.16,1,0.3,1)',
-              transform: hovered ? 'scale(1.05)' : 'scale(1)',
+              transform: hovered ? 'scale(1.04)' : 'scale(1)',
             }}
           />
-        )}
+        ) : null}
+      </div>
+      <div style={{ padding: '14px 16px 16px' }}>
         <div style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: '16px 20px 20px',
-          background: 'rgba(255,255,255,0.92)',
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
-          transform: hovered ? 'translateY(0)' : 'translateY(100%)',
-          transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1)',
+          fontSize: '10px',
+          fontFamily: "'Inter', sans-serif",
+          fontWeight: 600,
+          letterSpacing: '0.08em',
+          textTransform: 'uppercase',
+          color: '#3B0764',
+          marginBottom: '5px',
         }}>
-          <span style={{
-            display: 'block',
-            fontFamily: "'Inter', sans-serif",
-            fontSize: '10px',
-            fontWeight: 600,
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            color: ACCENT,
-            marginBottom: '4px',
-          }}>
-            {item.tag}
-          </span>
-          <span style={{
-            display: 'block',
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: '16px',
-            fontWeight: 400,
-            color: '#1a1a1a',
-            letterSpacing: '-0.02em',
-          }}>
-            {item.name}
-          </span>
-          <span style={{
-            display: 'block',
-            fontFamily: "'Inter', sans-serif",
-            fontSize: '12px',
-            color: '#767676',
-            marginTop: '4px',
-            lineHeight: 1.5,
-          }}>
-            {item.detail}
-          </span>
+          {item.tag}
+        </div>
+        <div style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: '15px',
+          fontWeight: 400,
+          color: '#1a1a1a',
+          letterSpacing: '-0.02em',
+          marginBottom: '4px',
+          lineHeight: 1.3,
+        }}>
+          {item.name}
+        </div>
+        <div style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: '11px',
+          color: '#767676',
+          lineHeight: 1.55,
+        }}>
+          {item.detail}
         </div>
       </div>
-      {lightboxOpen && item.image && (
-        <Lightbox
-          src={item.image}
-          alt={item.name}
-          onClose={() => setLightboxOpen(false)}
-        />
-      )}
-    </>
+    </div>
   )
 }
 
@@ -680,6 +650,7 @@ export default function BrandSegment() {
   const [activeFilter, setActiveFilter] = useState('all')
   const [activeStep, setActiveStep] = useState(0)
   const [activeStat, setActiveStat] = useState(-1)
+  const [lightboxItem, setLightboxItem] = useState<typeof ARCHIVE_ITEMS[0] | null>(null)
   const [isMobile, setIsMobile] = useState(false)
   const [started, setStarted] = useState(false)
 
@@ -816,15 +787,30 @@ export default function BrandSegment() {
         gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
         gap: '12px',
         marginBottom: '48px',
-        alignContent: 'start',
       }}>
-        {ARCHIVE_ITEMS
-          .filter(item => activeFilter === 'all' || item.tag === TAG_MAP[activeFilter])
-          .map(item => (
-            <GridCell key={`${activeFilter}-${item.id}`} item={item} />
-          ))
-        }
+        {(activeFilter === 'all'
+          ? ARCHIVE_ITEMS
+          : ARCHIVE_ITEMS.filter(item =>
+              activeFilter === 'logo' ? item.tag === 'Logo mark' :
+              activeFilter === 'color' ? item.tag === 'Color palette' :
+              activeFilter === 'type' ? item.tag === 'Type system' : true
+            )
+        ).map(item => (
+          <GalleryCard
+            key={item.id}
+            item={item}
+            onClick={() => { if (item.image) setLightboxItem(item) }}
+          />
+        ))}
       </div>
+
+      {lightboxItem && lightboxItem.image && (
+        <Lightbox
+          src={lightboxItem.image}
+          alt={lightboxItem.name}
+          onClose={() => setLightboxItem(null)}
+        />
+      )}
 
       {/* More coming note */}
       <p style={{
