@@ -10,6 +10,7 @@ const ACCENT = '#DC2626'
 const WEB_PROJECTS = [
   {
     slug: 'linear-cro',
+    thumbnail: '',
     metric: '63%',
     metricLabel: 'CVR increase',
     bg: '#F0F4FF',
@@ -20,6 +21,7 @@ const WEB_PROJECTS = [
   },
   {
     slug: 'kirrin-finch',
+    thumbnail: '',
     metric: '$1M+',
     metricLabel: 'Revenue scaled',
     bg: '#F5F0EB',
@@ -30,6 +32,7 @@ const WEB_PROJECTS = [
   },
   {
     slug: 'heybud-skincare',
+    thumbnail: '',
     metric: 'Meta + Pinterest',
     metricLabel: 'Channels tested',
     bg: '#FFF5F5',
@@ -40,6 +43,7 @@ const WEB_PROJECTS = [
   },
   {
     slug: 'issa',
+    thumbnail: '',
     metric: 'Brand elevation',
     metricLabel: 'Saturated market',
     bg: '#F0FFF4',
@@ -50,6 +54,7 @@ const WEB_PROJECTS = [
   },
   {
     slug: 'better-business-bureau',
+    thumbnail: '',
     metric: 'A/B tested',
     metricLabel: 'Audience intelligence',
     bg: '#FFFBF0',
@@ -60,6 +65,7 @@ const WEB_PROJECTS = [
   },
   {
     slug: 'skygate-growth-strategies',
+    thumbnail: '/images/skygate/thumbnail.jpg',
     metric: '0→1',
     metricLabel: 'Brand to live site',
     bg: '#F5F5F0',
@@ -711,17 +717,34 @@ export default function WebSegment() {
                   overflow: 'hidden',
                   position: 'relative',
                 }}>
-                  <span style={{
-                    fontFamily: "'Climate Crisis', cursive",
-                    fontSize: 'clamp(36px, 4vw, 52px)',
-                    color: 'rgba(0,0,0,0.12)',
-                    textAlign: 'center',
-                    pointerEvents: 'none',
-                    userSelect: 'none',
-                    letterSpacing: '-0.03em',
-                  }}>
-                    {p.metric}
-                  </span>
+                  {p.thumbnail ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={p.thumbnail}
+                      alt={p.title}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        borderRadius: '16px',
+                        display: 'block',
+                        position: 'absolute',
+                        inset: 0,
+                      }}
+                    />
+                  ) : (
+                    <span style={{
+                      fontFamily: "'Climate Crisis', cursive",
+                      fontSize: 'clamp(36px, 4vw, 52px)',
+                      color: 'rgba(0,0,0,0.12)',
+                      textAlign: 'center',
+                      pointerEvents: 'none',
+                      userSelect: 'none',
+                      letterSpacing: '-0.03em',
+                    }}>
+                      {p.metric}
+                    </span>
+                  )}
                 </div>
 
                 {/* Right content */}
