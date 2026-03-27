@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { CASE_STUDIES, SEGMENTS } from '@/lib/segments'
-import ContactCta from '@/components/ContactCta'
 
 const THUMBNAILS: Record<string, string> = {
   'black-coast-estates': '/images/black-coast/thumbnail.jpg',
@@ -31,7 +31,14 @@ const SEGMENT_ICONS: Record<string, React.ReactNode> = {
 
 export default function WorkPage() {
   const router = useRouter()
+  const [copied, setCopied] = useState(false)
   const visibleProjects = CASE_STUDIES.filter(p => !p.hidden)
+
+  function handleCopy() {
+    navigator.clipboard.writeText('cmoff13@gmail.com')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
     <main className="work-page" style={{ cursor: 'none' }}>
@@ -140,7 +147,7 @@ export default function WorkPage() {
       </div>
 
       {/* Project list */}
-      <div className="work-project-stack" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         {visibleProjects.map(project => {
           const segment = SEGMENTS[project.primarySegment]
           const thumbnail = THUMBNAILS[project.slug]
@@ -154,116 +161,107 @@ export default function WorkPage() {
             <div
               key={project.slug}
               onClick={() => router.push(`/work/${project.slug}`)}
+              onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 4px 24px rgba(0,0,0,0.10)' }}
+              onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 1px 4px rgba(0,0,0,0.06)' }}
               style={{
-                display: 'grid',
-                gridTemplateColumns: '80px 1fr',
-                gap: '0',
-                background: 'var(--color-bg)',
-                border: '1px solid var(--color-hairline)',
-                borderRadius: '12px',
+                borderRadius: '18px',
+                background: 'rgba(255,255,255,0.92)',
+                border: '1px solid rgba(0,0,0,0.06)',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
+                padding: '3px',
+                marginBottom: '12px',
+                cursor: 'none',
+                transition: 'box-shadow 0.3s ease',
                 overflow: 'hidden',
-                cursor: 'pointer',
-                transition: 'box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.08)'
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.borderColor = '#e4e4e1'
-                const thumb = e.currentTarget.querySelector('.work-thumb') as HTMLElement
-                if (thumb) thumb.style.transform = 'scale(1.05)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.boxShadow = 'none'
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.borderColor = '#ededec'
-                const thumb = e.currentTarget.querySelector('.work-thumb') as HTMLElement
-                if (thumb) thumb.style.transform = 'scale(1)'
               }}
             >
-              {/* Thumbnail */}
-              <div style={{
-                position: 'relative',
-                overflow: 'hidden',
-                background: segment.gradientSubtle,
-                minHeight: '80px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}>
-                {thumbnail ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={thumbnail}
-                    alt={project.title}
-                    className="work-thumb"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      display: 'block',
-                      transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
-                    }}
-                  />
-                ) : (
-                  <div
-                    className="work-thumb"
-                    style={{
-                      transition: 'transform 0.5s cubic-bezier(0.16,1,0.3,1)',
-                      color: segment.accentColor,
-                      opacity: 0.5,
-                    }}
-                  >
-                    {SEGMENT_ICONS[project.primarySegment]}
-                  </div>
-                )}
-              </div>
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                {/* Left frame */}
+                <div style={{
+                  width: '260px',
+                  flexShrink: 0,
+                  borderRadius: '16px',
+                  background: segment.accentColor + '0f',
+                  minHeight: '180px',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  position: 'relative',
+                }}>
+                  {thumbnail ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={thumbnail}
+                      alt={project.title}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        display: 'block',
+                        position: 'absolute',
+                        inset: 0,
+                      }}
+                    />
+                  ) : (
+                    <span style={{
+                      fontFamily: "'Climate Crisis', cursive",
+                      fontSize: '40px',
+                      color: 'rgba(0,0,0,0.1)',
+                      textAlign: 'center',
+                      pointerEvents: 'none',
+                      userSelect: 'none',
+                      padding: '0 16px',
+                      lineHeight: 1.2,
+                    }}>
+                      {project.title}
+                    </span>
+                  )}
+                </div>
 
-              {/* Content */}
-              <div style={{
-                padding: '16px 20px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '16px',
-              }}>
-                <div>
+                {/* Right content */}
+                <div style={{
+                  flex: 1,
+                  padding: '24px 28px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                }}>
                   <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    marginBottom: '5px',
                     fontFamily: "'Inter', sans-serif",
                     fontSize: '10px',
                     fontWeight: 600,
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
                     color: segment.accentColor,
+                    marginBottom: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '5px',
                   }}>
                     {SEGMENT_ICONS[project.primarySegment]}
                     {segment.label}
                   </div>
                   <div style={{
                     fontFamily: "'Outfit', sans-serif",
-                    fontSize: '17px',
+                    fontSize: '22px',
                     fontWeight: 400,
-                    letterSpacing: '-0.02em',
                     color: '#1a1a1a',
+                    letterSpacing: '-0.02em',
                     lineHeight: 1.2,
-                    marginBottom: '4px',
                   }}>
                     {project.title}
                   </div>
                   <div style={{
                     fontFamily: "'Inter', sans-serif",
-                    fontSize: '12px',
-                    color: '#9b9b9b',
-                    lineHeight: 1.4,
-                    marginBottom: '10px',
+                    fontSize: '14px',
+                    color: '#767676',
+                    lineHeight: 1.6,
+                    marginTop: '6px',
                   }}>
                     {project.subtitle}
                   </div>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '12px' }}>
                     {project.tags.slice(0, 3).map(tag => (
                       <span
                         key={tag}
@@ -273,8 +271,8 @@ export default function WorkPage() {
                           fontWeight: 600,
                           letterSpacing: '0.06em',
                           textTransform: 'uppercase',
-                          padding: '2px 7px',
-                          borderRadius: '4px',
+                          padding: '3px 8px',
+                          borderRadius: '999px',
                           color: segment.accentColor,
                           background: tagBg,
                         }}
@@ -283,66 +281,64 @@ export default function WorkPage() {
                       </span>
                     ))}
                   </div>
+                  <div style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '13px',
+                    color: segment.accentColor,
+                    fontWeight: 500,
+                    marginTop: '16px',
+                  }}>
+                    View case study →
+                  </div>
                 </div>
-
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#ccc"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ flexShrink: 0 }}
-                >
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
               </div>
             </div>
           )
         })}
       </div>
 
+      {/* Contact footer */}
       <div style={{
-        marginTop: '64px',
-        paddingTop: '40px',
-        borderTop: '1px solid var(--color-hairline)',
+        paddingTop: '64px',
+        paddingBottom: '80px',
+        borderTop: '1px solid #f0f0f0',
+        marginTop: '48px',
+        textAlign: 'center',
       }}>
-        <ContactCta variant="full" accentColor="#1a1a1a" />
-      </div>
-
-      {/* Footer */}
-      <div style={{
-        marginTop: '32px',
-        paddingTop: '32px',
-        borderTop: '1px solid var(--color-hairline)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-      }}>
-        <button
-          onClick={() => router.push('/')}
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: '13px',
-            color: '#999',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.color = '#1a1a1a')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#999')}
-        >
-          ← Back to gate
-        </button>
         <p style={{
           fontFamily: "'Inter', sans-serif",
-          fontSize: '12px',
-          color: '#ccc',
+          fontSize: '14px',
+          color: '#767676',
+          marginBottom: '20px',
         }}>
-          More projects coming
+          Open to senior design roles and select freelance.
         </p>
+        <button
+          onClick={handleCopy}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '10px 20px',
+            background: '#1a1a1a',
+            color: '#ffffff',
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '13px',
+            fontWeight: 600,
+            borderRadius: '999px',
+            border: 'none',
+            cursor: 'none',
+            transition: 'opacity 0.2s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+          onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <rect x="5" y="1" width="9" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.5"/>
+            <rect x="2" y="4" width="9" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.5" fill="#1a1a1a"/>
+          </svg>
+          {copied ? 'Copied!' : 'Copy email'}
+        </button>
       </div>
 
     </main>

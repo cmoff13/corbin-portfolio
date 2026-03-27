@@ -673,7 +673,10 @@ export default function WebSegment() {
       {/* SECTION 3 — PROJECT CARDS */}
       <div ref={inViewProjects.ref} style={inViewProjects.style}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '64px' }}>
-          {WEB_PROJECTS.filter(p => !CASE_STUDIES.find(c => c.slug === p.slug)?.hidden).map(p => (
+          {WEB_PROJECTS.filter(p => {
+              const cs = CASE_STUDIES.find(c => c.slug === p.slug)
+              return cs && !cs.hidden
+            }).map(p => (
             <div
               key={p.slug}
               onClick={() => router.push('/work/' + p.slug)}

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Outfit:wght@300;400;500;600&family=Inter:wght@400;500&display=swap');
 
-html, body, * { cursor: none !important; }
+html, body, * { cursor: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7") 0 0, none !important; }
 @media (pointer: coarse) { html, body, * { cursor: auto !important; } }
 /* -- Fonts ---------------------------------------------------------------- */
 

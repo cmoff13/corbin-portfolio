@@ -784,6 +784,12 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
 
   useEffect(() => {
+    if (!project || project.hidden) {
+      router.replace('/')
+    }
+  }, [project, router])
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
@@ -799,19 +805,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
     return () => observer.disconnect()
   }, [])
 
-  if (!project) {
-    return (
-      <main className="segment-page">
-        <p style={{ color: '#999' }}>Project not found.</p>
-        <button
-          onClick={() => router.back()}
-          style={{ marginTop: '16px', fontSize: '14px', color: '#555', background: 'none', border: 'none', cursor: 'pointer' }}
-        >
-          ← Back
-        </button>
-      </main>
-    )
-  }
+  if (!project || project.hidden) return null
 
   const segment = SEGMENTS[project.primarySegment]
   const tagBg = project.primarySegment === 'web'
