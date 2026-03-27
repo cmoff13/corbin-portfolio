@@ -129,13 +129,14 @@ function UxSVG() {
 }
 
 function SegmentButton({
-  seg, onClick, visible, delay, fullWidth,
+  seg, onClick, visible, delay, fullWidth, isMobile,
 }: {
   seg: typeof SEGMENTS[0]
   onClick: () => void
   visible: boolean
   delay: number
   fullWidth: boolean
+  isMobile: boolean
 }) {
   const [hovered, setHovered] = useState(false)
   const previewRef = useRef<HTMLDivElement>(null)
@@ -200,7 +201,8 @@ function SegmentButton({
     >
       {/* Preview area */}
       <div ref={previewRef} style={{
-        height: '200px',
+        height: isMobile ? undefined : '200px',
+        aspectRatio: isMobile ? '16/9' : undefined,
         borderRadius: '16px',
         overflow: 'hidden',
         position: 'relative',
@@ -212,7 +214,7 @@ function SegmentButton({
       </div>
       {/* Label area */}
       <div style={{
-        padding: '16px 20px',
+        padding: isMobile ? '14px 16px 16px' : '16px 20px',
         background: 'transparent',
       }}>
         <div style={{
@@ -240,7 +242,7 @@ function SegmentButton({
 export default function SegmentGate() {
   const router = useRouter()
   const [started, setStarted] = useState(false)
-  const [narrowSegmentCards, setNarrowSegmentCards] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animRef = useRef<number>(0)
 
@@ -265,8 +267,8 @@ export default function SegmentGate() {
   }, [])
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 499px)')
-    const sync = () => setNarrowSegmentCards(mq.matches)
+    const mq = window.matchMedia('(max-width: 768px)')
+    const sync = () => setIsMobile(mq.matches)
     sync()
     mq.addEventListener('change', sync)
     return () => mq.removeEventListener('change', sync)
@@ -394,7 +396,7 @@ export default function SegmentGate() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '24px 24px',
+        padding: isMobile ? '48px 20px 40px' : '24px 24px',
         overflow: 'hidden',
         position: 'relative',
         cursor: 'none',
@@ -425,16 +427,17 @@ export default function SegmentGate() {
           width: '100%',
           textAlign: 'center',
           fontFamily: "'Climate Crisis', cursive",
-          fontSize: 'clamp(70px, 10vw, 140px)',
+          fontSize: isMobile ? '22vw' : 'clamp(70px, 10vw, 140px)',
           fontWeight: 400,
           color: 'white',
-          opacity: 0.15,
+          opacity: isMobile ? 0.07 : 0.15,
           mixBlendMode: 'overlay',
           letterSpacing: '-0.04em',
           textTransform: 'uppercase',
           pointerEvents: 'none',
           zIndex: 0,
           whiteSpace: 'nowrap',
+          overflow: 'hidden',
           userSelect: 'none',
         }}
       >
@@ -449,16 +452,17 @@ export default function SegmentGate() {
           left: '50%',
           transform: 'translateX(-50%)',
           fontFamily: "'Climate Crisis', cursive",
-          fontSize: 'clamp(120px, 18vw, 260px)',
+          fontSize: isMobile ? '22vw' : 'clamp(120px, 18vw, 260px)',
           fontWeight: 400,
           color: 'white',
-          opacity: 0.15,
+          opacity: isMobile ? 0.07 : 0.15,
           mixBlendMode: 'overlay',
           letterSpacing: '-0.04em',
           textTransform: 'uppercase',
           pointerEvents: 'none',
           zIndex: 0,
           whiteSpace: 'nowrap',
+          overflow: 'hidden',
           userSelect: 'none',
         }}
       >
@@ -479,11 +483,12 @@ export default function SegmentGate() {
         <div style={{ width: '100%', textAlign: 'center', marginBottom: '20px' }}>
           <div style={{
             fontFamily: "'Outfit', sans-serif",
-            fontSize: 'clamp(22px, 4vw, 44px)',
+            fontSize: isMobile ? 'clamp(32px, 9vw, 52px)' : 'clamp(22px, 4vw, 44px)',
             fontWeight: 400,
             lineHeight: 1.1,
             letterSpacing: '-0.03em',
             color: '#1a1a1a',
+            textAlign: 'center',
             overflowWrap: 'break-word',
             marginBottom: '6px',
           }}>
@@ -495,11 +500,12 @@ export default function SegmentGate() {
           </div>
           <div style={{
             fontFamily: "'Outfit', sans-serif",
-            fontSize: 'clamp(22px, 4vw, 44px)',
+            fontSize: isMobile ? 'clamp(32px, 9vw, 52px)' : 'clamp(22px, 4vw, 44px)',
             fontWeight: 400,
             lineHeight: 1.1,
             letterSpacing: '-0.03em',
             color: '#1a1a1a',
+            textAlign: 'center',
             overflowWrap: 'break-word',
           }}>
             {line2.map(({ word, wrapStyle, innerStyle }, i) => (
@@ -513,12 +519,13 @@ export default function SegmentGate() {
         <p style={{
           ...fadeUp(700),
           fontFamily: "'Inter', sans-serif",
-          fontSize: '15px',
-          color: '#444',
+          fontSize: isMobile ? '16px' : '15px',
+          color: isMobile ? '#767676' : '#444',
           textAlign: 'center',
           lineHeight: 1.6,
           marginBottom: '48px',
-          maxWidth: '340px',
+          maxWidth: isMobile ? '280px' : '340px',
+          margin: isMobile ? '0 auto 48px' : undefined,
         }}>
           Pick the work that's relevant to you.
         </p>
@@ -526,12 +533,14 @@ export default function SegmentGate() {
         <div style={{
           ...fadeUp(820),
           display: 'flex',
-          flexDirection: narrowSegmentCards ? 'column' : 'row',
-          flexWrap: narrowSegmentCards ? 'nowrap' : 'wrap',
-          justifyContent: narrowSegmentCards ? 'stretch' : 'center',
-          alignItems: narrowSegmentCards ? 'stretch' : undefined,
+          flexDirection: isMobile ? 'column' : 'row',
+          flexWrap: isMobile ? 'nowrap' : 'wrap',
+          justifyContent: isMobile ? 'stretch' : 'center',
+          alignItems: isMobile ? 'stretch' : undefined,
           gap: '10px',
           width: '100%',
+          maxWidth: isMobile ? '100%' : undefined,
+          marginTop: isMobile ? '32px' : undefined,
           marginBottom: '28px',
         }}>
           {SEGMENTS.map((seg, i) => (
@@ -541,17 +550,23 @@ export default function SegmentGate() {
               onClick={() => choose(seg.id)}
               visible={started}
               delay={820 + i * 70}
-              fullWidth={narrowSegmentCards}
+              fullWidth={isMobile}
+              isMobile={isMobile}
             />
           ))}
         </div>
 
-        <div style={{ ...fadeUp(1040) }}>
+        <div style={{
+          ...fadeUp(1040),
+          display: isMobile ? 'flex' : undefined,
+          justifyContent: isMobile ? 'center' : undefined,
+          marginTop: isMobile ? '24px' : undefined,
+        }}>
           <button
             onClick={() => router.push('/work')}
             style={{
               fontFamily: "'Inter', sans-serif",
-              fontSize: '12px',
+              fontSize: isMobile ? '13px' : '12px',
               color: '#888',
               background: 'none',
               border: 'none',

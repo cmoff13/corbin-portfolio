@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 
 export default function CustomCursor() {
+  const [isTouch, setIsTouch] = useState(false)
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
   const mouse = useRef({ x: -1000, y: -1000 })
@@ -18,6 +19,10 @@ export default function CustomCursor() {
     const id = Date.now()
     setRipples(prev => [...prev, { id, x: e.clientX, y: e.clientY }])
     setTimeout(() => setRipples(prev => prev.filter(r => r.id !== id)), 550)
+  }, [])
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia('(pointer: coarse)').matches)
   }, [])
 
   useEffect(() => {
@@ -43,6 +48,8 @@ export default function CustomCursor() {
       window.removeEventListener('click', onMouseClick)
     }
   }, [onMouseMove, onMouseClick])
+
+  if (isTouch) return null
 
   return (
     <>
