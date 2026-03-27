@@ -91,11 +91,11 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
 
   return (
     <div
-      onClick={onClose}
+      onMouseDown={() => onClose()}
       style={{
         position: 'fixed',
         inset: 0,
-        zIndex: 9999,
+        zIndex: 999999,
         background: 'rgba(0,0,0,0.92)',
         display: 'flex',
         alignItems: 'center',
@@ -106,27 +106,25 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
       }}
     >
       <button
-        onClick={(e) => { e.stopPropagation(); onClose() }}
+        onMouseDown={(e) => { e.stopPropagation(); onClose() }}
         style={{
-          position: 'absolute',
-          top: '24px',
+          position: 'fixed',
+          top: '20px',
           right: '24px',
-          width: '40px',
-          height: '40px',
+          zIndex: 1000001,
+          background: 'white',
+          border: 'none',
           borderRadius: '50%',
-          background: 'rgba(255,255,255,0.1)',
-          border: '1px solid rgba(255,255,255,0.2)',
-          color: '#fff',
-          fontSize: '20px',
+          width: '44px',
+          height: '44px',
+          fontSize: '22px',
           cursor: 'none',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 10000,
-          transition: 'background 0.2s',
+          color: '#1a1a1a',
+          boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
         }}
-        onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
-        onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
       >
         ×
       </button>
@@ -134,7 +132,7 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
       <img
         src={src}
         alt={alt}
-        onClick={e => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
         style={{
           maxWidth: '90vw',
           maxHeight: '85vh',
