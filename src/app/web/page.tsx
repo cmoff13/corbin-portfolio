@@ -164,11 +164,12 @@ function getProcessSVG(index: number, c: string) {
   }
 }
 
-function ProcessCard({ step, active, onClick, index }: {
+function ProcessCard({ step, active, onClick, index, isMobile }: {
   step: typeof PROCESS_STEPS[0]
   active: boolean
   onClick: () => void
   index: number
+  isMobile?: boolean
 }) {
   const previewRef = useRef<HTMLDivElement>(null)
   const rafRef = useRef<number>(0)
@@ -221,7 +222,7 @@ function ProcessCard({ step, active, onClick, index }: {
       }}
     >
       <div ref={previewRef} style={{
-        height: '120px',
+        height: isMobile ? '100px' : '120px',
         borderRadius: '16px',
         overflow: 'hidden',
         position: 'relative',
@@ -239,7 +240,7 @@ function ProcessCard({ step, active, onClick, index }: {
           {getProcessSVG(index, svgColor)}
         </div>
       </div>
-      <div style={{ padding: '14px 16px' }}>
+      <div style={{ padding: isMobile ? '10px 12px 10px' : '14px 16px' }}>
         <div style={{
           fontFamily: "'Inter', sans-serif",
           fontSize: '10px',
@@ -368,9 +369,9 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
       overflow: 'hidden',
       background: '#f7f5f0',
       borderRadius: '16px',
-      padding: isMobile ? '48px 24px' : '64px 48px',
+      padding: isMobile ? '40px 24px' : '64px 48px',
       marginTop: '80px',
-      minHeight: isMobile ? '320px' : undefined,
+      minHeight: isMobile ? '280px' : undefined,
       height: isMobile ? 'auto' : undefined,
     }}>
       <canvas
@@ -419,7 +420,7 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
         </div>
         <h2 style={{
           fontFamily: "'Outfit', sans-serif",
-          fontSize: isMobile ? '22px' : 'clamp(20px, 2.5vw, 28px)',
+          fontSize: isMobile ? 'clamp(20px, 5vw, 28px)' : 'clamp(20px, 2.5vw, 28px)',
           fontWeight: 400,
           color: '#1a1a1a',
           letterSpacing: '-0.03em',
@@ -940,6 +941,7 @@ export default function WebSegment() {
                 active={activeStep === i}
                 onClick={() => setActiveStep(i)}
                 index={i}
+                isMobile={isMobile}
               />
             ))}
           </div>

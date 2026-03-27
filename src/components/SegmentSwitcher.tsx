@@ -80,6 +80,7 @@ export default function SegmentSwitcher() {
   const [open, setOpen] = useState(false)
   const [activeSegment, setActiveSegment] = useState<SegmentId | null>(null)
   const [mounted, setMounted] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -102,6 +103,14 @@ export default function SegmentSwitcher() {
     setActiveSegment(seg ?? null)
   }, [pathname])
 
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)')
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
   if (!mounted) return null
   if (pathname === '/') return null
 
@@ -111,14 +120,14 @@ export default function SegmentSwitcher() {
     <>
       <GlobalCursor />
 
-      <nav className="nav" style={{ cursor: 'none' }}>
-        <a href="/" className="nav-logo" style={{ cursor: 'pointer', fontFamily: "'Outfit', sans-serif", fontSize: '15px', fontWeight: 400, letterSpacing: '-0.03em', color: '#1a1a1a' }}>Corbin Moffitt</a>
+      <nav className="nav" style={{ cursor: 'none', overflow: 'hidden', ...(isMobile ? { padding: '0 16px' } : {}) }}>
+        <a href="/" className="nav-logo" style={{ cursor: 'pointer', fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? '13px' : '15px', fontWeight: 400, letterSpacing: '-0.03em', color: '#1a1a1a' }}>Corbin Moffitt</a>
 
         <div style={{ position: 'relative' }} ref={containerRef}>
           <button
             className="switcher-pill"
             onClick={() => setOpen(o => !o)}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', ...(isMobile ? { maxWidth: '140px', overflow: 'hidden' } : {}) }}
           >
             {current ? (
               <>
