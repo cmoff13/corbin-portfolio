@@ -186,15 +186,18 @@ export default function UXSegment() {
         })}
       </div>
 
-      <div
-        className="ux-callout ux-callout-delayed"
-        style={{ background: '#EFF6FF', borderColor: segment.accentColor, marginTop: '48px' }}
-      >
-        <p className="ux-callout-title" style={{ color: segment.accentColor }}>
-          This segment is growing
-        </p>
-        <p className="ux-callout-text">
-          UX work informed by seven years of design craft. More projects coming — including a speculative redesign currently in progress.
+      <div style={{
+        borderTop: '1px solid #f0f0f0',
+        paddingTop: '48px',
+        marginTop: '48px',
+        textAlign: 'center',
+      }}>
+        <p style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: '14px',
+          color: '#999',
+        }}>
+          More UX work in progress — including a speculative redesign currently underway.
         </p>
       </div>
 

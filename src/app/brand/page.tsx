@@ -480,6 +480,8 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
       borderRadius: '16px',
       padding: isMobile ? '48px 24px' : '64px 48px',
       marginTop: '80px',
+      minHeight: isMobile ? '320px' : undefined,
+      height: isMobile ? 'auto' : undefined,
     }}>
       {/* Blob canvas */}
       <canvas
@@ -811,18 +813,6 @@ export default function BrandSegment() {
           onClose={() => setLightboxItem(null)}
         />
       )}
-
-      {/* More coming note */}
-      <p style={{
-        fontFamily: "'Inter', sans-serif",
-        fontSize: '12px',
-        color: 'var(--color-muted)',
-        letterSpacing: '0.04em',
-        textAlign: 'center',
-        marginBottom: '64px',
-      }}>
-        More brand work coming — MyPetDx and others in progress
-      </p>
 
       {/* Process section */}
       <div ref={inViewProcess.ref} style={inViewProcess.style}>

@@ -70,6 +70,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     primarySegment: 'web',
     alsoIn: [],
     tags: ['CRO', 'Landing page', 'Heatmaps', 'A/B testing'],
+    hidden: true,
   },
   {
     slug: 'kirrin-finch',
@@ -78,6 +79,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     primarySegment: 'web',
     alsoIn: [],
     tags: ['Social ads', 'Email marketing', 'DTC', 'Creative production'],
+    hidden: true,
   },
   {
     slug: 'heybud-skincare',
@@ -86,6 +88,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     primarySegment: 'web',
     alsoIn: [],
     tags: ['Art direction', 'Meta ads', 'Pinterest', 'UGC'],
+    hidden: true,
   },
   {
     slug: 'issa',
@@ -94,6 +97,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     primarySegment: 'web',
     alsoIn: [],
     tags: ['Brand identity', 'Web design', 'Fitness'],
+    hidden: true,
   },
   {
     slug: 'better-business-bureau',
@@ -102,6 +106,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     primarySegment: 'web',
     alsoIn: [],
     tags: ['Email marketing', 'Drip campaigns', 'A/B testing'],
+    hidden: true,
   },
 ]
 

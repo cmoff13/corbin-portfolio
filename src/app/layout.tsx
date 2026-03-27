@@ -7,9 +7,19 @@ import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
   title: 'Corbin Moffitt — Designer',
-  description: 'Seven years of design. Three ways to see it.',
-  icons: {
-    icon: '/favicon.svg',
+  description: 'Seven years across brand identity, web, and UX. Based in Hawaii.',
+  icons: { icon: '/favicon.svg' },
+  openGraph: {
+    title: 'Corbin Moffitt — Designer',
+    description: 'Seven years across brand identity, web, and UX. Based in Hawaii.',
+    url: 'https://www.cmoffitt.com',
+    siteName: 'Corbin Moffitt',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Corbin Moffitt — Designer',
+    description: 'Seven years across brand identity, web, and UX. Based in Hawaii.',
   },
 }
 

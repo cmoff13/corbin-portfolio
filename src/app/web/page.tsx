@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { SEGMENTS } from '@/lib/segments'
+import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 
 const segment = SEGMENTS.web
 const ACCENT = '#DC2626'
@@ -370,6 +370,8 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
       borderRadius: '16px',
       padding: isMobile ? '48px 24px' : '64px 48px',
       marginTop: '80px',
+      minHeight: isMobile ? '320px' : undefined,
+      height: isMobile ? 'auto' : undefined,
     }}>
       <canvas
         ref={canvasRef}
@@ -670,7 +672,7 @@ export default function WebSegment() {
       {/* SECTION 3 — PROJECT CARDS */}
       <div ref={inViewProjects.ref} style={inViewProjects.style}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '64px' }}>
-          {WEB_PROJECTS.map(p => (
+          {WEB_PROJECTS.filter(p => !CASE_STUDIES.find(c => c.slug === p.slug)?.hidden).map(p => (
             <div
               key={p.slug}
               onClick={() => router.push('/work/' + p.slug)}
