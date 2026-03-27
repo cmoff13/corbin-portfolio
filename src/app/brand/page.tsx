@@ -79,39 +79,51 @@ const PROCESS_STEPS = [
 ]
 
 function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: () => void }) {
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', handleKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', handleKey)
+      document.body.style.overflow = ''
+    }
+  }, [onClose])
+
   return (
     <div
-      onClick={e => { e.stopPropagation(); onClose() }}
+      onClick={onClose}
       style={{
         position: 'fixed',
         inset: 0,
-        zIndex: 200,
-        background: 'rgba(0,0,0,0.85)',
+        zIndex: 9999,
+        background: 'rgba(0,0,0,0.92)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         padding: '32px',
-        cursor: 'zoom-out',
-        backdropFilter: 'blur(4px)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
       }}
     >
       <button
-        onClick={e => { e.stopPropagation(); onClose() }}
+        onClick={(e) => { e.stopPropagation(); onClose() }}
         style={{
           position: 'absolute',
-          top: '20px',
+          top: '24px',
           right: '24px',
-          background: 'rgba(255,255,255,0.1)',
-          border: 'none',
+          width: '40px',
+          height: '40px',
           borderRadius: '50%',
-          width: '36px',
-          height: '36px',
-          cursor: 'pointer',
+          background: 'rgba(255,255,255,0.1)',
+          border: '1px solid rgba(255,255,255,0.2)',
           color: '#fff',
-          fontSize: '18px',
+          fontSize: '20px',
+          cursor: 'none',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          zIndex: 10000,
+          transition: 'background 0.2s',
         }}
         onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.2)')}
         onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.1)')}
@@ -126,7 +138,7 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
         style={{
           maxWidth: '90vw',
           maxHeight: '85vh',
-          borderRadius: '8px',
+          borderRadius: '12px',
           objectFit: 'contain',
           boxShadow: '0 24px 80px rgba(0,0,0,0.5)',
         }}
@@ -172,7 +184,7 @@ function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
           borderRadius: '16px',
           overflow: 'hidden',
           position: 'relative',
-          cursor: item.image ? 'zoom-in' : 'default',
+          cursor: 'none',
         }}
       >
         {item.image && (
@@ -192,52 +204,45 @@ function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
         )}
         <div style={{
           position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.1) 70%, transparent 100%)',
-          opacity: hovered ? 1 : 0,
-          transition: 'opacity 0.3s ease',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-          padding: '20px',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          padding: '16px 20px 20px',
+          background: 'rgba(255,255,255,0.92)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          transform: hovered ? 'translateY(0)' : 'translateY(100%)',
+          transition: 'transform 0.3s cubic-bezier(0.16,1,0.3,1)',
         }}>
           <span style={{
+            display: 'block',
             fontFamily: "'Inter', sans-serif",
             fontSize: '10px',
             fontWeight: 600,
             letterSpacing: '0.1em',
             textTransform: 'uppercase',
-            color: '#A78BFA',
-            marginBottom: '6px',
-            opacity: hovered ? 1 : 0,
-            transform: hovered ? 'translateY(0)' : 'translateY(6px)',
-            transition: 'opacity 0.3s ease 0.05s, transform 0.3s ease 0.05s',
+            color: ACCENT,
+            marginBottom: '4px',
           }}>
             {item.tag}
           </span>
           <span style={{
+            display: 'block',
             fontFamily: "'Outfit', sans-serif",
-            fontSize: '18px',
+            fontSize: '16px',
             fontWeight: 400,
-            color: '#ffffff',
+            color: '#1a1a1a',
             letterSpacing: '-0.02em',
-            lineHeight: 1.25,
-            marginBottom: '6px',
-            textShadow: '0 1px 4px rgba(0,0,0,0.3)',
-            opacity: hovered ? 1 : 0,
-            transform: hovered ? 'translateY(0)' : 'translateY(8px)',
-            transition: 'opacity 0.3s ease 0.08s, transform 0.3s ease 0.08s',
           }}>
             {item.name}
           </span>
           <span style={{
+            display: 'block',
             fontFamily: "'Inter', sans-serif",
             fontSize: '12px',
-            color: 'rgba(255,255,255,0.8)',
-            lineHeight: 1.6,
-            opacity: hovered ? 1 : 0,
-            transform: hovered ? 'translateY(0)' : 'translateY(8px)',
-            transition: 'opacity 0.3s ease 0.11s, transform 0.3s ease 0.11s',
+            color: '#767676',
+            marginTop: '4px',
+            lineHeight: 1.5,
           }}>
             {item.detail}
           </span>
@@ -596,7 +601,7 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
               fontWeight: 600,
               borderRadius: '999px',
               border: 'none',
-              cursor: 'pointer',
+              cursor: 'none',
               transition: 'opacity 0.2s',
             }}
             onMouseEnter={e => (e.currentTarget.style.opacity = '0.88')}
@@ -622,7 +627,7 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
               fontWeight: 500,
               borderRadius: '999px',
               border: '1px solid rgba(0,0,0,0.15)',
-              cursor: 'pointer',
+              cursor: 'none',
               transition: 'border-color 0.2s',
             }}
             onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(0,0,0,0.3)')}
@@ -797,7 +802,7 @@ export default function BrandSegment() {
               border: activeFilter === f.id ? 'none' : '1px solid #e0e0e0',
               background: activeFilter === f.id ? ACCENT : 'transparent',
               color: activeFilter === f.id ? '#ffffff' : '#999',
-              cursor: 'pointer',
+              cursor: 'none',
               transition: 'all 0.2s ease',
             }}
           >
@@ -918,7 +923,7 @@ export default function BrandSegment() {
               onClick={() => setActiveStat(activeStat === i ? -1 : i)}
               style={{
                 position: 'relative',
-                cursor: 'pointer',
+                cursor: 'none',
                 padding: isMobile ? mobilePadding : desktopPadding,
                 borderRight,
                 borderBottom,
