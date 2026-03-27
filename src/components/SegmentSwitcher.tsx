@@ -120,10 +120,10 @@ export default function SegmentSwitcher() {
     <>
       <GlobalCursor />
 
-      <nav className="nav" style={{ cursor: 'none', overflow: 'hidden', ...(isMobile ? { padding: '0 16px' } : {}) }}>
-        <a href="/" className="nav-logo" style={{ cursor: 'pointer', fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? '13px' : '15px', fontWeight: 400, letterSpacing: '-0.03em', color: '#1a1a1a' }}>Corbin Moffitt</a>
+      <nav className="nav" style={{ cursor: 'none', overflow: 'visible', position: 'relative', ...(isMobile ? { padding: '0 16px' } : {}) }}>
+        <a href="/" className="nav-logo" style={{ cursor: 'pointer', fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? '13px' : '15px', fontWeight: 400, letterSpacing: '-0.03em', color: '#1a1a1a', ...(isMobile ? { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '160px' } : {}) }}>Corbin Moffitt</a>
 
-        <div style={{ position: 'relative' }} ref={containerRef}>
+        <div style={{ position: 'relative', overflow: 'visible' }} ref={containerRef}>
           <button
             className="switcher-pill"
             onClick={() => setOpen(o => !o)}
