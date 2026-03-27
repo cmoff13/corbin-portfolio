@@ -12,6 +12,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" data-theme="light">
+      <head>
+        <style>{`html,body,*,*:hover,*:focus,*:active{cursor:none!important}@media(pointer:coarse){html,body,*,*:hover,*:focus,*:active{cursor:auto!important}}`}</style>
+      </head>
       <body>
         <div style={{ cursor: 'none', minHeight: '100vh' }}>
           <GoogleAnalytics />
