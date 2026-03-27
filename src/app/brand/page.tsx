@@ -146,6 +146,7 @@ function GridCell({ item }: { item: typeof ARCHIVE_ITEMS[0] }) {
     let t = Math.random() * Math.PI * 2
     let animId: number
     function tick() {
+      if (!el) return
       t += hovered ? 0.006 * 3.5 : 0.006
       const mix = (Math.sin(t) + 1) / 2
       const alpha = hovered ? 0.26 : 0.12 + mix * 0.06
