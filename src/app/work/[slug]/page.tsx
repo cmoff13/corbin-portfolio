@@ -303,6 +303,196 @@ What I'd do differently: start with real content earlier. The system is solid. T
   },
 }
 
+const LINEAR_CRO_CONTENT = {
+  overview: {
+    title: 'Overview & context',
+    content: `Linear Design is a PPC agency helping small to mid-size businesses grow through paid search. Their landing page was the first thing prospective clients saw after clicking an ad — and it wasn't converting well enough. I was brought in to diagnose the problem and fix it.\n\nThe engagement was focused: one page, one metric, one sprint. No full redesign, no brand refresh. Just figure out where the page was losing people and make it stop.`,
+    tldr: "One landing page, one metric, one sprint — figure out where the page was losing people and fix it.",
+  },
+  problem: {
+    title: 'Problem / challenge',
+    content: `The page had a 5.5% CVR. Not terrible, but not where it needed to be. Heatmap data told the real story: visitors were dropping off hard right after the first section. Most people never made it to the CTA.\n\nThe second section had generic copy and a stock image. Nothing to stop a skeptical business owner from bouncing. For someone evaluating whether to trust an agency with their ad budget, "nice design" isn't enough. They need a reason to believe.`,
+    tldr: "Heatmap data showed a hard drop-off after the first section. Most visitors never reached the CTA — the second section wasn't giving skeptical business owners a reason to stay.",
+  },
+  research: {
+    title: 'Research & discovery',
+    content: `The research tool was the heatmap. I didn't need a formal discovery phase — the data showed exactly where the problem was. The question was why.\n\nMy hypothesis: a business owner who clicks a PPC agency ad is already skeptical. They've seen dozens of agency pitches. Generic claims don't move them — proof does. The second section needed to function as a trust accelerator, not a feature list.`,
+    tldr: "The heatmap showed where. The hypothesis was why: skeptical business owners need proof, not feature lists. The second section had to become a trust accelerator.",
+  },
+  decisions: {
+    title: 'Design decisions & rationale',
+    content: `I replaced the second section's generic content with a video case study from a real agency owner — someone in the same position as the visitor. Placed a CTA directly above the scroll break so anyone mildly interested didn't have to hunt for the next step.\n\nThe logic was simple: if someone sees a person like them getting results, they stay. If they stay, they convert. The video did the credibility work that copy couldn't.`,
+    tldr: "Replaced generic content with a video case study from a real agency owner and moved the CTA above the scroll break. Social proof does what copy can't.",
+  },
+  system: {
+    title: 'Design system',
+    content: `This wasn't a design system engagement — it was a targeted CRO intervention. The constraint was staying within the existing visual system. Every change had to be implementable without a full rebuild.\n\nThe discipline was in knowing what not to touch. Changing too much would invalidate the test. The goal was one clear variable: did the new section drive more conversions?`,
+    tldr: "Stayed within the existing system — one clear variable so the results were attributable. Discipline is knowing what not to touch.",
+  },
+  outcome: {
+    title: 'Final outcome & delivery',
+    content: `CVR went from 5.5% to 9.02% in 30 days. That's a 63% increase. Bounce rate dropped alongside it.\n\nNot a full redesign. One intentional section change, backed by data. The page is still running.`,
+    tldr: "63% CVR increase in 30 days. 5.5% to 9.02%. One section change backed by heatmap data.",
+  },
+  reflections: {
+    title: 'Reflections',
+    content: `The lesson here is about scope. The instinct in design is to want to fix everything you see. On a CRO engagement, that instinct is wrong — it creates noise that makes results unattributable.\n\nThe 30-day window was a constraint that made the work better. It forced prioritization: what's the single highest-leverage change? Make that. Measure it. Then decide what's next.\n\nI'd approach every performance engagement this way going forward — not because it's faster, but because it produces cleaner evidence.`,
+    tldr: "The constraint made the work better — a 30-day window forces you to identify the single highest-leverage change instead of fixing everything you see.",
+  },
+}
+
+const KIRRIN_FINCH_CONTENT = {
+  overview: {
+    title: 'Overview & context',
+    content: `Kirrin Finch makes clothing for people who don't fit the traditional mold — gender-neutral, thoughtfully designed, built for a community that had been underserved by mainstream fashion. By the time I joined the account, they had traction. Revenue was around $700K. The goal was growth.\n\nI was the designer and producer on the account, working alongside an account manager and a lifecycle marketing rep. My job was the creative — static social ads and email campaigns. Strategy came from the team. Execution came from me.`,
+    tldr: "Gender-neutral DTC brand with traction but stalled growth. I was the designer and producer — static social ads and email campaigns, built to convert.",
+  },
+  problem: {
+    title: 'Problem / challenge',
+    content: `Growth had plateaued. The creative wasn't converting at the rate the brand needed to scale past $700K.\n\nThe harder problem was maintaining brand integrity while pushing for performance. Kirrin Finch has a strong visual identity — specific, intentional, built around a community. Creative that pushed too hard on conversion signals risked feeling off-brand. Creative that stayed too safe wouldn't move the needle.`,
+    tldr: "Growth plateaued at $700K. The challenge was building creative that converted without compromising a strong, specific brand identity.",
+  },
+  research: {
+    title: 'Research & discovery',
+    content: `The research was iterative. I looked at what creative was already performing in account and what wasn't. The patterns were clear enough: the audience responded to authenticity — real people, real clothes, real context. Overly polished creative felt out of place for the brand and its community.\n\nI also paid close attention to the audience. Kirrin Finch's customers know who they are. The creative needed to reflect that back, not perform for them.`,
+    tldr: "Iterative research from existing creative performance. The audience responded to authenticity — real people, real context. Polished creative felt wrong for this community.",
+  },
+  decisions: {
+    title: 'Design decisions & rationale',
+    content: `I focused on clean, on-brand static creative that matched the brand's visual identity while being structured to convert. Copy hierarchy, visual contrast, CTA placement — all of it was deliberate.\n\nFor email, I worked with the lifecycle rep on sequencing and timing. My job was to make sure the creative matched the intent at every touchpoint — welcome series, promotional campaigns, re-engagement. The design system across email and social stayed consistent so the brand felt cohesive regardless of where someone encountered it.`,
+    tldr: "Clean, on-brand static creative structured to convert — deliberate copy hierarchy, visual contrast, CTA placement. Consistent design language across email and social.",
+  },
+  system: {
+    title: 'Design system',
+    content: `The brand system was established — my job was to work within it and push it where it needed to go. I built templates for both social and email that could be adapted across campaigns without rebuilding from scratch each time.\n\nThe goal was consistency at scale. When you're producing creative across multiple campaigns and channels simultaneously, a loose system creates visual drift. A tight system lets you move fast without losing the brand.`,
+    tldr: "Built production templates for social and email — consistency at scale so the brand didn't drift across campaigns and channels.",
+  },
+  outcome: {
+    title: 'Final outcome & delivery',
+    content: `Revenue crossed $1M. The account team credited the creative conversion rates as a meaningful contributor to the growth.\n\nFor me, the win was proving that brand-quality creative and performance outcomes aren't mutually exclusive. You don't have to sacrifice the brand to make creative that converts.`,
+    tldr: "Revenue scaled from $700K to $1M+. Brand-quality creative and performance outcomes aren't mutually exclusive — this proved it.",
+  },
+  reflections: {
+    title: 'Reflections',
+    content: `The thing I think about most from this account is the relationship between brand and performance. The instinct in performance marketing is to optimize everything — test more hooks, more formats, more offers. That instinct is right in general and wrong for a brand like Kirrin Finch specifically.\n\nThe brand's strength is its specificity. That specificity is what makes the community loyal. Creative that dilutes that specificity might lift a short-term metric while eroding the thing that makes the brand worth buying from. Holding that tension thoughtfully is one of the harder things in performance creative work.`,
+    tldr: "Brand specificity is a performance asset, not a constraint — creative that dilutes it might lift a short-term metric while eroding long-term loyalty.",
+  },
+}
+
+const HEYBUD_SKINCARE_CONTENT = {
+  overview: {
+    title: 'Overview & context',
+    content: `Heybud is a skincare brand testing paid social channels — Meta and Pinterest — to find where their audience lived and what kind of creative they responded to. I led art direction across both channels.\n\nThe brief was open enough to be interesting: figure out what works. That meant testing different creative approaches, reading the results, and adjusting.`,
+    tldr: "Skincare brand testing paid social on Meta and Pinterest. I led art direction — the brief was open: figure out what works.",
+  },
+  problem: {
+    title: 'Problem / challenge',
+    content: `The existing creative was polished. Too polished. High-end product photography, clean layouts, aspirational imagery — the kind of creative that looks great in a brand deck and underperforms in a feed.\n\nSkincare buyers on Meta and Pinterest aren't looking for a photoshoot. They're looking for something that feels real. The brand's assets communicated premium but not relatable, and relatable is what converts on social.`,
+    tldr: "Polished product photography underperformed in social feeds. The brand communicated premium but not relatable — and relatable is what converts.",
+  },
+  research: {
+    title: 'Research & discovery',
+    content: `I looked at what was performing in the skincare category on both platforms. The pattern was consistent: UGC-style content — real people, natural lighting, honest framing — was outperforming studio creative across the category.\n\nPinterest and Meta behave differently. Pinterest is search-driven — people are looking for solutions, not just scrolling. The creative strategy needed to reflect that: more context, more lifestyle framing, more "here's why this works" energy. Meta rewards the thumb-stop — the first frame has to earn the watch.`,
+    tldr: "Category research confirmed UGC outperformed studio creative. Pinterest needed solution-framing; Meta needed a thumb-stop first frame. Different platforms, different strategies.",
+  },
+  decisions: {
+    title: 'Design decisions & rationale',
+    content: `We shifted to UGC-style creative across Meta — real people, natural lighting, honest product use. I directed the visual approach: the goal was authentic, not cheap. There's a meaningful difference between lo-fi that feels genuine and lo-fi that feels sloppy. The craft was in making it look effortless.\n\nOn Pinterest, I focused on lifestyle imagery that fit the platform's search-heavy behavior — more context around the product, more visual storytelling, less direct-response energy.`,
+    tldr: "UGC-style on Meta — authentic not cheap, effortless not sloppy. Pinterest got lifestyle framing to match its search-driven behavior.",
+  },
+  system: {
+    title: 'Design system',
+    content: `The creative system that emerged from this work was a hierarchy: UGC-style as the primary format for Meta, lifestyle for Pinterest, with polished brand creative reserved for retargeting where trust was already partially established.\n\nThat framework gave the brand a repeatable production approach — not "make more content" but "make the right content for the right context."`,
+    tldr: "Built a channel-specific creative hierarchy — UGC for Meta, lifestyle for Pinterest, polished for retargeting. Right content for the right context.",
+  },
+  outcome: {
+    title: 'Final outcome & delivery',
+    content: `UGC-style creative outperformed polished product shots. Not close. Meta was the stronger performing channel for the brand.\n\nThe learnings gave Heybud a repeatable creative playbook — a framework for production that didn't require starting from scratch every campaign.`,
+    tldr: "UGC won decisively. Meta was the stronger channel. The brand left with a repeatable creative playbook instead of a one-off campaign.",
+  },
+  reflections: {
+    title: 'Reflections',
+    content: `The lesson I keep coming back to from this account is that "elevated" means different things in different contexts. Elevated for a skincare brand in a paid social feed doesn't mean studio photography — it means UGC that's been thoughtfully directed. The authenticity is the elevation.\n\nI'd push even harder on the Pinterest strategy next time. The platform has a different creative language than Meta and I think there was more to explore there — longer-form content, more editorial framing, leaning into the search intent more explicitly.`,
+    tldr: '"Elevated" is context-dependent — in paid social, elevated UGC beats polished studio. Pinterest had more to explore and I\'d go deeper there next time.',
+  },
+}
+
+const ISSA_CONTENT = {
+  overview: {
+    title: 'Overview & context',
+    content: `ISSA — the International Sports Sciences Association — is one of the largest fitness certification organizations in the world. They train and certify personal trainers, nutritionists, and strength coaches, and compete directly with ACE, NASM, and NSCA for market share in an increasingly crowded space.\n\nMy work focused on strengthening their brand image and digital presence — elevating how they showed up across digital touchpoints to better reflect the quality of their programs and the size of their organization.`,
+    tldr: "One of the largest fitness certification organizations competing in a crowded market. My work focused on elevating their brand image and digital presence.",
+  },
+  problem: {
+    title: 'Problem / challenge',
+    content: `The fitness certification market is saturated and commoditized. Every brand is making similar claims — accredited programs, flexible learning, career outcomes. The actual product differences are often subtle. In that environment, brand does most of the differentiation work.\n\nISSA had the product. What they needed was a visual identity and digital presence that communicated the authority of their organization without feeling corporate or inaccessible. The challenge was premium without cold, authoritative without stiff.`,
+    tldr: "In a commoditized market, brand does the differentiation work. ISSA needed to feel authoritative and premium without becoming cold or corporate.",
+  },
+  research: {
+    title: 'Research & discovery',
+    content: `I audited the category — NASM, ACE, NSCA, and several smaller players. The visual language was remarkably consistent: stock photography of muscular athletes, blue or orange color palettes, and a general aesthetic that communicated fitness rather than expertise.\n\nThe opportunity was clear: ISSA could own "intelligent fitness professional" — a visual register that communicated depth and authority rather than just athletic aspiration. That became the strategic lens for every visual decision.`,
+    tldr: 'Category audit revealed a consistent visual cliché — athletic aspiration, not expertise. The opportunity was to own "intelligent fitness professional" instead.',
+  },
+  decisions: {
+    title: 'Design decisions & rationale',
+    content: `I focused on tightening the visual language across digital — more intentional use of imagery, cleaner layouts, a brand presence that felt premium without losing approachability.\n\nImagery choices were deliberate: real instructors and students over stock athletes, expertise contexts over gym floor photography, moments that communicated learning and mastery rather than just physical achievement. The goal was to make ISSA look like the obvious choice for a serious fitness professional, not just another certification option.`,
+    tldr: "Deliberate imagery choices — real instructors, expertise contexts, mastery over athletic aspiration. Premium that felt earned, not imposed.",
+  },
+  system: {
+    title: 'Design system',
+    content: `The work was executed within ISSA's existing brand framework — my role was elevating the application of the system, not rebuilding it. Consistent component usage, refined spacing, more intentional typography hierarchy across digital touchpoints.\n\nThe system improvement was in the application layer: making decisions that had previously been made casually more intentional, and documenting the reasoning so future work would maintain the elevated standard.`,
+    tldr: "Elevated the application of an existing system — more intentional decisions, documented reasoning so future work maintains the standard.",
+  },
+  outcome: {
+    title: 'Final outcome & delivery',
+    content: `Stronger brand presence across the digital channels we touched. In a market where product differences are subtle, brand differentiation is the competitive lever — and ISSA's digital presence better reflected the quality and scale of their organization after the engagement.\n\nNo hard conversion metrics on this one — the outcome was brand equity, which is harder to measure and easier to feel.`,
+    tldr: "Stronger digital brand presence. No hard conversion metrics — the outcome was brand equity, which is harder to measure and easier to feel.",
+  },
+  reflections: {
+    title: 'Reflections',
+    content: `The honest reflection is that brand work without metrics is uncomfortable for me. I believe in the strategic rationale here — brand differentiation matters in commoditized markets — but "it looks better" is a weaker story than "it converted X% more."\n\nWhat I'd do differently: push harder upfront for agreed-upon success metrics, even qualitative ones. Brand perception surveys, NPS data, traffic-to-conversion comparisons. Something that closes the loop. Brand work deserves evidence as much as performance work does.`,
+    tldr: "Brand work without metrics is uncomfortable — I'd push harder for agreed-upon success criteria upfront, even qualitative ones. Brand work deserves evidence.",
+  },
+}
+
+const BBB_CONTENT = {
+  overview: {
+    title: 'Overview & context',
+    content: `The Better Business Bureau has one of the most recognizable brands in American business — but brand recognition doesn't automatically translate to transactions. My work focused on email marketing campaigns for their accreditation push: getting business owners to apply for BBB accreditation.\n\nThe specific challenge was re-engagement. A significant portion of their database consisted of business owners who had shown interest in accreditation at some point and gone quiet. Those warm leads were sitting unused. My job was to build campaigns that brought them back.`,
+    tldr: "Email marketing for BBB's accreditation push — drip campaigns and re-engagement sequences for business owners who had gone cold.",
+  },
+  problem: {
+    title: 'Problem / challenge',
+    content: `Business owners are busy, skeptical, and bombarded with email. Generic blasts weren't cutting through. The re-engagement problem was real: people who had shown interest had gone quiet, and nobody had a clear read on what would bring them back or why they had left in the first place.\n\nThe absence of audience intelligence was the root problem. Without knowing what messaging resonated with different segments, every campaign was a guess. The goal was to build campaigns that generated that intelligence while also driving conversions.`,
+    tldr: "No audience intelligence — every campaign was a guess. The goal was to build campaigns that generated insight while also driving accreditation signups.",
+  },
+  research: {
+    title: 'Research & discovery',
+    content: `The research methodology was the campaigns themselves. Rather than front-loading a formal discovery phase, I designed the email sequences as structured tests — every variable a question about the audience.\n\nWhat subject line framing got opens from business owners? Was it credibility-forward ("Trusted by 400,000 businesses") or benefit-forward ("What BBB accreditation gets you")? What send times hit business owners when they were actually reading email rather than clearing their inbox? What CTA language felt low-friction versus high-commitment?`,
+    tldr: "The campaigns were the research — structured A/B tests designed to answer audience questions while also driving conversions.",
+  },
+  decisions: {
+    title: 'Design decisions & rationale',
+    content: `I built two parallel tracks: a drip sequence for new leads moving through the accreditation consideration process, and a re-engagement sequence for lapsed contacts.\n\nThe drip was progressive — each email earned the next. The first email was low-commitment: here's what accreditation means. The second introduced social proof: here's who has it. The third created urgency without being pushy: here's what you're missing. The re-engagement sequence started with acknowledgment — we know it's been a while — and rebuilt from there.`,
+    tldr: "Two parallel tracks: drip for new leads (progressive, each email earns the next) and re-engagement for lapsed contacts (starts with acknowledgment).",
+  },
+  system: {
+    title: 'Design system',
+    content: `Email design for an organization like BBB requires a system that can be maintained and adapted by a team without design resources for every send. I built templates that were modular — header, body blocks, CTA, footer — so the team could assemble new emails without rebuilding from scratch.\n\nThe visual system stayed close to BBB's established brand: clean, credible, conservative. Email isn't the place to experiment with the brand — it's the place to be reliable. Trust is the product.`,
+    tldr: "Modular email templates the team could maintain without design resources — reliable over experimental, because trust is the product.",
+  },
+  outcome: {
+    title: 'Final outcome & delivery',
+    content: `A clearer picture of what messaging drove business owners to take action on accreditation. The A/B testing generated audience intelligence that hadn't existed before — not just for the campaigns I built, but as a foundation for future email strategy.\n\nRe-engagement sequences revived interest from lapsed contacts who had been dormant in the database. The campaigns are still running.`,
+    tldr: "Generated audience intelligence that didn't exist before — a foundation for future email strategy, not just a one-time campaign result.",
+  },
+  reflections: {
+    title: 'Reflections',
+    content: `The most valuable thing I built on this engagement wasn't a campaign — it was a testing framework. A methodology for asking questions about an audience through email and reading the answers in the data.\n\nThat framework is reusable. Any organization doing email marketing to a skeptical, low-frequency audience can apply the same approach: treat every send as a hypothesis, design for learning as much as for conversion, and let the audience tell you what they actually respond to rather than guessing.\n\nI'd bring that framework to every email engagement going forward.`,
+    tldr: "The most valuable output was a testing framework, not a campaign — a reusable methodology for any organization doing email to a skeptical, low-frequency audience.",
+  },
+}
+
 // ── Maps ───────────────────────────────────────────────────────────────────
 
 const CONTENT_MAP: Record<string, typeof SKYGATE_CONTENT> = {
@@ -310,6 +500,11 @@ const CONTENT_MAP: Record<string, typeof SKYGATE_CONTENT> = {
   'rely-health': RELY_CONTENT,
   'black-coast-estates': BLACK_COAST_CONTENT,
   'portfolio-nav-system': PORTFOLIO_CONTENT,
+  'linear-cro': LINEAR_CRO_CONTENT,
+  'kirrin-finch': KIRRIN_FINCH_CONTENT,
+  'heybud-skincare': HEYBUD_SKINCARE_CONTENT,
+  'issa': ISSA_CONTENT,
+  'better-business-bureau': BBB_CONTENT,
 }
 
 const META_MAP: Record<string, { label: string; value: string }[]> = {
@@ -336,6 +531,36 @@ const META_MAP: Record<string, { label: string; value: string }[]> = {
     { label: 'Scope', value: 'Product thinking, Design, Build' },
     { label: 'Type', value: 'Self-initiated' },
     { label: 'Stack', value: 'Next.js + Vercel' },
+  ],
+  'linear-cro': [
+    { label: 'Role', value: 'Designer / CRO' },
+    { label: 'Scope', value: 'Landing page optimization' },
+    { label: 'Timeline', value: '30-day sprint' },
+    { label: 'Tools', value: 'Figma + Heatmaps' },
+  ],
+  'kirrin-finch': [
+    { label: 'Role', value: 'Designer / Producer' },
+    { label: 'Scope', value: 'Social ads + email' },
+    { label: 'Client type', value: 'DTC ecommerce' },
+    { label: 'Channels', value: 'Meta + Email' },
+  ],
+  'heybud-skincare': [
+    { label: 'Role', value: 'Art Director' },
+    { label: 'Scope', value: 'Paid social creative' },
+    { label: 'Channels', value: 'Meta + Pinterest' },
+    { label: 'Approach', value: 'UGC + lifestyle' },
+  ],
+  'issa': [
+    { label: 'Role', value: 'Designer' },
+    { label: 'Scope', value: 'Brand + digital presence' },
+    { label: 'Market', value: 'Fitness certification' },
+    { label: 'Platform', value: 'Figma' },
+  ],
+  'better-business-bureau': [
+    { label: 'Role', value: 'Designer' },
+    { label: 'Scope', value: 'Email marketing' },
+    { label: 'Type', value: 'Drip + re-engagement' },
+    { label: 'Method', value: 'A/B testing' },
   ],
 }
 

@@ -63,6 +63,46 @@ export const CASE_STUDIES: CaseStudy[] = [
     tags: ['UX', 'IA', 'Navigation design', 'Self-initiated'],
     hidden: true,
   },
+  {
+    slug: 'linear-cro',
+    title: 'From 5.5% to 9.02% in 30 days',
+    subtitle: 'CRO sprint — heatmap-driven landing page optimization',
+    primarySegment: 'web',
+    alsoIn: [],
+    tags: ['CRO', 'Landing page', 'Heatmaps', 'A/B testing'],
+  },
+  {
+    slug: 'kirrin-finch',
+    title: 'Scaling a DTC brand past $1M',
+    subtitle: 'Social advertising and email creative — $700K to $1M+',
+    primarySegment: 'web',
+    alsoIn: [],
+    tags: ['Social ads', 'Email marketing', 'DTC', 'Creative production'],
+  },
+  {
+    slug: 'heybud-skincare',
+    title: 'UGC-led creative that actually performed',
+    subtitle: 'Art direction for paid social on Meta and Pinterest',
+    primarySegment: 'web',
+    alsoIn: [],
+    tags: ['Art direction', 'Meta ads', 'Pinterest', 'UGC'],
+  },
+  {
+    slug: 'issa',
+    title: 'Standing out in a saturated fitness market',
+    subtitle: 'Brand and digital presence for ISSA',
+    primarySegment: 'web',
+    alsoIn: [],
+    tags: ['Brand identity', 'Web design', 'Fitness'],
+  },
+  {
+    slug: 'better-business-bureau',
+    title: 'Drip campaigns that taught us the audience',
+    subtitle: 'Email marketing and A/B testing for BBB accreditation',
+    primarySegment: 'web',
+    alsoIn: [],
+    tags: ['Email marketing', 'Drip campaigns', 'A/B testing'],
+  },
 ]
 
 export const SEGMENTS: Record<SegmentId, Segment> = {
