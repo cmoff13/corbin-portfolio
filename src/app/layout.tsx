@@ -3,6 +3,7 @@ import './globals.css'
 import SegmentSwitcher from '@/components/SegmentSwitcher'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import CustomCursor from '@/components/CustomCursor'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
   title: 'Corbin Moffitt — Designer',
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <div style={{ cursor: 'none', minHeight: '100vh' }}>
           <GoogleAnalytics />
+          <Analytics />
           <CustomCursor />
           <SegmentSwitcher />
           {children}
