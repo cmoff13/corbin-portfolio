@@ -56,14 +56,14 @@ export default function CustomCursor() {
       <div ref={dotRef} style={{
         position: 'fixed', width: 7, height: 7,
         borderRadius: '50%', background: '#1a1a1a',
-        pointerEvents: 'none', zIndex: 9999,
+        pointerEvents: 'none', zIndex: 999999,
         transform: 'translate(-50%,-50%)',
         mixBlendMode: 'multiply',
       }} />
       <div ref={ringRef} style={{
         position: 'fixed', width: 32, height: 32,
         borderRadius: '50%', border: '1.5px solid #1a1a1a',
-        pointerEvents: 'none', zIndex: 9998,
+        pointerEvents: 'none', zIndex: 999998,
         transform: 'translate(-50%,-50%)',
         mixBlendMode: 'multiply', opacity: 0.4,
       }} />
@@ -72,7 +72,7 @@ export default function CustomCursor() {
           position: 'fixed', left: r.x, top: r.y,
           width: 8, height: 8, borderRadius: '50%',
           border: '1.5px solid #1a1a1a',
-          pointerEvents: 'none', zIndex: 9997,
+          pointerEvents: 'none', zIndex: 999997,
           transform: 'translate(-50%,-50%)',
           mixBlendMode: 'multiply',
           animation: 'cursorRipple 0.5s ease forwards',
