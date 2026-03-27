@@ -427,10 +427,10 @@ export default function SegmentGate() {
           width: '100%',
           textAlign: 'center',
           fontFamily: "'Climate Crisis', cursive",
-          fontSize: isMobile ? '22vw' : 'clamp(70px, 10vw, 140px)',
+          fontSize: 'clamp(70px, 10vw, 140px)',
           fontWeight: 400,
           color: 'white',
-          opacity: isMobile ? 0.07 : 0.15,
+          opacity: 0.15,
           mixBlendMode: 'overlay',
           letterSpacing: '-0.04em',
           textTransform: 'uppercase',
@@ -439,6 +439,7 @@ export default function SegmentGate() {
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           userSelect: 'none',
+          display: isMobile ? 'none' : 'block',
         }}
       >
         Corbin Moffitt
@@ -452,10 +453,10 @@ export default function SegmentGate() {
           left: '50%',
           transform: 'translateX(-50%)',
           fontFamily: "'Climate Crisis', cursive",
-          fontSize: isMobile ? '22vw' : 'clamp(120px, 18vw, 260px)',
+          fontSize: 'clamp(120px, 18vw, 260px)',
           fontWeight: 400,
           color: 'white',
-          opacity: isMobile ? 0.07 : 0.15,
+          opacity: 0.15,
           mixBlendMode: 'overlay',
           letterSpacing: '-0.04em',
           textTransform: 'uppercase',
@@ -464,6 +465,7 @@ export default function SegmentGate() {
           whiteSpace: 'nowrap',
           overflow: 'hidden',
           userSelect: 'none',
+          display: isMobile ? 'none' : 'block',
         }}
       >
         Designer
