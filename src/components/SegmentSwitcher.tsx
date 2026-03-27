@@ -112,7 +112,7 @@ export default function SegmentSwitcher() {
       <GlobalCursor />
 
       <nav className="nav" style={{ cursor: 'none' }}>
-        <a href="/" className="nav-logo" style={{ cursor: 'pointer' }}>Corbin Moffitt</a>
+        <a href="/" className="nav-logo" style={{ cursor: 'pointer', fontFamily: "'Outfit', sans-serif", fontSize: '15px', fontWeight: 400, letterSpacing: '-0.03em', color: '#1a1a1a' }}>Corbin Moffitt</a>
 
         <div style={{ position: 'relative' }} ref={containerRef}>
           <button

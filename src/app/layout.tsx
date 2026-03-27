@@ -7,6 +7,9 @@ import CustomCursor from '@/components/CustomCursor'
 export const metadata: Metadata = {
   title: 'Corbin Moffitt — Designer',
   description: 'Seven years of design. Three ways to see it.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
