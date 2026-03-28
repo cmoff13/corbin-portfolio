@@ -10,7 +10,7 @@ const SEGMENTS = [
     sub: 'Logos, systems, craft',
     accent: '#3B0764',
     gradient: 'linear-gradient(135deg, #3B0764, #6D28D9)',
-    previewBg: '#F5F0EB',
+    previewBg: '#F0F2F5',
   },
   {
     id: 'web',
@@ -18,7 +18,7 @@ const SEGMENTS = [
     sub: 'Pages, CRO, performance',
     accent: '#DC2626',
     gradient: 'linear-gradient(135deg, #DC2626, #F87171)',
-    previewBg: '#F5F0EB',
+    previewBg: '#F0F2F5',
   },
   {
     id: 'ux',
@@ -26,7 +26,7 @@ const SEGMENTS = [
     sub: 'Flows, IA, interaction',
     accent: '#1D4ED8',
     gradient: 'linear-gradient(135deg, #1D4ED8, #60A5FA)',
-    previewBg: '#F5F0EB',
+    previewBg: '#F0F2F5',
   },
 ]
 
