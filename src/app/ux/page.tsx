@@ -45,7 +45,7 @@ export default function UXSegment() {
     <div style={{ background: BG, minHeight: '100vh', position: 'relative', cursor: 'none' }}>
       <AmbientBlob color={ACCENT} />
 
-      <div style={{ position: 'relative', zIndex: 1, background: BG }}>
+      <div style={{ position: 'relative', zIndex: 1 }}>
 
         {/* HERO */}
         <div style={{ padding: `80px ${P} 88px` }}>
