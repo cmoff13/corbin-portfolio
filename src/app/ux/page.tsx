@@ -49,23 +49,27 @@ export default function UXSegment() {
 
         {/* HERO */}
         <div style={{ padding: `80px ${P} 88px` }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: 22 }}>UX &amp; product</div>
           <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26, maxWidth: 640 }}>
             {segment.headline[0]}<br />{segment.headline[1]}
           </div>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500 }}>Good UX is invisible.</div>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 300, color: '#999', lineHeight: 1.75, maxWidth: 460 }}>The user never notices the decision hierarchy, the cognitive load trade-offs, or the three flows that got cut before the one that shipped.</div>
+          </div>
         </div>
 
         <div style={{ borderTop: LINE }} />
 
         {/* APPROACH CALLOUT */}
         <div style={{ padding: `52px ${P}` }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ maxWidth: 600, padding: '24px 28px', borderRadius: 14, border: LINE }}>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 14 }}>How I approach product work</div>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 300, color: '#666', lineHeight: 1.75 }}>
               I start with the problem, not the interface. That means understanding user goals, mapping flows before pixels, and making decisions I can explain. Brand craft informs the output — systems thinking drives the process.
             </div>
+          </div>
           </div>
         </div>
 
@@ -73,6 +77,7 @@ export default function UXSegment() {
 
         {/* PROJECTS */}
         <div style={{ padding: `52px ${P}` }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           {sectionLabel('Selected work')}
           <div style={{ maxWidth: 880, display: 'flex', flexDirection: 'column', gap: 10 }}>
             {projects.map(project => {
@@ -109,14 +114,17 @@ export default function UXSegment() {
               )
             })}
           </div>
+          </div>
         </div>
 
         <div style={{ borderTop: LINE }} />
 
         {/* MORE WORK NOTE */}
         <div style={{ padding: `36px ${P}` }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: '#bbb', fontWeight: 300 }}>
             More UX work in progress — including a speculative redesign currently underway.
+          </div>
           </div>
         </div>
 
@@ -124,6 +132,7 @@ export default function UXSegment() {
 
         {/* CONTACT */}
         <div style={{ padding: `72px ${P}` }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ maxWidth: 560 }}>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
             <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Thinking beyond the interface.</div>
@@ -144,6 +153,7 @@ export default function UXSegment() {
                 Brand identity →
               </button>
             </div>
+          </div>
           </div>
         </div>
 

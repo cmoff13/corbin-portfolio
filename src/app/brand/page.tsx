@@ -690,6 +690,7 @@ export default function BrandSegment() {
       <AmbientBlob color={ACCENT} />
       <main className="segment-page" style={{ background: 'transparent' }}>
       <div style={{ position: 'relative', zIndex: 1 }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
       {/* Hero */}
       <div style={{ paddingTop: 80, paddingBottom: 72, marginBottom: 48 }}>
@@ -1015,6 +1016,7 @@ export default function BrandSegment() {
         </div>
       </div>
 
+      </div>
       </div>
       </main>
     </div>

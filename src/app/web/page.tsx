@@ -121,6 +121,7 @@ export default function WebPage() {
 
         {/* HERO */}
         <div style={{ padding: `80px ${P} 88px` }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: 22 }}>Web &amp; Digital</div>
           <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26, maxWidth: 640 }}>
             {segment.headline[0]}<br />{segment.headline[1]}
@@ -130,12 +131,14 @@ export default function WebPage() {
           <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
             {['Landing pages', 'Social advertising', 'Email marketing', 'CRO & growth'].map(pill)}
           </div>
+          </div>
         </div>
 
         <div style={{ borderTop: LINE }} />
 
         {/* PROJECTS */}
         <div style={{ padding: `52px ${P}` }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           {sectionLabel('Selected work')}
           <div style={{ maxWidth: 880, display: 'flex', flexDirection: 'column', gap: 10 }}>
             {visibleProjects.map(p => (
@@ -158,12 +161,14 @@ export default function WebPage() {
               </div>
             ))}
           </div>
+          </div>
         </div>
 
         <div style={{ borderTop: LINE }} />
 
         {/* TESTIMONIALS */}
         <div style={{ padding: `52px ${P}` }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           {sectionLabel('What people say')}
           <div style={{ maxWidth: 560 }}>
             <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 20 : 26, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.03em', lineHeight: 1.3, marginBottom: 22 }}>
@@ -188,12 +193,14 @@ export default function WebPage() {
               ))}
             </div>
           </div>
+          </div>
         </div>
 
         <div style={{ borderTop: LINE }} />
 
         {/* PROCESS */}
         <div style={{ padding: `52px ${P}` }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           {sectionLabel('How I work')}
           <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)', gap: 10 }}>
             {PROCESS.map(step => (
@@ -209,12 +216,14 @@ export default function WebPage() {
               </div>
             ))}
           </div>
+          </div>
         </div>
 
         <div style={{ borderTop: LINE }} />
 
         {/* STATS */}
         <div style={{ padding: `52px ${P}` }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)' }}>
             {STATS.map((s, i) => {
               const padL = !isMobile && i > 0 ? 48 : 0
@@ -246,12 +255,14 @@ export default function WebPage() {
               )
             })}
           </div>
+          </div>
         </div>
 
         <div style={{ borderTop: LINE }} />
 
         {/* CONTACT */}
         <div style={{ padding: `72px ${P}` }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ maxWidth: 560 }}>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
             <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Seven years of performance thinking.</div>
@@ -272,6 +283,7 @@ export default function WebPage() {
                 UX &amp; product →
               </button>
             </div>
+          </div>
           </div>
         </div>
 
