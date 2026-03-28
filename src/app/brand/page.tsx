@@ -3,10 +3,12 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { SEGMENTS } from '@/lib/segments'
-import HeroBlob from '@/components/HeroBlob'
+import AmbientBlob from '@/components/AmbientBlob'
 
 const segment = SEGMENTS.brand
 const ACCENT = '#3B0764'
+const BG = '#F7F5F0'
+const LINE = '1px solid rgba(0,0,0,0.07)'
 
 const ARCHIVE_ITEMS = [
   {
@@ -155,11 +157,10 @@ function GalleryCard({ item, onClick }: { item: typeof ARCHIVE_ITEMS[0], onClick
       onMouseLeave={() => setHovered(false)}
       onClick={onClick}
       style={{
-        borderRadius: '18px',
-        background: 'rgba(255,255,255,0.92)',
-        border: '1px solid rgba(0,0,0,0.06)',
-        boxShadow: hovered ? '0 4px 24px rgba(0,0,0,0.10)' : '0 1px 4px rgba(0,0,0,0.06)',
-        padding: '3px',
+        borderRadius: '14px',
+        background: BG,
+        border: LINE,
+        boxShadow: hovered ? '0 4px 24px rgba(0,0,0,0.06)' : 'none',
         cursor: 'none',
         transition: 'box-shadow 0.3s ease',
         overflow: 'hidden',
@@ -199,7 +200,7 @@ function GalleryCard({ item, onClick }: { item: typeof ARCHIVE_ITEMS[0], onClick
           fontWeight: 600,
           letterSpacing: '0.08em',
           textTransform: 'uppercase',
-          color: '#3B0764',
+          color: '#bbb',
           marginBottom: '5px',
         }}>
           {item.tag}
@@ -325,8 +326,8 @@ function ProcessCard({ step, active, onClick, index, isMobile }: {
         padding: '3px',
         borderRadius: '18px',
         border: active ? `1px solid ${ACCENT}` : '1px solid rgba(0,0,0,0.06)',
-        background: active ? ACCENT : 'rgba(255,255,255,0.92)',
-        boxShadow: hovered ? '0 4px 24px rgba(0,0,0,0.08)' : '0 1px 4px rgba(0,0,0,0.06)',
+        background: active ? ACCENT : BG,
+        boxShadow: hovered ? '0 4px 24px rgba(0,0,0,0.06)' : 'none',
         cursor: 'pointer',
         textAlign: 'left',
         transition: 'all 0.25s ease',
@@ -337,7 +338,7 @@ function ProcessCard({ step, active, onClick, index, isMobile }: {
         borderRadius: '16px',
         overflow: 'hidden',
         position: 'relative',
-        background: '#F5F0EB',
+        background: BG,
       }}>
         <div style={{
           position: 'absolute',
@@ -651,12 +652,14 @@ function useInView(delay = 0) {
 }
 
 export default function BrandSegment() {
+  const router = useRouter()
   const [activeFilter, setActiveFilter] = useState('all')
   const [activeStep, setActiveStep] = useState(0)
   const [activeStat, setActiveStat] = useState(-1)
   const [lightboxItem, setLightboxItem] = useState<typeof ARCHIVE_ITEMS[0] | null>(null)
   const [isMobile, setIsMobile] = useState(false)
   const [started, setStarted] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     const t = setTimeout(() => setStarted(true), 80)
@@ -683,69 +686,58 @@ export default function BrandSegment() {
   const inViewCta     = useInView(0)
 
   return (
-    <main className="segment-page" style={{ cursor: 'none' }}>
+    <div style={{ background: BG, minHeight: '100vh', position: 'relative', cursor: 'none' }}>
+      <AmbientBlob color={ACCENT} />
+      <main className="segment-page" style={{ background: 'transparent' }}>
+      <div style={{ position: 'relative', zIndex: 1 }}>
 
       {/* Hero */}
-      <div style={{
-        position: 'relative',
-        overflow: 'hidden',
-        background: '#F7F5F0',
-        paddingTop: '72px',
-        paddingBottom: '72px',
-        marginLeft: 'clamp(-120px, -6vw, -24px)',
-        marginRight: 'clamp(-120px, -6vw, -24px)',
-        paddingLeft: 'clamp(24px, 6vw, 120px)',
-        paddingRight: 'clamp(24px, 6vw, 120px)',
-        marginBottom: '48px',
-      }}>
-        <HeroBlob color={ACCENT} />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <p style={{
-            ...fadeUp(0),
-            fontFamily: "'Inter', sans-serif",
-            fontSize: '11px',
-            fontWeight: 400,
-            letterSpacing: '0.14em',
-            textTransform: 'uppercase',
-            color: '#bbb',
-            marginBottom: '20px',
-          }}>
-            Brand identity
-          </p>
-          <h1 style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: 'clamp(40px, 5.5vw, 72px)',
-            fontWeight: 300,
-            letterSpacing: '-0.05em',
-            lineHeight: 1.0,
-            color: '#1a1a1a',
-            marginBottom: '24px',
-          }}>
-            {segment.headline[0]}<br />{segment.headline[1]}
-          </h1>
-          <p style={{
-            ...fadeUp(400),
-            fontFamily: "'Inter', sans-serif",
-            fontSize: '17px',
-            fontWeight: 400,
-            color: '#1a1a1a',
-            marginBottom: '6px',
-            maxWidth: '520px',
-          }}>
-            Before landing pages and product flows, there were marks.
-          </p>
-          <p style={{
-            ...fadeUp(500),
-            fontFamily: "'Inter', sans-serif",
-            fontSize: '15px',
-            fontWeight: 300,
-            color: '#999',
-            lineHeight: 1.75,
-            maxWidth: '520px',
-          }}>
-            Logos for businesses being named for the first time. Type systems built from scratch. This is where the eye came from.
-          </p>
-        </div>
+      <div style={{ paddingTop: 80, paddingBottom: 72, marginBottom: 48 }}>
+        <p style={{
+          ...fadeUp(0),
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 10,
+          fontWeight: 400,
+          letterSpacing: '0.16em',
+          textTransform: 'uppercase',
+          color: '#bbb',
+          marginBottom: 20,
+        }}>
+          Brand identity
+        </p>
+        <h1 style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: 'clamp(44px, 5.5vw, 68px)',
+          fontWeight: 300,
+          letterSpacing: '-0.055em',
+          lineHeight: 0.97,
+          color: '#1a1a1a',
+          marginBottom: 24,
+        }}>
+          {segment.headline[0]}<br />{segment.headline[1]}
+        </h1>
+        <p style={{
+          ...fadeUp(400),
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 17,
+          fontWeight: 400,
+          color: '#1a1a1a',
+          marginBottom: 6,
+          maxWidth: 520,
+        }}>
+          Before landing pages and product flows, there were marks.
+        </p>
+        <p style={{
+          ...fadeUp(500),
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 15,
+          fontWeight: 300,
+          color: '#999',
+          lineHeight: 1.75,
+          maxWidth: 520,
+        }}>
+          Logos for businesses being named for the first time. Type systems built from scratch. This is where the eye came from.
+        </p>
       </div>
 
       {/* Filter pills */}
@@ -770,8 +762,8 @@ export default function BrandSegment() {
               textTransform: 'uppercase',
               padding: '6px 16px',
               borderRadius: '999px',
-              border: activeFilter === f.id ? 'none' : '1px solid #e0e0e0',
-              background: activeFilter === f.id ? ACCENT : 'transparent',
+              border: activeFilter === f.id ? 'none' : LINE,
+              background: activeFilter === f.id ? ACCENT : 'rgba(0,0,0,0.05)',
               color: activeFilter === f.id ? '#ffffff' : '#999',
               cursor: 'none',
               transition: 'all 0.2s ease',
@@ -817,21 +809,12 @@ export default function BrandSegment() {
       {/* Process section */}
       <div ref={inViewProcess.ref} style={inViewProcess.style}>
       <div style={{
-        borderTop: '1px solid #f0f0f0',
+        borderTop: LINE,
         paddingTop: '56px',
         marginTop: '72px',
         marginBottom: '64px',
       }}>
-        <h2 style={{
-          fontFamily: "'Outfit', sans-serif",
-          fontSize: '28px',
-          fontWeight: 400,
-          letterSpacing: '-0.02em',
-          color: '#1a1a1a',
-          marginBottom: '24px',
-        }}>
-          How I work
-        </h2>
+        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, fontWeight: 400, marginBottom: 28 }}>How I work</div>
 
         {/* Step cards */}
         <div style={{
@@ -873,8 +856,8 @@ export default function BrandSegment() {
       {/* Stats row */}
       <div ref={inViewStats.ref} style={inViewStats.style}>
       <div style={{
-        borderTop: '1px solid #f0f0f0',
-        borderBottom: '1px solid #f0f0f0',
+        borderTop: LINE,
+        borderBottom: LINE,
         marginTop: '64px',
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
@@ -890,8 +873,8 @@ export default function BrandSegment() {
               ? '40px 0 40px 40px'
               : '40px 40px 40px 40px'
           const mobilePadding = '28px 0'
-          const borderRight = !isMobile && i < 2 ? '1px solid #f0f0f0' : 'none'
-          const borderBottom = isMobile && i < 2 ? '1px solid #f0f0f0' : 'none'
+          const borderRight = !isMobile && i < 2 ? LINE : 'none'
+          const borderBottom = isMobile && i < 2 ? LINE : 'none'
           return (
             <div
               key={stat.label}
@@ -905,11 +888,11 @@ export default function BrandSegment() {
               }}
             >
               <div style={{
-                fontFamily: "'Climate Crisis', cursive",
+                fontFamily: "'Outfit', sans-serif",
                 fontSize: '52px',
-                fontWeight: 400,
-                color: activeStat === i ? ACCENT : '#1a1a1a',
-                letterSpacing: '-0.02em',
+                fontWeight: 300,
+                color: '#1a1a1a',
+                letterSpacing: '-0.05em',
                 lineHeight: 1,
                 transition: 'color 0.2s ease',
               }}>
@@ -977,7 +960,7 @@ export default function BrandSegment() {
       {/* Pull quote */}
       <div ref={inViewQuote.ref} style={inViewQuote.style}>
       <div style={{
-        borderTop: '1px solid #f0f0f0',
+        borderTop: LINE,
         paddingTop: '64px',
         marginTop: '80px',
         textAlign: 'center',
@@ -1007,11 +990,33 @@ export default function BrandSegment() {
       </div>
       </div>{/* /inViewQuote */}
 
-      {/* Contact band */}
-      <div ref={inViewCta.ref} style={inViewCta.style}>
-        <CtaBand isMobile={isMobile} />
+      {/* Contact */}
+      <div ref={inViewCta.ref} style={{ ...inViewCta.style, borderTop: LINE, padding: `72px 0` }}>
+        <div style={{ maxWidth: 560 }}>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
+          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Let&apos;s build something worth looking at.</div>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: '#999', fontWeight: 300, marginBottom: 32 }}>Senior design roles and select freelance.</div>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+            <button
+              onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: ACCENT, color: 'white', fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, borderRadius: 999, border: 'none', cursor: 'none', transition: 'opacity 0.2s' }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+              onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+            >
+              {copied ? 'Copied!' : 'Copy email'}
+            </button>
+            <button
+              onClick={() => router.push('/web')}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: 'transparent', color: '#1a1a1a', fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 500, borderRadius: 999, border: LINE, cursor: 'none' }}
+            >
+              Web &amp; digital →
+            </button>
+          </div>
+        </div>
       </div>
 
-    </main>
+      </div>
+      </main>
+    </div>
   )
 }
