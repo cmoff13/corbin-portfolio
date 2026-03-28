@@ -22,7 +22,7 @@ const WEB_PROJECTS = [
     slug: 'kirrin-finch',
     metric: '$1M+',
     metricLabel: 'Revenue scaled',
-    bg: '#F5F0EB',
+    bg: '#F0F2F5',
     discipline: 'Social Ads + Email',
     title: 'Scaling a DTC brand past $1M',
     what: 'Designed and produced static social ads and email campaigns for a gender-neutral clothing brand growing past a revenue plateau.',
@@ -307,7 +307,7 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
     function tick() {
       const W = canvas!.width
       const H = canvas!.height
-      ctx!.fillStyle = '#f7f5f0'
+      ctx!.fillStyle = '#f0f2f5'
       ctx!.fillRect(0, 0, W, H)
 
       blobsRef.current.forEach((blob, i) => {
@@ -366,7 +366,7 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
     <div ref={outerRef} style={{
       position: 'relative',
       overflow: 'hidden',
-      background: '#f7f5f0',
+      background: '#f0f2f5',
       borderRadius: '16px',
       padding: isMobile ? '48px 24px' : '64px 48px',
       marginTop: '80px',

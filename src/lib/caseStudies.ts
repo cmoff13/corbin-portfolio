@@ -50,7 +50,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       'Creative conversion rates cited as a key growth driver',
       'Consistent brand voice maintained across email and paid social',
     ],
-    bg: '#F5F0EB',
+    bg: '#F0F2F5',
     overview: 'Kirrin Finch makes clothing for people who don\'t fit the traditional mold. Gender-neutral, thoughtfully designed, built for a community that had been underserved by mainstream fashion. By the time I joined the account, they had traction — but growth had plateaued.',
     problem: 'The creative wasn\'t keeping up with the brand\'s ambition. Static ads and emails were functional but not converting at the rate needed to push past the plateau. The brand had a strong identity — the challenge was translating that into performance creative that actually moved product.',
     solution: 'I designed and produced static social ads and email campaigns that stayed true to the brand\'s voice while being built to convert. Clean layouts, intentional copy treatment, imagery that reflected the audience. No gimmicks. I worked ely with the account manager on strategy and the lifecycle rep on email sequencing — my job was to make sure the creative matched the intent at every touchpoint.',

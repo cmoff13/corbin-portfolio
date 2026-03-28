@@ -45,7 +45,7 @@ html, body, * { cursor: none !important; }
   --color-hairline-strong: #e0e0de;
   --color-surface:   #f3f3f2;
   --color-bg:        #ffffff;
-  --color-bg-page:   #ffffff;
+  --color-bg-page:   #F0F2F5;
   /* Product-style layout (Linear-like: one max width, consistent rhythm) */
   --layout-max:      720px;
   --layout-gutter:   var(--space-6);
