@@ -22,15 +22,10 @@ export default function CustomCursor() {
   }, [])
 
   useEffect(() => {
-    let touched = false
-    const onTouch = () => { touched = true }
-    const onFirstMove = () => { if (!touched) setShow(true) }
-    window.addEventListener('touchstart', onTouch, { passive: true })
+    if (navigator.maxTouchPoints > 0 || 'ontouchstart' in window) return
+    const onFirstMove = () => setShow(true)
     window.addEventListener('mousemove', onFirstMove, { once: true })
-    return () => {
-      window.removeEventListener('touchstart', onTouch)
-      window.removeEventListener('mousemove', onFirstMove)
-    }
+    return () => window.removeEventListener('mousemove', onFirstMove)
   }, [])
 
   useEffect(() => {
