@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { SEGMENTS, SegmentId } from '@/lib/segments'
 
 function GlobalCursor() {
+  const [isTouch, setIsTouch] = useState(true)
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
   const mouse = useRef({ x: -500, y: -500 })
@@ -13,6 +14,10 @@ function GlobalCursor() {
 
   const onMouseMove = useCallback((e: MouseEvent) => {
     mouse.current = { x: e.clientX, y: e.clientY }
+  }, [])
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia('(pointer: coarse)').matches)
   }, [])
 
   useEffect(() => {
@@ -38,6 +43,8 @@ function GlobalCursor() {
       cancelAnimationFrame(rafRef.current)
     }
   }, [onMouseMove])
+
+  if (isTouch) return null
 
   return (
     <>
