@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 import ContactCta from '@/components/ContactCta'
+import HeroBlob from '@/components/HeroBlob'
 
 const segment = SEGMENTS.ux
 const projects = CASE_STUDIES.filter(c =>
@@ -19,16 +20,64 @@ export default function UXSegment() {
   return (
     <main className="segment-page" style={{ cursor: 'none' }}>
 
-      <div className="segment-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={segment.accentColor} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
-            <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
-          </svg>
-          <p className="segment-eyebrow" style={{ color: segment.accentColor }}>UX & product</p>
+      {/* Hero */}
+      <div style={{
+        position: 'relative',
+        overflow: 'hidden',
+        background: '#F7F5F0',
+        paddingTop: '72px',
+        paddingBottom: '72px',
+        marginLeft: 'clamp(-120px, -6vw, -24px)',
+        marginRight: 'clamp(-120px, -6vw, -24px)',
+        paddingLeft: 'clamp(24px, 6vw, 120px)',
+        paddingRight: 'clamp(24px, 6vw, 120px)',
+        marginBottom: '48px',
+      }}>
+        <HeroBlob color={segment.accentColor} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <p style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '11px',
+            fontWeight: 400,
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: '#bbb',
+            marginBottom: '20px',
+          }}>
+            UX &amp; product
+          </p>
+          <h1 style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: 'clamp(40px, 5.5vw, 72px)',
+            fontWeight: 300,
+            letterSpacing: '-0.05em',
+            lineHeight: 1.0,
+            color: '#1a1a1a',
+            marginBottom: '24px',
+          }}>
+            {segment.headline[0]}<br />{segment.headline[1]}
+          </h1>
+          <p style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '17px',
+            fontWeight: 400,
+            color: '#1a1a1a',
+            marginBottom: '6px',
+            maxWidth: '520px',
+          }}>
+            Good UX is invisible.
+          </p>
+          <p style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '15px',
+            fontWeight: 300,
+            color: '#999',
+            lineHeight: 1.75,
+            maxWidth: '520px',
+          }}>
+            The user never notices the decision hierarchy, the cognitive load trade-offs, or the three flows that got cut before the one that shipped.
+          </p>
         </div>
-        <h1 className="segment-headline">{segment.headline[0]}<br />{segment.headline[1]}</h1>
-        <p className="segment-intro">{segment.intro}</p>
       </div>
 
       <div

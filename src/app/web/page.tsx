@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
+import HeroBlob from '@/components/HeroBlob'
 
 const segment = SEGMENTS.web
 const ACCENT = '#DC2626'
@@ -576,9 +577,6 @@ export default function WebSegment() {
     transition: `opacity 0.55s ease ${delay}ms, transform 0.55s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
   })
 
-  const line1 = useWordReveal(segment.headline[0], started, 80)
-  const line2 = useWordReveal(segment.headline[1], started, 320)
-
   const inViewChips        = useInView(0)
   const inViewProjects     = useInView(0)
   const inViewTestimonials = useInView(0)
@@ -592,60 +590,66 @@ export default function WebSegment() {
     <main className="segment-page" style={{ cursor: 'none' }}>
 
       {/* SECTION 1 — HERO */}
-      <div style={{ paddingTop: isMobile ? '48px' : '80px', marginBottom: '48px' }}>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          marginBottom: '20px',
-          ...fadeUp(0),
-        }}>
-          <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: ACCENT }} />
-          <span style={{
+      <div style={{
+        position: 'relative',
+        overflow: 'hidden',
+        background: '#F7F5F0',
+        paddingTop: '72px',
+        paddingBottom: '72px',
+        marginLeft: 'clamp(-120px, -6vw, -24px)',
+        marginRight: 'clamp(-120px, -6vw, -24px)',
+        paddingLeft: 'clamp(24px, 6vw, 120px)',
+        paddingRight: 'clamp(24px, 6vw, 120px)',
+        marginBottom: '48px',
+      }}>
+        <HeroBlob color={ACCENT} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <p style={{
+            ...fadeUp(0),
             fontFamily: "'Inter', sans-serif",
             fontSize: '11px',
-            fontWeight: 600,
-            letterSpacing: '0.1em',
+            fontWeight: 400,
+            letterSpacing: '0.14em',
             textTransform: 'uppercase',
-            color: ACCENT,
+            color: '#bbb',
+            marginBottom: '20px',
           }}>
             Web &amp; Digital
-          </span>
+          </p>
+          <h1 style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: 'clamp(40px, 5.5vw, 72px)',
+            fontWeight: 300,
+            letterSpacing: '-0.05em',
+            lineHeight: 1.0,
+            color: '#1a1a1a',
+            marginBottom: '24px',
+          }}>
+            {segment.headline[0]}<br />{segment.headline[1]}
+          </h1>
+          <p style={{
+            ...fadeUp(400),
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '17px',
+            fontWeight: 400,
+            color: '#1a1a1a',
+            marginBottom: '6px',
+            maxWidth: '520px',
+          }}>
+            Most designers stop at how it looks.
+          </p>
+          <p style={{
+            ...fadeUp(500),
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '15px',
+            fontWeight: 300,
+            color: '#999',
+            lineHeight: 1.75,
+            maxWidth: '520px',
+          }}>
+            The work here goes further — landing pages built around message match, conversion audits that diagnose why a page isn&apos;t performing, ad creative systems designed to scale.
+          </p>
         </div>
-
-        <h1 style={{
-          fontFamily: "'Outfit', sans-serif",
-          fontSize: 'clamp(32px, 4vw, 48px)',
-          fontWeight: 400,
-          letterSpacing: '-0.03em',
-          lineHeight: 1.1,
-          color: '#1a1a1a',
-          marginBottom: 0,
-        }}>
-          <div>
-            {line1.map(({ word, wrapStyle, innerStyle }, i) => (
-              <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
-            ))}
-          </div>
-          <div>
-            {line2.map(({ word, wrapStyle, innerStyle }, i) => (
-              <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
-            ))}
-          </div>
-        </h1>
-
-        <p style={{
-          ...fadeUp(600),
-          fontFamily: "'Inter', sans-serif",
-          fontSize: '15px',
-          color: '#767676',
-          lineHeight: 1.75,
-          maxWidth: '520px',
-          marginTop: '20px',
-          marginBottom: 0,
-        }}>
-          {segment.intro}
-        </p>
       </div>
 
       {/* SECTION 2 — CAPABILITIES STRIP */}
@@ -666,7 +670,7 @@ export default function WebSegment() {
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
               color: '#767676',
-              background: '#F5F5F5',
+              background: 'rgba(0,0,0,0.05)',
               borderRadius: '999px',
               padding: '5px 14px',
             }}>
