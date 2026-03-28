@@ -45,7 +45,7 @@ html, body, * { cursor: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5B
   --color-hairline-strong: #e0e0de;
   --color-surface:   #f3f3f2;
   --color-bg:        #ffffff;
-  --color-bg-page:   #F7F5F0;
+  --color-bg-page:   #F0F2F5;
   /* Product-style layout (Linear-like: one max width, consistent rhythm) */
   --layout-max:      720px;
   --layout-gutter:   var(--space-6);

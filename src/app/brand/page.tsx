@@ -7,7 +7,7 @@ import AmbientBlob from '@/components/AmbientBlob'
 
 const segment = SEGMENTS.brand
 const ACCENT = '#3B0764'
-const BG = '#F7F5F0'
+const BG = '#F0F2F5'
 const LINE = '1px solid rgba(0,0,0,0.07)'
 
 const ARCHIVE_ITEMS = [
@@ -420,7 +420,7 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
     function tick() {
       const W = canvas!.width
       const H = canvas!.height
-      ctx!.fillStyle = '#f7f5f0'
+      ctx!.fillStyle = '#F0F2F5'
       ctx!.fillRect(0, 0, W, H)
 
       blobsRef.current.forEach((blob, i) => {
@@ -479,7 +479,7 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
     <div ref={outerRef} style={{
       position: 'relative',
       overflow: 'hidden',
-      background: '#f7f5f0',
+      background: '#F0F2F5',
       borderRadius: '16px',
       padding: isMobile ? '40px 24px' : '64px 48px',
       marginTop: '80px',

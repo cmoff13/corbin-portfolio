@@ -312,7 +312,7 @@ export default function SegmentGate() {
       const mx = mouse.current.x
       const my = mouse.current.y
 
-      ctx.fillStyle = '#f7f5f0'
+      ctx.fillStyle = '#F0F2F5'
       ctx.fillRect(0, 0, W, H)
 
       blobsRef.current.forEach(blob => {

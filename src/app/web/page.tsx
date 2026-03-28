@@ -7,7 +7,7 @@ import AmbientBlob from '@/components/AmbientBlob'
 
 const segment = SEGMENTS.web
 const ACCENT = '#DC2626'
-const BG = '#F7F5F0'
+const BG = '#F0F2F5'
 const LINE = '1px solid rgba(0,0,0,0.07)'
 
 const WEB_PROJECTS = [

@@ -7,7 +7,7 @@ import AmbientBlob from '@/components/AmbientBlob'
 
 const segment = SEGMENTS.ux
 const ACCENT = '#1D4ED8'
-const BG = '#F7F5F0'
+const BG = '#F0F2F5'
 const LINE = '1px solid rgba(0,0,0,0.07)'
 
 const projects = CASE_STUDIES.filter(c =>
