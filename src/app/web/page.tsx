@@ -114,7 +114,7 @@ export default function WebPage() {
   )
 
   return (
-    <div style={{ background: BG, minHeight: '100vh', position: 'relative', cursor: 'none' }}>
+    <div style={{ background: 'transparent', minHeight: '100vh', position: 'relative', cursor: 'none' }}>
       <AmbientBlob color={ACCENT} />
 
       <div style={{ position: 'relative', zIndex: 1 }}>

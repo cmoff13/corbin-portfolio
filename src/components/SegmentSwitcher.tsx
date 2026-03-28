@@ -5,7 +5,8 @@ import { usePathname, useRouter } from 'next/navigation'
 import { SEGMENTS, SegmentId } from '@/lib/segments'
 
 function GlobalCursor() {
-  const [isTouch, setIsTouch] = useState(true)
+  const [mounted, setMounted] = useState(false)
+  const [isTouch, setIsTouch] = useState(false)
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
   const mouse = useRef({ x: -500, y: -500 })
@@ -17,6 +18,7 @@ function GlobalCursor() {
   }, [])
 
   useEffect(() => {
+    setMounted(true)
     setIsTouch(window.matchMedia('(pointer: coarse)').matches)
   }, [])
 
@@ -44,7 +46,7 @@ function GlobalCursor() {
     }
   }, [onMouseMove])
 
-  if (isTouch) return null
+  if (!mounted || isTouch) return null
 
   return (
     <>
