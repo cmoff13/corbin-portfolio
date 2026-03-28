@@ -32,7 +32,7 @@ const WEB_PROJECTS = [
     slug: 'heybud-skincare',
     metric: 'Meta + Pinterest',
     metricLabel: 'Channels tested',
-    bg: '#FFF5F5',
+    bg: '#F0F2F5',
     discipline: 'Art Direction / Paid Social',
     title: 'UGC-led creative that actually performed',
     what: 'Led art direction across Meta and Pinterest. Tested polished product creative against UGC-style ads — UGC won decisively.',
@@ -52,7 +52,7 @@ const WEB_PROJECTS = [
     slug: 'better-business-bureau',
     metric: 'A/B tested',
     metricLabel: 'Audience intelligence',
-    bg: '#FFFBF0',
+    bg: '#F0F2F5',
     discipline: 'Email Marketing',
     title: 'Drip campaigns that taught us the audience',
     what: "Built drip and re-engagement sequences for BBB's accreditation push. Used A/B testing to learn what actually moved business owners.",
@@ -62,7 +62,7 @@ const WEB_PROJECTS = [
     slug: 'skygate-growth-strategies',
     metric: '0→1',
     metricLabel: 'Brand to live site',
-    bg: '#F5F5F0',
+    bg: '#F0F2F5',
     discipline: 'Brand + Webflow',
     title: 'Zero to one — brand system and Webflow launch',
     what: 'Built the complete brand identity and Webflow site for a real estate investment platform. Logo, color, type, design system, full build.',
@@ -193,7 +193,7 @@ function ProcessCard({ step, active, onClick, index }: {
       const y = 50 + 20 * Math.cos(t * 0.7)
       const a1 = Math.round(alpha * 255).toString(16).padStart(2, '0')
       const a2 = Math.round(alpha * 0.4 * 255).toString(16).padStart(2, '0')
-      const bg = `#FFF5F5 radial-gradient(ellipse at ${x}% ${y}%, ${ACCENT}${a1} 0%, ${ACCENT}${a2} 60%, transparent 100%)`
+      const bg = `#F0F2F5 radial-gradient(ellipse at ${x}% ${y}%, ${ACCENT}${a1} 0%, ${ACCENT}${a2} 60%, transparent 100%)`
       if (previewRef.current) previewRef.current.style.background = bg
       rafRef.current = requestAnimationFrame(frame)
     }
@@ -225,7 +225,7 @@ function ProcessCard({ step, active, onClick, index }: {
         borderRadius: '16px',
         overflow: 'hidden',
         position: 'relative',
-        background: '#FFF5F5',
+        background: '#F0F2F5',
       }}>
         <div style={{
           position: 'absolute',

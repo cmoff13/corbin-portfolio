@@ -752,7 +752,7 @@ function ImageOrPlaceholder({ src, alt, style, label, clickable = false }: {
     <div style={{
       width: '100%',
       aspectRatio: '16/9',
-      background: '#f7f7f5',
+      background: '#f0f2f5',
       borderRadius: '8px',
       display: 'flex',
       alignItems: 'center',
