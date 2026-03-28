@@ -22,9 +22,11 @@ export default function CustomCursor() {
   }, [])
 
   useEffect(() => {
-    if (!window.matchMedia('(pointer: coarse)').matches) {
-      setShow(true)
-    }
+    if (window.matchMedia('(pointer: coarse)').matches) return
+    const onTouch = () => setShow(false)
+    window.addEventListener('touchstart', onTouch, { once: true })
+    setShow(true)
+    return () => window.removeEventListener('touchstart', onTouch)
   }, [])
 
   useEffect(() => {
