@@ -117,7 +117,7 @@ export default function WebPage() {
     <div style={{ background: BG, minHeight: '100vh', position: 'relative', cursor: 'none' }}>
       <AmbientBlob color={ACCENT} />
 
-      <div style={{ position: 'relative', zIndex: 1 }}>
+      <div style={{ position: 'relative', zIndex: 1, background: BG }}>
 
         {/* HERO */}
         <div style={{ padding: `80px ${P} 88px` }}>
