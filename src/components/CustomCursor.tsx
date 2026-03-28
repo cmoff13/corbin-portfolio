@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 
 export default function CustomCursor() {
-  const [isTouch, setIsTouch] = useState(true)
+  const [mounted, setMounted] = useState(false)
+  const [isTouch, setIsTouch] = useState(false)
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
   const mouse = useRef({ x: -1000, y: -1000 })
@@ -22,6 +23,7 @@ export default function CustomCursor() {
   }, [])
 
   useEffect(() => {
+    setMounted(true)
     setIsTouch(window.matchMedia('(pointer: coarse)').matches)
   }, [])
 
@@ -49,7 +51,7 @@ export default function CustomCursor() {
     }
   }, [onMouseMove, onMouseClick])
 
-  if (isTouch) return null
+  if (!mounted || isTouch) return null
 
   return (
     <>

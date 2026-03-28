@@ -479,7 +479,6 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
     <div ref={outerRef} style={{
       position: 'relative',
       overflow: 'hidden',
-      background: '#F0F2F5',
       borderRadius: '16px',
       padding: isMobile ? '40px 24px' : '64px 48px',
       marginTop: '80px',
@@ -686,7 +685,7 @@ export default function BrandSegment() {
   const inViewCta     = useInView(0)
 
   return (
-    <div style={{ background: BG, minHeight: '100vh', position: 'relative', cursor: 'none' }}>
+    <div style={{ background: 'transparent', minHeight: '100vh', position: 'relative', cursor: 'none' }}>
       <AmbientBlob color={ACCENT} />
       <main className="segment-page" style={{ background: 'transparent' }}>
       <div style={{ position: 'relative', zIndex: 1 }}>
