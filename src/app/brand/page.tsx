@@ -17,7 +17,7 @@ const ARCHIVE_ITEMS = [
     name: 'Swift Powerwashing',
     detail: 'Primary mark for a residential and commercial powerwashing business. Built for signage, vehicles, and digital.',
     image: '/images/brand/swift-logo.jpg',
-    bg: '#F5F0EB',
+    bg: '#F0F2F5',
     svg: null,
   },
   {
@@ -26,7 +26,7 @@ const ARCHIVE_ITEMS = [
     name: 'MyPetDx — Color system',
     detail: 'Brand color palette for a pet lab diagnostics platform. Warm, trustworthy, and approachable.',
     image: '/images/brand/mypetdx-palette.jpg',
-    bg: '#FDFAF7',
+    bg: '#F0F2F5',
     svg: null,
   },
   {
@@ -35,7 +35,7 @@ const ARCHIVE_ITEMS = [
     name: 'Poppy Mobile Notary — Color system',
     detail: 'Color system for a mobile notary service. Professional yet warm — built to communicate trust.',
     image: '/images/brand/poppy-palette.jpg',
-    bg: '#FFF8F5',
+    bg: '#F0F2F5',
     svg: null,
   },
   {
@@ -44,7 +44,7 @@ const ARCHIVE_ITEMS = [
     name: 'Poppy Mobile Notary — Type system',
     detail: 'Type scale and pairing for a mobile notary brand. Display, body, and label weights with usage rules.',
     image: '/images/brand/poppy-type.jpg',
-    bg: '#F7F5F2',
+    bg: '#F0F2F5',
     svg: null,
   },
 ]
@@ -306,7 +306,7 @@ function ProcessCard({ step, active, onClick, index, isMobile }: {
       const y = 50 + 20 * Math.cos(t * 0.7)
       const a1 = Math.round(alpha * 255).toString(16).padStart(2, '0')
       const a2 = Math.round(alpha * 0.4 * 255).toString(16).padStart(2, '0')
-      const bg = `#F5F0EB radial-gradient(ellipse at ${x}% ${y}%, ${ACCENT}${a1} 0%, ${ACCENT}${a2} 60%, transparent 100%)`
+      const bg = `#F0F2F5 radial-gradient(ellipse at ${x}% ${y}%, ${ACCENT}${a1} 0%, ${ACCENT}${a2} 60%, transparent 100%)`
       if (previewRef.current) previewRef.current.style.background = bg
       rafRef.current = requestAnimationFrame(frame)
     }
