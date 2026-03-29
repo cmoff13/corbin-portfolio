@@ -10,6 +10,12 @@ const ACCENT = '#3B0764'
 const BG = '#F0F2F5'
 const LINE = '1px solid rgba(0,0,0,0.07)'
 
+const BRAND_TESTIMONIALS = [
+  { quote: 'A powerhouse senior designer with a strong foundation in UI/UX.', name: 'Brian Steffes', title: 'Ex-Creative Team Lead Manager @ Disruptive Advertising', initials: 'BS' },
+  { quote: 'His adaptability across different styles and projects makes him a valuable asset to any creative or marketing team.', name: 'Sarah Rodriguez', title: 'Ex-VP Creative Manager @ Disruptive Advertising', initials: 'SR' },
+  { quote: 'Corbin was easy to get along with and would be an asset to any company.', name: 'McKenna Miller', title: 'Ex-Marketing Manager @ Northstar Home Security', initials: 'MM' },
+]
+
 const ARCHIVE_ITEMS = [
   {
     id: 'swift-powerwashing',
@@ -219,7 +225,7 @@ function GalleryCard({ item, onClick }: { item: typeof ARCHIVE_ITEMS[0], onClick
         <div style={{
           fontFamily: "'Inter', sans-serif",
           fontSize: '11px',
-          color: '#767676',
+          color: '#6b6b6b',
           lineHeight: 1.55,
         }}>
           {item.detail}
@@ -520,7 +526,7 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
           padding: '4px 12px',
           marginBottom: '24px',
         }}>
-          <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#999' }} />
+          <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#6b6b6b' }} />
           <span style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: '11px',
@@ -548,7 +554,7 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
         <p style={{
           fontFamily: "'Inter', sans-serif",
           fontSize: '15px',
-          color: '#767676',
+          color: '#6b6b6b',
           marginBottom: '32px',
         }}>
           Senior design roles and select freelance.
@@ -659,6 +665,12 @@ export default function BrandSegment() {
   const [isMobile, setIsMobile] = useState(false)
   const [started, setStarted] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [activeTestimonial, setActiveTestimonial] = useState(0)
+
+  useEffect(() => {
+    const t = setInterval(() => setActiveTestimonial(p => (p + 1) % BRAND_TESTIMONIALS.length), 5000)
+    return () => clearInterval(t)
+  }, [])
 
   useEffect(() => {
     const t = setTimeout(() => setStarted(true), 80)
@@ -732,7 +744,7 @@ export default function BrandSegment() {
           fontFamily: "'Inter', sans-serif",
           fontSize: 15,
           fontWeight: 300,
-          color: '#999',
+          color: '#6b6b6b',
           lineHeight: 1.75,
           maxWidth: 520,
         }}>
@@ -764,7 +776,7 @@ export default function BrandSegment() {
               borderRadius: '999px',
               border: activeFilter === f.id ? 'none' : LINE,
               background: activeFilter === f.id ? ACCENT : 'rgba(0,0,0,0.05)',
-              color: activeFilter === f.id ? '#ffffff' : '#999',
+              color: activeFilter === f.id ? '#ffffff' : '#6b6b6b',
               cursor: 'none',
               transition: 'all 0.2s ease',
             }}
@@ -840,7 +852,7 @@ export default function BrandSegment() {
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: '14px',
-            color: '#767676',
+            color: '#6b6b6b',
             lineHeight: 1.75,
             maxWidth: '560px',
             marginTop: '20px',
@@ -907,7 +919,7 @@ export default function BrandSegment() {
                 <span style={{
                   fontFamily: "'Inter', sans-serif",
                   fontSize: '11px',
-                  color: activeStat === i ? ACCENT : '#767676',
+                  color: activeStat === i ? ACCENT : '#6b6b6b',
                   fontWeight: 400,
                   letterSpacing: '0.04em',
                   whiteSpace: 'nowrap',
@@ -920,7 +932,7 @@ export default function BrandSegment() {
                   style={{
                     flexShrink: 0,
                     marginLeft: '8px',
-                    color: activeStat === i ? ACCENT : '#999',
+                    color: activeStat === i ? ACCENT : '#6b6b6b',
                     transform: activeStat === i ? 'rotate(180deg)' : 'rotate(0deg)',
                     transition: 'transform 0.2s ease, color 0.2s ease',
                   }}
@@ -931,7 +943,7 @@ export default function BrandSegment() {
               <div style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: '13px',
-                color: '#767676',
+                color: '#6b6b6b',
                 lineHeight: 1.65,
                 maxHeight: activeStat === i ? '80px' : '0',
                 opacity: activeStat === i ? 1 : 0,
@@ -957,36 +969,33 @@ export default function BrandSegment() {
       </div>
       </div>{/* /inViewStats */}
 
-      {/* Pull quote */}
+      {/* Testimonials */}
       <div ref={inViewQuote.ref} style={inViewQuote.style}>
-      <div style={{
-        borderTop: LINE,
-        paddingTop: '64px',
-        marginTop: '80px',
-        textAlign: 'center',
-      }}>
-        <p style={{
-          fontFamily: "'Outfit', sans-serif",
-          fontSize: isMobile ? '22px' : 'clamp(22px, 3vw, 32px)',
-          fontWeight: 400,
-          color: '#1a1a1a',
-          letterSpacing: '-0.03em',
-          lineHeight: 1.3,
-          textAlign: 'center',
-          maxWidth: '520px',
-          margin: '0 auto',
-        }}>
-          "A logo that needs explaining has already failed."
-        </p>
-        <p style={{
-          fontFamily: "'Inter', sans-serif",
-          fontSize: '12px',
-          color: '#999',
-          textAlign: 'center',
-          marginTop: '16px',
-        }}>
-          — on brand clarity
-        </p>
+      <div style={{ borderTop: LINE, padding: `52px 0` }}>
+        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, fontWeight: 400, marginBottom: 28 }}>What people say</div>
+        <div style={{ maxWidth: 560 }}>
+          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 20 : 26, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.03em', lineHeight: 1.3, marginBottom: 22 }}>
+            &ldquo;{BRAND_TESTIMONIALS[activeTestimonial].quote}&rdquo;
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+            <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 600, color: '#888', flexShrink: 0, fontFamily: "'Inter', sans-serif" }}>
+              {BRAND_TESTIMONIALS[activeTestimonial].initials}
+            </div>
+            <div>
+              <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: '#1a1a1a', fontWeight: 500 }}>{BRAND_TESTIMONIALS[activeTestimonial].name}</div>
+              <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#888' }}>{BRAND_TESTIMONIALS[activeTestimonial].title}</div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: 6, marginTop: 20 }}>
+            {BRAND_TESTIMONIALS.map((_, i) => (
+              <div
+                key={i}
+                onClick={() => setActiveTestimonial(i)}
+                style={{ width: 20, height: 2, borderRadius: 999, background: i === activeTestimonial ? '#1a1a1a' : 'rgba(0,0,0,0.12)', cursor: 'none', transition: 'background 0.2s' }}
+              />
+            ))}
+          </div>
+        </div>
       </div>
       </div>{/* /inViewQuote */}
 
@@ -995,7 +1004,7 @@ export default function BrandSegment() {
         <div style={{ maxWidth: 560 }}>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
           <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Let&apos;s build something worth looking at.</div>
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: '#999', fontWeight: 300, marginBottom: 32 }}>Senior design roles and select freelance.</div>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: '#6b6b6b', fontWeight: 300, marginBottom: 32 }}>Senior design roles and select freelance.</div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
             <button
               onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}

@@ -34,7 +34,7 @@ export default function UXSegment() {
   const P = isMobile ? '24px' : 'clamp(24px, 6vw, 120px)'
 
   const pill = (text: string) => (
-    <span key={text} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#999', background: 'rgba(0,0,0,0.05)', borderRadius: 999, padding: '4px 12px', display: 'inline-block' }}>{text}</span>
+    <span key={text} style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#6b6b6b', background: 'rgba(0,0,0,0.05)', borderRadius: 999, padding: '4px 12px', display: 'inline-block' }}>{text}</span>
   )
 
   const sectionLabel = (text: string) => (
@@ -55,7 +55,7 @@ export default function UXSegment() {
             {segment.headline[0]}<br />{segment.headline[1]}
           </div>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500 }}>Good UX is invisible.</div>
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 300, color: '#999', lineHeight: 1.75, maxWidth: 460 }}>The user never notices the decision hierarchy, the cognitive load trade-offs, or the three flows that got cut before the one that shipped.</div>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 300, color: '#6b6b6b', lineHeight: 1.75, maxWidth: 460 }}>The user never notices the decision hierarchy, the cognitive load trade-offs, or the three flows that got cut before the one that shipped.</div>
           </div>
         </div>
 
@@ -107,7 +107,7 @@ export default function UXSegment() {
                       {project.tags.slice(0, 3).map(pill)}
                     </div>
                     <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 17 : 20, color: '#1a1a1a', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: 8 }}>{project.title}</div>
-                    <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: '#999', lineHeight: 1.65, marginBottom: 16, maxWidth: 400 }}>{project.subtitle}</div>
+                    <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: '#6b6b6b', lineHeight: 1.65, marginBottom: 16, maxWidth: 400 }}>{project.subtitle}</div>
                     <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: ACCENT, fontWeight: 500 }}>View case study →</span>
                   </div>
                 </div>
@@ -122,7 +122,7 @@ export default function UXSegment() {
         {/* MORE WORK NOTE */}
         <div style={{ padding: `36px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: '#bbb', fontWeight: 300 }}>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: '#888', fontWeight: 300 }}>
             More UX work in progress — including a speculative redesign currently underway.
           </div>
           </div>
@@ -136,7 +136,7 @@ export default function UXSegment() {
           <div style={{ maxWidth: 560 }}>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
             <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Thinking beyond the interface.</div>
-            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: '#999', fontWeight: 300, marginBottom: 32 }}>Senior design roles and select freelance.</div>
+            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: '#6b6b6b', fontWeight: 300, marginBottom: 32 }}>Senior design roles and select freelance.</div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
               <button
                 onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}

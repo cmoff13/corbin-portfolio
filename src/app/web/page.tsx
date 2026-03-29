@@ -106,7 +106,7 @@ export default function WebPage() {
   const P = isMobile ? '24px' : 'clamp(24px, 6vw, 120px)'
 
   const pill = (text: string) => (
-    <span key={text} style={{ fontSize: 11, color: '#999', background: 'rgba(0,0,0,0.05)', borderRadius: 999, padding: '4px 12px', display: 'inline-block' }}>{text}</span>
+    <span key={text} style={{ fontSize: 11, color: '#6b6b6b', background: 'rgba(0,0,0,0.05)', borderRadius: 999, padding: '4px 12px', display: 'inline-block' }}>{text}</span>
   )
 
   const sectionLabel = (text: string) => (
@@ -127,7 +127,7 @@ export default function WebPage() {
             {segment.headline[0]}<br />{segment.headline[1]}
           </div>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500 }}>Most designers stop at how it looks.</div>
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 300, color: '#999', lineHeight: 1.75, maxWidth: 460, marginBottom: 36 }}>The work here goes further — landing pages built around message match, conversion audits that diagnose why a page isn&apos;t performing, ad creative systems designed to scale.</div>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 300, color: '#6b6b6b', lineHeight: 1.75, maxWidth: 460, marginBottom: 36 }}>The work here goes further — landing pages built around message match, conversion audits that diagnose why a page isn&apos;t performing, ad creative systems designed to scale.</div>
           <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
             {['Landing pages', 'Social advertising', 'Email marketing', 'CRO & growth'].map(pill)}
           </div>
@@ -155,7 +155,7 @@ export default function WebPage() {
                 <div style={{ flex: 1, padding: isMobile ? '20px' : '28px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: BG }}>
                   <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 12 }}>{p.tags.map(pill)}</div>
                   <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 17 : 20, color: '#1a1a1a', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: 8 }}>{p.title}</div>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: '#999', lineHeight: 1.65, marginBottom: 16, maxWidth: 400 }}>{p.what}</div>
+                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: '#6b6b6b', lineHeight: 1.65, marginBottom: 16, maxWidth: 400 }}>{p.what}</div>
                   <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: ACCENT, fontWeight: 500 }}>View case study →</span>
                 </div>
               </div>
@@ -180,7 +180,7 @@ export default function WebPage() {
               </div>
               <div>
                 <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: '#1a1a1a', fontWeight: 500 }}>{TESTIMONIALS[activeTestimonial].name}</div>
-                <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#bbb' }}>{TESTIMONIALS[activeTestimonial].title}</div>
+                <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#888' }}>{TESTIMONIALS[activeTestimonial].title}</div>
               </div>
             </div>
             <div style={{ display: 'flex', gap: 6 }}>
@@ -211,7 +211,7 @@ export default function WebPage() {
                 <div style={{ padding: '14px 16px', background: BG }}>
                   <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, color: '#bbb', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 5 }}>{step.num}</div>
                   <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, color: '#1a1a1a', marginBottom: 5 }}>{step.title}</div>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#999', lineHeight: 1.5 }}>{step.desc}</div>
+                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#6b6b6b', lineHeight: 1.5 }}>{step.desc}</div>
                 </div>
               </div>
             ))}
@@ -244,12 +244,12 @@ export default function WebPage() {
                 >
                   <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 44 : 52, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.05em', lineHeight: 1, marginBottom: 10 }}>{s.num}</div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#bbb', letterSpacing: '0.04em' }}>{s.label}</div>
+                    <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#888', letterSpacing: '0.04em' }}>{s.label}</div>
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transition: 'transform 0.2s', transform: activeStat === i ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0, marginLeft: 8 }}>
-                      <path d="M2 4l4 4 4-4" stroke="#bbb" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M2 4l4 4 4-4" stroke="#888" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: '#999', lineHeight: 1.6, marginTop: activeStat === i ? 10 : 0, maxHeight: activeStat === i ? 60 : 0, overflow: 'hidden', transition: 'max-height 0.3s ease, margin-top 0.3s ease', opacity: activeStat === i ? 1 : 0 }}>{s.detail}</div>
+                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: '#6b6b6b', lineHeight: 1.6, marginTop: activeStat === i ? 10 : 0, maxHeight: activeStat === i ? 60 : 0, overflow: 'hidden', transition: 'max-height 0.3s ease, margin-top 0.3s ease', opacity: activeStat === i ? 1 : 0 }}>{s.detail}</div>
                   <div style={{ position: 'absolute', bottom: 0, left: 0, height: 2, background: '#1a1a1a', width: activeStat === i ? '100%' : '0%', transition: 'width 0.3s ease', borderRadius: 999 }} />
                 </div>
               )
@@ -266,7 +266,7 @@ export default function WebPage() {
           <div style={{ maxWidth: 560 }}>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
             <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Seven years of performance thinking.</div>
-            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: '#999', fontWeight: 300, marginBottom: 32 }}>Senior design roles and select freelance.</div>
+            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: '#6b6b6b', fontWeight: 300, marginBottom: 32 }}>Senior design roles and select freelance.</div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
               <button
                 onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
