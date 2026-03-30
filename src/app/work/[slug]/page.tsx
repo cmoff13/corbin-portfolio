@@ -738,7 +738,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
   const router = useRouter()
   const project = CASE_STUDIES.find(c => c.slug === slug)
   const [activeSection, setActiveSection] = useState<SectionKey>('overview')
-  const [tldr, setTldr] = useState(true)
+  const [tldr, setTldr] = useState(false)
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
 
   useEffect(() => {
