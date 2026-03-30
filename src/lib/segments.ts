@@ -61,7 +61,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     primarySegment: 'ux',
     alsoIn: [],
     tags: ['UX', 'IA', 'Navigation design', 'Self-initiated'],
-    hidden: true,
   },
   {
     slug: 'linear-cro',
@@ -70,7 +69,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     primarySegment: 'web',
     alsoIn: [],
     tags: ['CRO', 'Landing page', 'Heatmaps', 'A/B testing'],
-    hidden: true,
   },
   {
     slug: 'kirrin-finch',
@@ -79,7 +77,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     primarySegment: 'web',
     alsoIn: [],
     tags: ['Social ads', 'Email marketing', 'DTC', 'Creative production'],
-    hidden: true,
   },
   {
     slug: 'heybud-skincare',
@@ -88,7 +85,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     primarySegment: 'web',
     alsoIn: [],
     tags: ['Art direction', 'Meta ads', 'Pinterest', 'UGC'],
-    hidden: true,
   },
   {
     slug: 'issa',

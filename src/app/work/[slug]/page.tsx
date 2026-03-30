@@ -226,194 +226,152 @@ The broader lesson is about scoping. MVP doesn't mean low quality — it means h
 const PORTFOLIO_CONTENT = {
   overview: {
     title: 'Overview & context',
-    content: `This portfolio is a self-initiated product — designed, built, and shipped by one person to solve a problem I kept running into personally.
-
-After years of applying to a mix of brand, web, and UX/product roles, I noticed a pattern: the same portfolio was landing differently depending on who was reading it. Brand studios wanted to see craft and visual systems. Growth teams wanted conversion thinking. Product teams wanted process and rationale. One portfolio trying to speak to all three audiences was serving none of them well.
-
-The insight wasn't complicated: most portfolios are organized around the designer. This one is organized around the viewer. Three segments, each speaking a different language, built on one unified design system underneath.`,
-    tldr: 'Self-initiated product solving a real personal problem — one portfolio speaking to brand, web, and UX audiences simultaneously was serving none of them well.',
+    content: `This portfolio is a product. Not a PDF, not a scrolling list of projects — a segmented web application designed to solve a real problem I kept running into as a multi-disciplinary designer applying to different kinds of roles.\n\nI built it using Claude, Cursor, GitHub, and Vercel. My coding ability was limited before this project. What I had was a clear problem, a structured design process, and enough determination to figure out the tools as I went. The result is a live Next.js application deployed at cmoffitt.com — and this case study documents the thinking behind it.`,
+    tldr: 'A portfolio built as a product — segmented by audience, designed to solve a real positioning problem for a multi-disciplinary designer.',
   },
   problem: {
     title: 'Problem / challenge',
-    content: `The problem had two sides.
-
-On the applicant side: sending the same portfolio to a brand studio and a SaaS product team means one of them is always seeing irrelevant work. Worse, they're seeing work that actively undermines your positioning — a UX hiring manager looking at logo work might conclude you're not a product thinker. A brand director looking at CRO audits might conclude you're too performance-focused. The portfolio becomes a liability.
-
-On the reviewer side: hiring managers spend an average of a few minutes on a portfolio. If the first thing they see isn't relevant to what they're hiring for, they're gone. There's no mechanism in a traditional portfolio to say "this section is for you specifically."
-
-The design challenge was building something that felt tailored without being fragmented — a portfolio that adapts to its audience while still communicating a coherent design identity.`,
-    tldr: "A generic portfolio actively undermines positioning — a UX manager seeing logo work concludes you're not a product thinker. The design challenge: tailored without being fragmented.",
+    content: `The problem was specific: I was applying to brand studios, growth marketing teams, and product design roles simultaneously. Each audience cares about completely different things. Brand directors want to see craft and taste. Performance marketers want conversion outcomes. Product teams want process and systems thinking.\n\nSending the same portfolio to all three meant one audience always saw irrelevant work — and worse, work that actively undermined my positioning. A UX hiring manager scrolling through logo work might conclude I wasn't a product thinker. A brand director seeing CRO audits might think I was too performance-focused to care about craft.\n\nThe portfolio itself was creating the wrong impression. That's a product problem, not a content problem.`,
+    tldr: 'One portfolio trying to speak to three different audiences was undermining my positioning with each of them.',
   },
   research: {
     title: 'Research & discovery',
-    content: `The research was personal. Seven years of job applications, freelance pitches, and client conversations gave me a clear picture of what different audiences actually respond to.
-
-Brand roles care about the eye — does this person have taste? Can they build a visual system? Web and growth roles care about outcomes — does this person understand conversion? Can they connect design decisions to business results? UX and product roles care about thinking — does this person have a process? Can they articulate why they made a decision?
-
-Those three questions became the brief for three distinct segment experiences. Not three different portfolios — three different editorial registers built on the same design foundation.
-
-I also looked at how other multi-disciplinary designers positioned themselves. The most common approach was a single portfolio with category filters. That solves the content problem but not the framing problem — the visitor still lands in a generic context before finding relevant work. The segment gate solves both: the framing is set before a single project is shown.`,
-    tldr: 'Seven years of applications distilled into three audience questions — brand asks about taste, web asks about outcomes, UX asks about process. Those became the three segments.',
+    content: `I followed Google's UX design process — empathize, define, ideate, prototype, test. I documented my research in FigJam: competitive audit of other designer portfolios, empathy mapping for the three hiring audiences, and a clear problem statement.\n\nThe core insight from the empathy work: hiring managers spend very little time on portfolios. They're not reading — they're scanning for relevance. If the first thing they see isn't relevant to what they're hiring for, they leave. A traditional portfolio with filters doesn't solve this because the framing is already wrong before they filter anything.\n\nI wrote a series of How Might We statements to push my thinking: How might we help a hiring manager immediately understand which work is relevant to them? How might we let the portfolio adapt to the viewer rather than the viewer adapting to the portfolio? That second question became the brief.`,
+    tldr: 'Empathy mapping revealed that hiring managers scan, not read — the framing needed to be right before they saw a single project.',
   },
   decisions: {
     title: 'Design decisions & rationale',
-    content: `The gate screen was the most important design decision in the project. It had to do something unusual: ask the visitor to self-select before showing them anything. That's friction by design — and friction is usually the enemy of conversion. The bet was that the right visitor would appreciate being asked, and that the resulting experience would be more relevant than any generic first impression.
-
-The three-segment structure maps directly to how I actually work: brand identity as craft foundation, web and digital as performance execution, UX and product as systems thinking. The segments aren't marketing categories — they're real disciplines with real differences in how the work should be presented.
-
-Each segment has a distinct format language. Brand is a craft showcase — dense artifact grid, hover reveals, no case study narrative required. Web is case-study-forward with conversion metrics and outcomes. UX is process-forward — wireframes, decisions, rationale before final screens.
-
-The design system underneath stays constant. Same typography, same spacing, same component patterns. The accent color and editorial register shift per segment. The goal was to demonstrate the skill directly in the portfolio itself: adapting a system to context without losing coherence.
-
-AI was used deliberately throughout the build. Claude helped architect the data model, write and refine case study copy, generate component code, and pressure-test design decisions. That's not a shortcut — it's a workflow. Knowing how to use AI as a design and development collaborator is a skill the industry is actively looking for, and this project is evidence of it.`,
-    tldr: "The gate screen is friction by design — the bet was that the right visitor would appreciate being asked, and the tailored experience would outperform any generic first impression.",
+    content: `The gate screen is the central design decision. Asking a visitor to self-identify before seeing any work is deliberate friction — and friction is usually the enemy of conversion. The bet was that the right visitor would appreciate being asked, and that the resulting experience would be more relevant than any generic first impression.\n\nThree segments map directly to how I actually work: Brand identity as craft foundation, Web and digital as performance execution, UX and product as systems thinking. Each segment has a distinct editorial register — Brand is a craft showcase, Web is case-study-forward with metrics, UX is process-forward with rationale.\n\nThe design system underneath stays constant across all three. Same typography, same spacing, same component patterns. The accent color and tone shift per segment. This was intentional — I wanted to demonstrate the skill directly in the portfolio itself: adapting a system to context without losing coherence.\n\nI was severely limited in coding ability before this project. Using Claude as a thinking and execution partner, Cursor for targeted code edits, and Vercel for deployment, I built something I couldn't have built alone. That workflow — knowing how to use AI as a collaborator rather than a shortcut — is itself a relevant skill for the roles I'm targeting.`,
+    tldr: 'The gate screen is deliberate friction — asking visitors to self-identify creates a more relevant experience than any generic first impression.',
   },
   system: {
     title: 'Design system',
-    content: `The design system had to serve three audiences simultaneously — which meant it had to be flexible enough to feel different per segment without requiring three separate codebases.
-
-The solution was a token-based approach in code. A single segments.ts config file drives everything: accent colors, headline copy, intro paragraphs, case study assignments, and page format. Changing a segment's experience means changing one object in one file. That's the kind of scalable thinking that separates a design system from a collection of screens.
-
-The component architecture follows the same principle. The gate screen, segment pages, case study template, and navigation are all built as reusable components that read from the segment config. The visual differentiation happens at the token level — not by maintaining parallel component trees.
-
-Typography is Outfit + Inter — clean, neutral, system-native. The gate screen uses animated word reveals and a canvas-based background with magnetic color blobs that respond to cursor movement. The rest of the site is deliberately restrained — Notion-inspired whitespace, subtle UI elements, accent color as the primary differentiator.`,
-    tldr: 'One segments.ts config file drives everything — accent colors, copy, case study assignments, page format. Three different experiences from a single source of truth.',
+    content: `The system is driven by a single config file — segments.ts — that controls accent colors, headline copy, intro paragraphs, case study assignments, and page format per segment. Changing a segment's experience means changing one object in one file.\n\nTypography: Outfit for display, Inter for body. The gate screen uses animated word reveals and a canvas-based background with color blobs that respond to cursor movement. Segment pages use an ambient scroll-driven blob in the segment's accent color — contained to the page as a personality element rather than a UI component.\n\nThe component architecture follows the same principle as the config: reusable components that read from segment data, with visual differentiation happening at the token level rather than through parallel component trees.`,
+    tldr: 'One config file drives everything — three different experiences from a single source of truth.',
   },
   outcome: {
     title: 'Final outcome & delivery',
-    content: `The portfolio shipped as a live Next.js application deployed on Vercel. It's the site you're reading right now.
-
-The gate screen routes visitors to one of three segment experiences based on their role. Each segment surfaces relevant case studies, uses appropriate copy and framing, and presents work in the format that audience expects. The floating segment switcher lets visitors explore other disciplines without returning to the gate.
-
-The case study template includes a sticky left navigation, section-by-section content, meta information, and real project assets. The entire content layer is driven by a single config file — adding a new case study means adding an object, not rebuilding a page.
-
-This is a living project. New projects will be added as they ship. The system is built to scale.`,
-    tldr: "Live Next.js app on Vercel — the site you're reading right now. Built to scale: adding a case study means adding one object to a config file.",
+    content: `The portfolio is live at cmoffitt.com. The gate routes visitors to one of three segment experiences based on their role. Each segment surfaces relevant case studies with appropriate framing and format. A floating segment switcher lets visitors explore other disciplines without returning to the gate.\n\nMore importantly: I shipped a real product with limited coding experience by knowing how to define the problem clearly, structure the work, and use the right tools. That process is replicable. This case study is evidence of it.`,
+    tldr: 'Live at cmoffitt.com — shipped with limited coding experience by defining the problem clearly and using AI as a genuine collaborator.',
   },
   reflections: {
     title: 'Reflections',
-    content: `The most interesting thing about building your own portfolio is that you're the client, the designer, and the user simultaneously. That's a strange position — you have no brief to push back against, no stakeholder to align with, and no external constraint to blame when a decision doesn't land.
-
-What I learned: constraint is generative. The decisions I'm most confident about — the three-segment structure, the gate screen format, the Notion-inspired design system — all came from forcing myself to define the problem precisely before touching a tool.
-
-The AI-assisted workflow was genuinely new for me on this project. Using Claude as a collaborator for architecture decisions, copy drafts, and component generation changed how I think about the design-to-build pipeline. It's not about generating output — it's about having a thinking partner that responds to specifics. The quality of the prompt is the quality of the work.
-
-What I'd do differently: start with real content earlier. The system is solid. The content is the work.`,
-    tldr: "Being your own client is strange — constraint is generative. The AI workflow changed how I think about design-to-build. The system is solid; real content is what's left.",
+    content: `The thing I'm most aware of looking back is how much the process discipline mattered. I knew what I was building before I touched a tool. The problem statement was clear. The audience was defined. The HMW questions pushed me toward a solution that actually addressed the root problem rather than just making a nicer-looking version of what I already had.\n\nI also learned that constraint is generative. Not knowing how to code pushed me to think more carefully about what I actually needed to build. Every technical decision had to be justified because every technical decision cost time I didn't have to waste.\n\nThis portfolio will keep evolving. The system is built to scale — adding a case study means adding one object to a config file. The design work to fill it is ongoing.`,
+    tldr: 'Process discipline before tools — knowing the problem clearly made every subsequent decision faster and more defensible.',
   },
 }
 
 const LINEAR_CRO_CONTENT = {
   overview: {
     title: 'Overview & context',
-    content: `Linear Design is a PPC agency helping small to mid-size businesses grow through paid search. Their landing page was the first thing prospective clients saw after clicking an ad — and it wasn't converting well enough. I was brought in to diagnose the problem and fix it.\n\nThe engagement was focused: one page, one metric, one sprint. No full redesign, no brand refresh. Just figure out where the page was losing people and make it stop.`,
-    tldr: "One landing page, one metric, one sprint — figure out where the page was losing people and fix it.",
+    content: `Linear Design is a PPC agency helping small to mid-size businesses grow through paid search. Their landing page was the primary conversion surface for prospective clients — the first thing someone saw after clicking one of their ads. It wasn't converting at the rate it needed to.\n\nI was brought in to diagnose the problem and fix it. The scope was focused: one page, one metric, one sprint. No full redesign. No brand refresh. Just find where the page was losing people and stop it.`,
+    tldr: "One page, one metric, one sprint — diagnose where a PPC agency's landing page was losing prospective clients and fix it.",
   },
   problem: {
     title: 'Problem / challenge',
-    content: `The page had a 5.5% CVR. Not terrible, but not where it needed to be. Heatmap data told the real story: visitors were dropping off hard right after the first section. Most people never made it to the CTA.\n\nThe second section had generic copy and a stock image. Nothing to stop a skeptical business owner from bouncing. For someone evaluating whether to trust an agency with their ad budget, "nice design" isn't enough. They need a reason to believe.`,
-    tldr: "Heatmap data showed a hard drop-off after the first section. Most visitors never reached the CTA — the second section wasn't giving skeptical business owners a reason to stay.",
+    content: `The page had a 5.5% CVR. Functional, but not where it needed to be for the volume of traffic they were driving.\n\nHeatmap data told the real story: visitors were dropping off hard right after the first section. Most people never made it to the CTA. The second section had generic copy and a stock image — nothing to stop a skeptical business owner from bouncing.\n\nThe audience is the hardest possible audience for this kind of page: small business owners who have almost certainly been burned by an agency before. They're not looking for features. They're looking for a reason to believe this time will be different.`,
+    tldr: "Heatmap data showed a hard drop-off after section one. The second section wasn't giving skeptical business owners a reason to stay.",
   },
   research: {
     title: 'Research & discovery',
-    content: `The research tool was the heatmap. I didn't need a formal discovery phase — the data showed exactly where the problem was. The question was why.\n\nMy hypothesis: a business owner who clicks a PPC agency ad is already skeptical. They've seen dozens of agency pitches. Generic claims don't move them — proof does. The second section needed to function as a trust accelerator, not a feature list.`,
-    tldr: "The heatmap showed where. The hypothesis was why: skeptical business owners need proof, not feature lists. The second section had to become a trust accelerator.",
+    content: `The research tool was the heatmap. Scroll depth data showed exactly where the page was losing people. Click maps showed what they were engaging with before they left.\n\nMy hypothesis: a small business owner who clicks a PPC agency ad is already skeptical. They've seen agency pitches. Generic claims about "proven results" and "dedicated account managers" don't move them — proof does. Specifically, proof from someone who looks like them.\n\nThe second section needed to answer the question every skeptical business owner is asking: "Has this actually worked for someone in my situation?"`,
+    tldr: 'The hypothesis: skeptical business owners need proof from someone like them, not generic agency claims. The second section had to answer that question.',
   },
   decisions: {
     title: 'Design decisions & rationale',
-    content: `I replaced the second section's generic content with a video case study from a real agency owner — someone in the same position as the visitor. Placed a CTA directly above the scroll break so anyone mildly interested didn't have to hunt for the next step.\n\nThe logic was simple: if someone sees a person like them getting results, they stay. If they stay, they convert. The video did the credibility work that copy couldn't.`,
-    tldr: "Replaced generic content with a video case study from a real agency owner and moved the CTA above the scroll break. Social proof does what copy can't.",
+    content: `I replaced the generic second section content with a video case study from a real agency owner — someone who matched the profile of the target visitor. Placed a CTA directly above the scroll break so anyone who was mildly interested didn't have to hunt for the next step.\n\nTwo changes. That's it.\n\nThe logic: if someone sees a person like them getting results, they stay. If they stay, they convert. The video did the credibility work that copy alone couldn't. The early CTA captured intent before the visitor lost momentum.\n\nThe discipline was in not touching everything else. Changing too much would invalidate the test and make the result unattributable. One variable, measured cleanly.`,
+    tldr: 'Two changes: a video case study from a real agency owner, and a CTA above the scroll break. One variable, measured cleanly.',
   },
   system: {
     title: 'Design system',
-    content: `This wasn't a design system engagement — it was a targeted CRO intervention. The constraint was staying within the existing visual system. Every change had to be implementable without a full rebuild.\n\nThe discipline was in knowing what not to touch. Changing too much would invalidate the test. The goal was one clear variable: did the new section drive more conversions?`,
-    tldr: "Stayed within the existing system — one clear variable so the results were attributable. Discipline is knowing what not to touch.",
+    content: `This was a CRO intervention, not a design system engagement. The constraint was staying within the existing visual system — every change had to be implementable without a full rebuild.\n\nThe discipline was knowing what not to touch. The visual design wasn't the problem. The information architecture was. Fixing the architecture within the existing visual system is a different skill than redesigning from scratch — and in many ways a harder one.`,
+    tldr: "Stayed within the existing system — fixing the architecture, not the aesthetic. Knowing what not to touch is the skill.",
   },
   outcome: {
     title: 'Final outcome & delivery',
-    content: `CVR went from 5.5% to 9.02% in 30 days. That's a 63% increase. Bounce rate dropped alongside it.\n\nNot a full redesign. One intentional section change, backed by data. The page is still running.`,
-    tldr: "63% CVR increase in 30 days. 5.5% to 9.02%. One section change backed by heatmap data.",
+    content: `CVR from 5.5% to 9.02% in 30 days. That's a 63% increase.\n\nBounce rate dropped alongside it. The changes held — the page is still running the updated version.\n\nNot a full redesign. Two intentional changes, backed by data, executed within a 30-day sprint.`,
+    tldr: '63% CVR increase in 30 days. 5.5% to 9.02%. Two changes, one sprint, still running.',
   },
   reflections: {
     title: 'Reflections',
-    content: `The lesson here is about scope. The instinct in design is to want to fix everything you see. On a CRO engagement, that instinct is wrong — it creates noise that makes results unattributable.\n\nThe 30-day window was a constraint that made the work better. It forced prioritization: what's the single highest-leverage change? Make that. Measure it. Then decide what's next.\n\nI'd approach every performance engagement this way going forward — not because it's faster, but because it produces cleaner evidence.`,
-    tldr: "The constraint made the work better — a 30-day window forces you to identify the single highest-leverage change instead of fixing everything you see.",
+    content: `The lesson I carry from this project is about scope as a feature, not a constraint. The instinct in design is to want to fix everything you see that isn't working. On a CRO engagement, that instinct is wrong — it creates noise that makes results unattributable and timelines unmanageable.\n\nThe 30-day window forced prioritization: what is the single highest-leverage change? Make that. Measure it. Decide what's next based on evidence rather than assumption.\n\nI'd approach every performance engagement this way going forward. Not because it's faster — though it often is — but because it produces evidence that actually teaches you something about the audience.`,
+    tldr: 'Scope as a feature — a 30-day window forces you to find the single highest-leverage change instead of fixing everything you see.',
   },
 }
 
 const KIRRIN_FINCH_CONTENT = {
   overview: {
     title: 'Overview & context',
-    content: `Kirrin Finch makes clothing for people who don't fit the traditional mold — gender-neutral, thoughtfully designed, built for a community that had been underserved by mainstream fashion. By the time I joined the account, they had traction. Revenue was around $700K. The goal was growth.\n\nI was the designer and producer on the account, working alongside an account manager and a lifecycle marketing rep. My job was the creative — static social ads and email campaigns. Strategy came from the team. Execution came from me.`,
-    tldr: "Gender-neutral DTC brand with traction but stalled growth. I was the designer and producer — static social ads and email campaigns, built to convert.",
+    content: `Kirrin Finch makes clothing for people who don't fit the traditional mold — gender-neutral, thoughtfully designed, with a loyal community built around authenticity. By the time I joined the account at Disruptive Advertising, they had traction and a real brand. The goal was growth past a revenue plateau.\n\nI was the designer and producer on the account, working alongside an account manager and a lifecycle marketing rep. My responsibility was the creative — static social ads and email campaigns across their paid and owned channels. I wasn't setting the business strategy, but I was directing the creative that executed it.`,
+    tldr: 'Designer and producer on a gender-neutral DTC brand account — responsible for all paid social and email creative as they pushed past a revenue plateau.',
   },
   problem: {
     title: 'Problem / challenge',
-    content: `Growth had plateaued. The creative wasn't converting at the rate the brand needed to scale past $700K.\n\nThe harder problem was maintaining brand integrity while pushing for performance. Kirrin Finch has a strong visual identity — specific, intentional, built around a community. Creative that pushed too hard on conversion signals risked feeling off-brand. Creative that stayed too safe wouldn't move the needle.`,
-    tldr: "Growth plateaued at $700K. The challenge was building creative that converted without compromising a strong, specific brand identity.",
+    content: `Growth had stalled around $700K in revenue. The creative was functional but not converting at the rate needed to push past the plateau. The harder problem was that Kirrin Finch has a strong, specific brand identity — one that exists for a community that had been underserved by mainstream fashion. Creative that pushed too hard on conversion signals would feel off-brand. Creative that played it too safe wouldn't move the needle.\n\nThe channel mix also needed rethinking. The brand was primarily running on a narrow set of placements and hadn't seriously explored Pinterest, which turned out to be a significant missed opportunity for an apparel brand with strong lifestyle imagery.`,
+    tldr: 'Revenue plateau at $700K — the challenge was building creative that converted without compromising a specific, community-driven brand identity.',
   },
   research: {
     title: 'Research & discovery',
-    content: `The research was iterative. I looked at what creative was already performing in account and what wasn't. The patterns were clear enough: the audience responded to authenticity — real people, real clothes, real context. Overly polished creative felt out of place for the brand and its community.\n\nI also paid close attention to the audience. Kirrin Finch's customers know who they are. The creative needed to reflect that back, not perform for them.`,
-    tldr: "Iterative research from existing creative performance. The audience responded to authenticity — real people, real context. Polished creative felt wrong for this community.",
+    content: `The research was iterative and performance-driven. I looked closely at what was already running in the account — what creative was converting, what wasn't, and what patterns emerged across the pieces that worked.\n\nThe clearest signal: lifestyle photography outperformed product-only creative consistently. Both studio lifestyle and real-world contextual shots — images that showed the clothes being lived in rather than displayed — were driving stronger engagement and conversion. That became the creative direction I advocated for.\n\nFor Pinterest, the audience behavior was different. Pinterest users are actively searching, not passively scrolling. Lifestyle imagery with strong visual identity and clear product context performed well there — and the platform was underexplored by the brand, which meant lower competition for their audience.`,
+    tldr: 'Lifestyle imagery consistently outperformed product-only. Pinterest was an untapped channel with strong potential for an apparel brand.',
   },
   decisions: {
     title: 'Design decisions & rationale',
-    content: `I focused on clean, on-brand static creative that matched the brand's visual identity while being structured to convert. Copy hierarchy, visual contrast, CTA placement — all of it was deliberate.\n\nFor email, I worked with the lifecycle rep on sequencing and timing. My job was to make sure the creative matched the intent at every touchpoint — welcome series, promotional campaigns, re-engagement. The design system across email and social stayed consistent so the brand felt cohesive regardless of where someone encountered it.`,
-    tldr: "Clean, on-brand static creative structured to convert — deliberate copy hierarchy, visual contrast, CTA placement. Consistent design language across email and social.",
+    content: `My creative direction focused on three things: staying true to the brand's visual identity, leading with lifestyle over product, and testing systematically rather than guessing.\n\nFor social ads, I designed static creative that reflected the brand's community — real people, genuine contexts, the clothes worn rather than displayed. I worked with the account manager to advocate for product shoots that would give us the lifestyle assets we needed, which meant influencing the client's production decisions upstream of the design work.\n\nFor email, I partnered with the lifecycle rep on strategy and handled all design execution. I ran A/B tests constantly — safe on-brand assets vs elevated custom designs, short vs long form, different heading and CTA treatments. The testing discipline was as important as the creative quality. Every send was a question about the audience.`,
+    tldr: 'Lifestyle-first creative direction, Pinterest channel expansion, and systematic A/B testing — the combination drove the revenue growth.',
   },
   system: {
     title: 'Design system',
-    content: `The brand system was established — my job was to work within it and push it where it needed to go. I built templates for both social and email that could be adapted across campaigns without rebuilding from scratch each time.\n\nThe goal was consistency at scale. When you're producing creative across multiple campaigns and channels simultaneously, a loose system creates visual drift. A tight system lets you move fast without losing the brand.`,
-    tldr: "Built production templates for social and email — consistency at scale so the brand didn't drift across campaigns and channels.",
+    content: `I built production templates for both social and email that could be adapted across campaigns without rebuilding from scratch. The goal was consistency at scale — when you're producing creative across multiple campaigns and channels simultaneously, a loose system creates visual drift.\n\nThe templates stayed close to Kirrin Finch's established brand: their typography, color palette, and visual tone. My job was to push the application of the system into contexts that converted, not to redesign the brand.`,
+    tldr: "Production templates for social and email — consistency at scale so the brand didn't drift across campaigns.",
   },
   outcome: {
     title: 'Final outcome & delivery',
-    content: `Revenue crossed $1M. The account team credited the creative conversion rates as a meaningful contributor to the growth.\n\nFor me, the win was proving that brand-quality creative and performance outcomes aren't mutually exclusive. You don't have to sacrifice the brand to make creative that converts.`,
-    tldr: "Revenue scaled from $700K to $1M+. Brand-quality creative and performance outcomes aren't mutually exclusive — this proved it.",
+    content: `Revenue crossed $1M. The account team credited the creative approach as a meaningful contributor to the growth.\n\nBeyond the revenue number: the lifestyle creative direction became the client's standard going forward. I was able to inform their future product shoots based on what we learned was working — which meant the creative insights had upstream impact on how they approached production, not just how they ran ads.\n\nPinterest became a meaningful channel for the brand where it previously hadn't been explored seriously.`,
+    tldr: "Revenue from $700K to $1M+. Lifestyle creative became the client's standard. Pinterest unlocked as a new performing channel.",
   },
   reflections: {
     title: 'Reflections',
-    content: `The thing I think about most from this account is the relationship between brand and performance. The instinct in performance marketing is to optimize everything — test more hooks, more formats, more offers. That instinct is right in general and wrong for a brand like Kirrin Finch specifically.\n\nThe brand's strength is its specificity. That specificity is what makes the community loyal. Creative that dilutes that specificity might lift a short-term metric while eroding the thing that makes the brand worth buying from. Holding that tension thoughtfully is one of the harder things in performance creative work.`,
-    tldr: "Brand specificity is a performance asset, not a constraint — creative that dilutes it might lift a short-term metric while eroding long-term loyalty.",
+    content: `What I keep coming back to on this account is the relationship between brand integrity and performance. The temptation in performance marketing is to optimize everything — more hooks, more offers, more formats. That instinct is right in general and wrong for Kirrin Finch specifically.\n\nThe brand's strength is its specificity. Its community is loyal because the brand reflects them accurately. Creative that chases short-term conversion metrics at the cost of that authenticity might lift a number this quarter while eroding the thing that makes the brand worth buying from long-term.\n\nHolding that tension — being rigorous about performance while being protective of brand — is one of the harder things in this kind of work. I got better at it on this account.`,
+    tldr: 'Brand specificity is a performance asset. Creative that protects the brand identity while pushing for conversion is harder than optimizing either one alone.',
   },
 }
 
 const HEYBUD_SKINCARE_CONTENT = {
   overview: {
     title: 'Overview & context',
-    content: `Heybud is a skincare brand testing paid social channels — Meta and Pinterest — to find where their audience lived and what kind of creative they responded to. I led art direction across both channels.\n\nThe brief was open enough to be interesting: figure out what works. That meant testing different creative approaches, reading the results, and adjusting.`,
-    tldr: "Skincare brand testing paid social on Meta and Pinterest. I led art direction — the brief was open: figure out what works.",
+    content: `Heybud is a skincare brand that brought me on for a three-month freelance contract to establish a creative direction for their paid social channels. My scope was specific: strategy and production of static ad creative for Meta and Pinterest.\n\nI wasn't involved in video UGC or motion production. My job was to figure out what static creative approach would perform, build it, and give them a benchmark they could take and scale.`,
+    tldr: 'Three-month freelance contract — strategy and production of static paid social creative for Meta and Pinterest.',
   },
   problem: {
     title: 'Problem / challenge',
-    content: `The existing creative was polished. Too polished. High-end product photography, clean layouts, aspirational imagery — the kind of creative that looks great in a brand deck and underperforms in a feed.\n\nSkincare buyers on Meta and Pinterest aren't looking for a photoshoot. They're looking for something that feels real. The brand's assets communicated premium but not relatable, and relatable is what converts on social.`,
-    tldr: "Polished product photography underperformed in social feeds. The brand communicated premium but not relatable — and relatable is what converts.",
+    content: `The existing creative looked like it came from a brand. That's a problem on social.\n\nSkincare buyers on Meta and Pinterest aren't in brand-discovery mode — they're scrolling. Polished product photography with clean layouts and branded text overlays signals "advertisement" immediately, which triggers the skip response before the message lands. The brand needed creative that felt like it came from a person, not a business.\n\nThe strategic question was: how do you make paid creative feel trustworthy and real without looking cheap or off-brand?`,
+    tldr: "Polished brand creative was signaling 'advertisement' too early. The challenge was making paid creative feel like it came from a real person.",
   },
   research: {
     title: 'Research & discovery',
-    content: `I looked at what was performing in the skincare category on both platforms. The pattern was consistent: UGC-style content — real people, natural lighting, honest framing — was outperforming studio creative across the category.\n\nPinterest and Meta behave differently. Pinterest is search-driven — people are looking for solutions, not just scrolling. The creative strategy needed to reflect that: more context, more lifestyle framing, more "here's why this works" energy. Meta rewards the thumb-stop — the first frame has to earn the watch.`,
-    tldr: "Category research confirmed UGC outperformed studio creative. Pinterest needed solution-framing; Meta needed a thumb-stop first frame. Different platforms, different strategies.",
+    content: `I looked at what was performing in the skincare category on both platforms. The pattern was consistent: content that looked user-created — natural lighting, real contexts, honest product use — was outperforming studio creative across the category.\n\nThe insight wasn't just "UGC performs better." It was more specific: trust is the conversion lever for skincare. A customer buying a skincare product is asking "will this actually work for someone like me?" A friend's recommendation answers that question. A brand advertisement doesn't.\n\nStatic UGC-style creative is an attempt to simulate the friend's recommendation in a paid format. The craft challenge is making it feel genuine without feeling sloppy.`,
+    tldr: "Trust is the conversion lever for skincare. UGC-style creative simulates a friend's recommendation — the craft is making it feel genuine, not cheap.",
   },
   decisions: {
     title: 'Design decisions & rationale',
-    content: `We shifted to UGC-style creative across Meta — real people, natural lighting, honest product use. I directed the visual approach: the goal was authentic, not cheap. There's a meaningful difference between lo-fi that feels genuine and lo-fi that feels sloppy. The craft was in making it look effortless.\n\nOn Pinterest, I focused on lifestyle imagery that fit the platform's search-heavy behavior — more context around the product, more visual storytelling, less direct-response energy.`,
-    tldr: "UGC-style on Meta — authentic not cheap, effortless not sloppy. Pinterest got lifestyle framing to match its search-driven behavior.",
+    content: `I directed and produced static creative that was deliberately designed to look user-made rather than brand-made. Natural lighting, real product contexts, copy that sounded like a person talking rather than a brand announcing.\n\nThe key design decision was restraint. Every instinct toward polish — cleaner layouts, branded color treatments, professional typography — worked against the goal. The creative needed to earn trust through authenticity, not impress through execution.\n\nFor Pinterest, the approach shifted slightly. Pinterest users are actively searching for solutions, so the creative could be more editorial — lifestyle framing, product in context, visual storytelling that matched the search intent rather than interrupting a scroll.`,
+    tldr: 'Deliberate restraint — every move toward polish worked against the trust goal. Different approach for Pinterest to match its search-driven behavior.',
   },
   system: {
     title: 'Design system',
-    content: `The creative system that emerged from this work was a hierarchy: UGC-style as the primary format for Meta, lifestyle for Pinterest, with polished brand creative reserved for retargeting where trust was already partially established.\n\nThat framework gave the brand a repeatable production approach — not "make more content" but "make the right content for the right context."`,
-    tldr: "Built a channel-specific creative hierarchy — UGC for Meta, lifestyle for Pinterest, polished for retargeting. Right content for the right context.",
+    content: `The deliverable wasn't just a set of ads — it was a creative framework the brand could take and replicate. I established a hierarchy: UGC-style static as the primary format for Meta, lifestyle editorial for Pinterest, polished brand creative reserved for retargeting where some trust was already established.\n\nThat framework gave Heybud a repeatable production approach. Not "make more content" but "make the right content for the right context and audience temperature."`,
+    tldr: 'A creative framework by channel and audience temperature — not just ads, but a repeatable production approach they could scale.',
   },
   outcome: {
     title: 'Final outcome & delivery',
-    content: `UGC-style creative outperformed polished product shots. Not close. Meta was the stronger performing channel for the brand.\n\nThe learnings gave Heybud a repeatable creative playbook — a framework for production that didn't require starting from scratch every campaign.`,
-    tldr: "UGC won decisively. Meta was the stronger channel. The brand left with a repeatable creative playbook instead of a one-off campaign.",
+    content: `I delivered a creative benchmark across both channels — a defined visual approach and format system the brand could use to brief future production and evaluate new creative against.\n\nThe client didn't share performance metrics with me as a freelance contractor, which is common. What I know is that they had a clear creative direction they could scale coming out of the engagement, where they hadn't had one going in.\n\nFor a three-month contract with a defined scope, that's the outcome — not a revenue number, but a strategic creative foundation.`,
+    tldr: 'Delivered a creative benchmark and framework the brand could scale — a strategic foundation, not just a campaign.',
   },
   reflections: {
     title: 'Reflections',
-    content: `The lesson I keep coming back to from this account is that "elevated" means different things in different contexts. Elevated for a skincare brand in a paid social feed doesn't mean studio photography — it means UGC that's been thoughtfully directed. The authenticity is the elevation.\n\nI'd push even harder on the Pinterest strategy next time. The platform has a different creative language than Meta and I think there was more to explore there — longer-form content, more editorial framing, leaning into the search intent more explicitly.`,
-    tldr: '"Elevated" is context-dependent — in paid social, elevated UGC beats polished studio. Pinterest had more to explore and I\'d go deeper there next time.',
+    content: `The honest limitation of this project is the absence of performance data. I don't have conversion numbers or ROAS figures. That's a real gap in the story and I won't pretend otherwise.\n\nWhat I can speak to is the strategic thinking: identifying trust as the conversion lever, building creative that addressed that insight, and establishing a framework that was bigger than any individual ad. That thinking is transferable regardless of the specific metrics.\n\nIf I were doing it again, I'd push harder for even directional performance feedback — not detailed analytics, just enough to close the loop. A three-month engagement with no feedback on outcomes is a missed learning opportunity for both sides.`,
+    tldr: 'No performance data — honest limitation. The strategic thinking is the transferable value: trust as conversion lever, framework over one-off creative.',
   },
 }
 
@@ -528,27 +486,27 @@ const META_MAP: Record<string, { label: string; value: string }[]> = {
   ],
   'portfolio-nav-system': [
     { label: 'Role', value: 'Designer + Developer' },
-    { label: 'Scope', value: 'Product thinking, Design, Build' },
+    { label: 'Scope', value: 'UX, Design, Build' },
     { label: 'Type', value: 'Self-initiated' },
     { label: 'Stack', value: 'Next.js + Vercel' },
   ],
   'linear-cro': [
-    { label: 'Role', value: 'Designer / CRO' },
+    { label: 'Role', value: 'CRO Designer' },
     { label: 'Scope', value: 'Landing page optimization' },
     { label: 'Timeline', value: '30-day sprint' },
-    { label: 'Tools', value: 'Figma + Heatmaps' },
+    { label: 'Result', value: '63% CVR increase' },
   ],
   'kirrin-finch': [
     { label: 'Role', value: 'Designer / Producer' },
     { label: 'Scope', value: 'Social ads + email' },
-    { label: 'Client type', value: 'DTC ecommerce' },
-    { label: 'Channels', value: 'Meta + Email' },
+    { label: 'Channels', value: 'Meta, Pinterest, Email' },
+    { label: 'Context', value: 'Disruptive Advertising' },
   ],
   'heybud-skincare': [
     { label: 'Role', value: 'Art Director' },
-    { label: 'Scope', value: 'Paid social creative' },
+    { label: 'Scope', value: 'Static paid social creative' },
     { label: 'Channels', value: 'Meta + Pinterest' },
-    { label: 'Approach', value: 'UGC + lifestyle' },
+    { label: 'Contract', value: '3-month freelance' },
   ],
   'issa': [
     { label: 'Role', value: 'Designer' },
