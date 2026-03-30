@@ -697,6 +697,7 @@ function ImageOrPlaceholder({ src, alt, style, label, clickable = false }: {
             borderRadius: '8px',
             overflow: 'hidden',
             cursor: clickable ? 'zoom-in' : 'default',
+            border: '1px solid #e0e0de',
             ...style,
           }}
         >
