@@ -541,6 +541,42 @@ const IMAGE_MAP: Record<string, Record<string, string>> = {
       system: '/images/black-coast/system.jpg',
       outcome: '/images/black-coast/outcome.jpg',
     },
+    'portfolio-nav-system': {
+      hero: '/images/portfolio/hero.jpg',
+      overview: '/images/portfolio/overview.jpg',
+      problem: '/images/portfolio/problem.jpg',
+      research: '/images/portfolio/research.jpg',
+      decisions: '/images/portfolio/decisions.jpg',
+      system: '/images/portfolio/system.jpg',
+      outcome: '/images/portfolio/outcome.jpg',
+    },
+    'linear-cro': {
+      hero: '/images/linear/hero.jpg',
+      overview: '/images/linear/overview.jpg',
+      problem: '/images/linear/problem.jpg',
+      research: '/images/linear/research.jpg',
+      decisions: '/images/linear/decisions.jpg',
+      system: '/images/linear/system.jpg',
+      outcome: '/images/linear/outcome.jpg',
+    },
+    'kirrin-finch': {
+      hero: '/images/kirrin/hero.jpg',
+      overview: '/images/kirrin/overview.jpg',
+      problem: '/images/kirrin/problem.jpg',
+      research: '/images/kirrin/research.jpg',
+      decisions: '/images/kirrin/decisions.jpg',
+      system: '/images/kirrin/system.jpg',
+      outcome: '/images/kirrin/outcome.jpg',
+    },
+    'heybud-skincare': {
+      hero: '/images/heybud/hero.jpg',
+      overview: '/images/heybud/overview.jpg',
+      problem: '/images/heybud/problem.jpg',
+      research: '/images/heybud/research.jpg',
+      decisions: '/images/heybud/decisions.jpg',
+      system: '/images/heybud/system.jpg',
+      outcome: '/images/heybud/outcome.jpg',
+    },
   }
 
 const SECTION_KEYS = [
