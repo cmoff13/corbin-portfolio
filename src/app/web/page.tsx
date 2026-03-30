@@ -204,11 +204,11 @@ export default function WebPage() {
           {sectionLabel('How I work')}
           <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)', gap: 10 }}>
             {PROCESS.map(step => (
-              <div key={step.num} style={{ borderRadius: 14, overflow: 'hidden', border: LINE }}>
+              <div key={step.num} style={{ borderRadius: 14, overflow: 'hidden', border: LINE, display: 'flex', flexDirection: 'column' }}>
                 <div style={{ height: 100, background: BG, display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: LINE }}>
                   {step.svg}
                 </div>
-                <div style={{ padding: '14px 16px', background: BG }}>
+                <div style={{ padding: '14px 16px', background: BG, flex: 1 }}>
                   <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, color: '#bbb', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 5 }}>{step.num}</div>
                   <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, color: '#1a1a1a', marginBottom: 5 }}>{step.title}</div>
                   <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#999', lineHeight: 1.5 }}>{step.desc}</div>
@@ -233,7 +233,8 @@ export default function WebPage() {
                   key={s.num}
                   onClick={() => setActiveStat(activeStat === i ? null : i)}
                   style={{
-                    padding: isMobile ? '24px 0' : `0`,
+                    paddingTop: isMobile ? '24px' : 0,
+                    paddingBottom: isMobile ? '24px' : '32px',
                     paddingLeft: padL,
                     paddingRight: padR,
                     borderRight: !isMobile && i < 2 ? LINE : 'none',
