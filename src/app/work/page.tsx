@@ -8,6 +8,10 @@ import { CASE_STUDIES, SEGMENTS } from '@/lib/segments'
 const THUMBNAILS: Record<string, string> = {
   'black-coast-estates': '/images/black-coast/thumbnail.jpg',
   'skygate-growth-strategies': '/images/skygate/thumbnail.jpg',
+  'portfolio-nav-system': '/images/portfolio-nav-system/thumbnail.jpg',
+  'kirrin-finch': '/images/kirrin-finch/thumbnail.jpg',
+  'heybud-skincare': '/images/heybud-skincare/thumbnail.jpg',
+  'linear-cro': '/images/linear-cro/thumbnail.jpg',
 }
 
 const SEGMENT_ICONS: Record<string, React.ReactNode> = {
