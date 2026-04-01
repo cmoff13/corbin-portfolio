@@ -21,14 +21,14 @@ export default function SiteFooter() {
         {[
           { label: 'LinkedIn', href: 'https://www.linkedin.com/in/corbinmoffitt', external: true },
           { label: 'Figma', href: 'https://www.figma.com/design/bPfgluySGiIXoHucOxmyfn', external: true },
-          { label: 'Resume ↓', href: '/resume.pdf', download: true },
+          { label: 'Resume ↓', href: '/CorbinMoffittResume_04-2026.pdf', download: 'CorbinMoffittResume_04-2026.pdf' },
         ].map(link => (
           <a
             key={link.label}
             href={link.href}
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noopener noreferrer' : undefined}
-            download={link.download ? true : undefined}
+            download={link.download ?? undefined}
             style={{
               fontSize: 11,
               color: '#999',
