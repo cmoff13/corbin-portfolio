@@ -219,24 +219,22 @@ export default function WebPage() {
           </div>
         </div>
 
-        <div style={{ borderTop: LINE }} />
-
         {/* STATS */}
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)' }}>
+          <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', borderTop: LINE, borderBottom: LINE }}>
             {STATS.map((s, i) => {
-              const padL = !isMobile && i > 0 ? 48 : 0
-              const padR = !isMobile && i < 2 ? 48 : 0
+              const desktopPadding = i === 0
+                ? '40px 40px 40px 0'
+                : i === 2
+                ? '40px 0 40px 40px'
+                : '40px 40px 40px 40px'
               return (
                 <div
                   key={s.num}
                   onClick={() => setActiveStat(activeStat === i ? null : i)}
                   style={{
-                    paddingTop: isMobile ? '24px' : 0,
-                    paddingBottom: isMobile ? '24px' : '32px',
-                    paddingLeft: padL,
-                    paddingRight: padR,
+                    padding: isMobile ? '28px 0' : desktopPadding,
                     borderRight: !isMobile && i < 2 ? LINE : 'none',
                     borderBottom: isMobile && i < 2 ? LINE : 'none',
                     cursor: 'none',
