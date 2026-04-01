@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 import AmbientBlob from '@/components/AmbientBlob'
+import ProcessCards from '@/components/ProcessCards'
 
 const segment = SEGMENTS.ux
 const ACCENT = '#1D4ED8'
@@ -15,64 +16,10 @@ const UX_METRICS: Record<string, string> = {
   'portfolio-nav-system': '0→1',
 }
 
-const UX_PROCESS = [
-  {
-    num: '01',
-    title: 'Research',
-    desc: 'Understanding user goals and mental models before touching a frame. Audience mapping, competitive audit, and defining what success looks like.',
-    svg: (
-      <svg width="32" height="32" viewBox="0 0 100 90" fill="none">
-        <circle cx="44" cy="42" r="20" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" fill="none"/>
-        <line x1="58" y1="56" x2="76" y2="74" stroke="rgba(0,0,0,0.25)" strokeWidth="2" strokeLinecap="round"/>
-        <circle cx="44" cy="42" r="8" fill="rgba(0,0,0,0.08)"/>
-      </svg>
-    ),
-  },
-  {
-    num: '02',
-    title: 'Map',
-    desc: 'Flows before frames. IA, user journeys, and decision points mapped out so the structure is right before any visual work begins.',
-    svg: (
-      <svg width="32" height="32" viewBox="0 0 100 90" fill="none">
-        <rect x="12" y="18" width="22" height="14" rx="3" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" fill="none"/>
-        <rect x="39" y="38" width="22" height="14" rx="3" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" fill="none"/>
-        <rect x="66" y="58" width="22" height="14" rx="3" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" fill="none"/>
-        <line x1="34" y1="25" x2="39" y2="45" stroke="rgba(0,0,0,0.15)" strokeWidth="1.5"/>
-        <line x1="61" y1="45" x2="66" y2="65" stroke="rgba(0,0,0,0.15)" strokeWidth="1.5"/>
-      </svg>
-    ),
-  },
-  {
-    num: '03',
-    title: 'Wire',
-    desc: 'Low-fidelity decisions at speed. Structure, hierarchy, and interaction patterns locked before visual polish begins.',
-    svg: (
-      <svg width="32" height="32" viewBox="0 0 100 90" fill="none">
-        <rect x="14" y="12" width="72" height="66" rx="4" stroke="rgba(0,0,0,0.18)" strokeWidth="1.5" fill="none"/>
-        <rect x="14" y="12" width="72" height="14" fill="rgba(0,0,0,0.06)"/>
-        <rect x="22" y="34" width="30" height="20" rx="2" stroke="rgba(0,0,0,0.15)" strokeWidth="1" fill="none"/>
-        <rect x="58" y="34" width="20" height="8" rx="2" fill="rgba(0,0,0,0.08)"/>
-        <rect x="58" y="46" width="20" height="8" rx="2" fill="rgba(0,0,0,0.06)"/>
-        <rect x="22" y="62" width="56" height="8" rx="2" fill="rgba(0,0,0,0.1)"/>
-      </svg>
-    ),
-  },
-  {
-    num: '04',
-    title: 'Ship',
-    desc: 'High-fidelity prototype delivered with rationale. Every decision documented so the handoff is a conversation, not a mystery.',
-    svg: (
-      <svg width="32" height="32" viewBox="0 0 100 90" fill="none">
-        <rect x="20" y="10" width="60" height="70" rx="6" stroke="rgba(0,0,0,0.18)" strokeWidth="1.5" fill="none"/>
-        <line x1="50" y1="80" x2="50" y2="88" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5"/>
-        <line x1="38" y1="88" x2="62" y2="88" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" strokeLinecap="round"/>
-        <rect x="30" y="22" width="40" height="26" rx="2" fill="rgba(0,0,0,0.06)"/>
-        <rect x="30" y="56" width="18" height="4" rx="2" fill="rgba(0,0,0,0.1)"/>
-        <rect x="52" y="56" width="18" height="4" rx="2" fill="rgba(0,0,0,0.06)"/>
-      </svg>
-    ),
-  },
-]
+const THUMBNAILS: Record<string, string> = {
+  'black-coast-estates': '/images/black-coast/thumbnail.jpg',
+  'portfolio-nav-system': '/images/portfolio/thumbnail.jpg',
+}
 
 const UX_STATS = [
   { num: '2', label: 'UX case studies', detail: 'Black Coast Estates and this portfolio — both shipped, both documented with full process rationale.' },
@@ -90,9 +37,9 @@ const TESTIMONIAL = {
 export default function UXPage() {
   const router = useRouter()
   const [activeStat, setActiveStat] = useState<number | null>(null)
+  const [activeStep, setActiveStep] = useState(0)
   const [copied, setCopied] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  const [activeProcess, setActiveProcess] = useState(0)
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)')
@@ -159,10 +106,22 @@ export default function UXPage() {
                   onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
                   onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                 >
-                  <div style={{ width: isMobile ? '100%' : 260, flexShrink: 0, background: BG, minHeight: isMobile ? 120 : 180, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: isMobile ? 'none' : LINE, borderBottom: isMobile ? LINE : 'none' }}>
-                    <span style={{ fontSize: isMobile ? 36 : 44, fontWeight: 300, color: 'rgba(0,0,0,0.12)', letterSpacing: '-0.05em' }}>
-                      {UX_METRICS[p.slug] ?? 'UX'}
-                    </span>
+                  <div style={{ width: isMobile ? '100%' : 260, flexShrink: 0, background: BG, minHeight: isMobile ? 120 : 180, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: isMobile ? 'none' : LINE, borderBottom: isMobile ? LINE : 'none', position: 'relative', overflow: 'hidden' }}>
+                    {(() => {
+                      const thumb = THUMBNAILS[p.slug]
+                      return thumb ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={thumb}
+                          alt={p.title}
+                          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                        />
+                      ) : (
+                        <span style={{ fontSize: isMobile ? 36 : 44, fontWeight: 300, color: 'rgba(0,0,0,0.12)', letterSpacing: '-0.05em' }}>
+                          {UX_METRICS[p.slug] ?? 'UX'}
+                        </span>
+                      )
+                    })()}
                   </div>
                   <div style={{ flex: 1, padding: isMobile ? '20px' : '28px 32px', display: 'flex', flexDirection: 'column' as const, justifyContent: 'center', background: BG }}>
                     <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' as const, marginBottom: 12 }}>
@@ -211,24 +170,18 @@ export default function UXPage() {
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             {sectionLabel('How I work')}
-            <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)', gap: 10, marginBottom: 16 }}>
-              {UX_PROCESS.map((step, i) => (
-                <div
-                  key={step.num}
-                  onClick={() => setActiveProcess(i)}
-                  style={{ borderRadius: 14, overflow: 'hidden', border: i === activeProcess ? `1px solid ${ACCENT}40` : LINE, cursor: 'none', transition: 'border-color 0.25s' }}
-                >
-                  <div style={{ height: 110, background: BG, display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: LINE }}>
-                    <div style={{ opacity: i === activeProcess ? 1 : 0.6, transition: 'opacity 0.25s' }}>{step.svg}</div>
-                  </div>
-                  <div style={{ padding: '14px 16px', background: BG }}>
-                    <div style={{ fontSize: 9, color: i === activeProcess ? ACCENT : '#bbb', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 5, transition: 'color 0.25s' }}>{step.num}</div>
-                    <div style={{ fontSize: 13, color: '#1a1a1a', fontWeight: i === activeProcess ? 500 : 400, marginBottom: 4 }}>{step.title}</div>
-                    <div style={{ fontSize: 11, color: '#888', lineHeight: 1.5 }}>{step.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <ProcessCards
+              steps={[
+                { number: '01', title: 'Discover', description: 'User goals, mental models, and jobs to be done. Research before wireframes — always.' },
+                { number: '02', title: 'Map', description: 'Information architecture, user flows, and decision trees. Structure before pixels.' },
+                { number: '03', title: 'Design', description: 'High-fidelity Figma prototypes. Every interaction decision documented with rationale.' },
+                { number: '04', title: 'Validate', description: 'Usability testing and iteration. Shipping the version that works, not the version that looked good in the mockup.' },
+              ]}
+              accent="#1D4ED8"
+              isMobile={isMobile}
+              activeStep={activeStep}
+              onStepChange={setActiveStep}
+            />
           </div>
         </div>
 

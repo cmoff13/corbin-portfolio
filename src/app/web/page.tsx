@@ -4,11 +4,19 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 import AmbientBlob from '@/components/AmbientBlob'
+import ProcessCards from '@/components/ProcessCards'
 
 const segment = SEGMENTS.web
 const ACCENT = '#DC2626'
 const BG = '#F0F2F5'
 const LINE = '1px solid rgba(0,0,0,0.07)'
+
+const WEB_THUMBNAILS: Record<string, string> = {
+  'linear-cro': '/images/linear-cro/thumbnail.jpg',
+  'kirrin-finch': '/images/kirrin-finch/thumbnail.jpg',
+  'heybud-skincare': '/images/heybud-skincare/thumbnail.jpg',
+  'skygate-growth-strategies': '/images/skygate/thumbnail.jpg',
+}
 
 const WEB_PROJECTS = [
   { slug: 'linear-cro', metric: '63%', tags: ['CRO', 'Landing page', 'Heatmaps'], title: 'From 5.5% to 9.02% in 30 days', what: 'Heatmap-driven redesign of a single section that turned a decent-converting page into a high-converting one. One change, 30 days, measurable result.' },
@@ -25,53 +33,6 @@ const TESTIMONIALS = [
   { quote: 'Working with Corbin was a pleasure... I highly recommend him.', name: 'Claudia Gharai', title: 'Ex-Marketing Manager @ Porsche', initials: 'CG' },
 ]
 
-const PROCESS = [
-  {
-    num: '01', title: 'Audit',
-    desc: 'Read the data before redesigning anything. Heatmaps, scroll depth, form drop-off.',
-    svg: (
-      <svg width="32" height="32" viewBox="0 0 100 90" fill="none">
-        <rect x="22" y="16" width="56" height="64" rx="4" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5"/>
-        <circle cx="70" cy="30" r="14" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" fill="none"/>
-        <line x1="62" y1="22" x2="78" y2="38" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5"/>
-      </svg>
-    ),
-  },
-  {
-    num: '02', title: 'Strategy',
-    desc: 'Every element earns its place. Hierarchy, CTA placement, copy framing.',
-    svg: (
-      <svg width="32" height="32" viewBox="0 0 100 90" fill="none">
-        <polygon points="50,12 88,75 12,75" stroke="rgba(0,0,0,0.2)" strokeWidth="1.5" fill="none"/>
-        <polygon points="50,30 74,70 26,70" stroke="rgba(0,0,0,0.15)" strokeWidth="1.5" fill="none"/>
-      </svg>
-    ),
-  },
-  {
-    num: '03', title: 'Design',
-    desc: 'Brand-quality craft applied to performance outcomes.',
-    svg: (
-      <svg width="32" height="32" viewBox="0 0 100 90" fill="none">
-        <rect x="12" y="14" width="76" height="58" rx="4" stroke="rgba(0,0,0,0.18)" strokeWidth="1.5" fill="none"/>
-        <rect x="12" y="14" width="76" height="13" fill="rgba(0,0,0,0.07)"/>
-        <rect x="26" y="46" width="48" height="12" rx="3" fill="rgba(0,0,0,0.1)"/>
-      </svg>
-    ),
-  },
-  {
-    num: '04', title: 'Measure',
-    desc: "What moved, what didn't, and what to test next.",
-    svg: (
-      <svg width="32" height="32" viewBox="0 0 100 90" fill="none">
-        <rect x="10" y="58" width="14" height="22" fill="rgba(0,0,0,0.1)" rx="2"/>
-        <rect x="30" y="42" width="14" height="38" fill="rgba(0,0,0,0.14)" rx="2"/>
-        <rect x="50" y="28" width="14" height="52" fill="rgba(0,0,0,0.18)" rx="2"/>
-        <rect x="70" y="14" width="14" height="66" fill="rgba(0,0,0,0.22)" rx="2"/>
-      </svg>
-    ),
-  },
-]
-
 const STATS = [
   { num: '4+', label: 'Years at Disruptive Advertising', detail: 'Producing and auditing performance creative across dozens of DTC and ecom brands.' },
   { num: '100+', label: 'Landing pages audited', detail: 'CRO audits, message match analysis, and conversion-focused redesigns across ecom and SaaS.' },
@@ -82,6 +43,7 @@ export default function WebPage() {
   const router = useRouter()
   const [activeTestimonial, setActiveTestimonial] = useState(0)
   const [activeStat, setActiveStat] = useState<number | null>(null)
+  const [activeStep, setActiveStep] = useState(0)
   const [copied, setCopied] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
 
@@ -149,8 +111,20 @@ export default function WebPage() {
                 onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
                 onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
               >
-                <div style={{ width: isMobile ? '100%' : 260, flexShrink: 0, background: BG, minHeight: isMobile ? 120 : 180, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: isMobile ? 'none' : LINE, borderBottom: isMobile ? LINE : 'none' }}>
-                  <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 36 : 44, fontWeight: 300, color: 'rgba(0,0,0,0.12)', letterSpacing: '-0.05em' }}>{p.metric}</span>
+                <div style={{ width: isMobile ? '100%' : 260, flexShrink: 0, background: BG, minHeight: isMobile ? 120 : 180, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: isMobile ? 'none' : LINE, borderBottom: isMobile ? LINE : 'none', position: 'relative', overflow: 'hidden' }}>
+                  {(() => {
+                    const thumb = WEB_THUMBNAILS[p.slug]
+                    return thumb ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={thumb}
+                        alt={p.title}
+                        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                      />
+                    ) : (
+                      <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 36 : 44, fontWeight: 300, color: 'rgba(0,0,0,0.12)', letterSpacing: '-0.05em' }}>{p.metric}</span>
+                    )
+                  })()}
                 </div>
                 <div style={{ flex: 1, padding: isMobile ? '20px' : '28px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: BG }}>
                   <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 12 }}>{p.tags.map(pill)}</div>
@@ -198,24 +172,24 @@ export default function WebPage() {
 
         <div style={{ borderTop: LINE }} />
 
+        <div style={{ borderTop: LINE }} />
+
         {/* PROCESS */}
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           {sectionLabel('How I work')}
-          <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)', gap: 10 }}>
-            {PROCESS.map(step => (
-              <div key={step.num} style={{ borderRadius: 14, overflow: 'hidden', border: LINE, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ height: 100, background: BG, display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: LINE }}>
-                  {step.svg}
-                </div>
-                <div style={{ padding: '14px 16px', background: BG, flex: 1 }}>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 9, color: '#bbb', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' as const, marginBottom: 5 }}>{step.num}</div>
-                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 13, color: '#1a1a1a', marginBottom: 5 }}>{step.title}</div>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#999', lineHeight: 1.5 }}>{step.desc}</div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ProcessCards
+            steps={[
+              { number: '01', title: 'Audit', description: 'Read the data before redesigning anything. Heatmaps, scroll depth, form drop-off.' },
+              { number: '02', title: 'Strategy', description: 'Every element earns its place. Hierarchy, CTA placement, copy framing.' },
+              { number: '03', title: 'Design', description: 'Brand-quality craft applied to performance outcomes.' },
+              { number: '04', title: 'Measure', description: "What moved, what didn't, and what to test next." },
+            ]}
+            accent="#DC2626"
+            isMobile={isMobile}
+            activeStep={activeStep}
+            onStepChange={setActiveStep}
+          />
           </div>
         </div>
 
