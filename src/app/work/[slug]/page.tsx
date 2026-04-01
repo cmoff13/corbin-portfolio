@@ -1201,15 +1201,20 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
                           overflow: 'hidden',
                           transition: 'max-height 0.25s ease, opacity 0.2s ease',
                         }}>
-                          <div style={{ padding: '0 20px 18px 60px' }}>
+                          <div style={{ padding: '20px 20px 24px 60px' }}>
                             <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-                              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '13px', color: '#4a4a4a', lineHeight: 1.75, margin: 0, flex: 1 }}>
+                              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '14px', color: '#4a4a4a', lineHeight: 1.85, margin: 0, flex: 1 }}>
                                 {section.tldr}
                               </p>
                               {images[key] && key !== 'reflections' && (
-                                <div style={{ width: '100px', height: '64px', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(0,0,0,0.07)', flexShrink: 0 }}>
-                                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                                  <img src={images[key]} alt={section.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                <div style={{ width: '140px', flexShrink: 0 }}>
+                                  <ImageOrPlaceholder
+                                    src={images[key]}
+                                    alt={`${project.title} — ${section.title}`}
+                                    label={section.title}
+                                    style={{ borderRadius: '8px' }}
+                                    clickable
+                                  />
                                 </div>
                               )}
                             </div>
