@@ -145,12 +145,6 @@ export default function WorkPage() {
             {visibleProjects.map(project => {
               const segment = SEGMENTS[project.primarySegment]
               const thumbnail = THUMBNAILS[project.slug]
-              const tagBg = project.primarySegment === 'web'
-                ? '#FEF0EE'
-                : project.primarySegment === 'brand'
-                ? '#F3EEF8'
-                : '#EFF6FF'
-
               return (
                 <div
                   key={project.slug}
@@ -161,7 +155,6 @@ export default function WorkPage() {
                     borderRadius: '18px',
                     background: BG,
                     border: '1px solid rgba(0,0,0,0.07)',
-                    padding: '3px',
                     cursor: 'none',
                     transition: 'opacity 0.2s',
                     overflow: 'hidden',
@@ -260,14 +253,12 @@ export default function WorkPage() {
                             key={tag}
                             style={{
                               fontFamily: "'Inter', sans-serif",
-                              fontSize: '10px',
-                              fontWeight: 600,
-                              letterSpacing: '0.06em',
-                              textTransform: 'uppercase',
-                              padding: '3px 8px',
-                              borderRadius: '999px',
-                              color: segment.accentColor,
-                              background: tagBg,
+                              fontSize: '11px',
+                              color: '#999',
+                              background: 'rgba(0,0,0,0.05)',
+                              borderRadius: 999,
+                              padding: '4px 12px',
+                              display: 'inline-block',
                             }}
                           >
                             {tag}

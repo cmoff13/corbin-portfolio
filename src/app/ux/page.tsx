@@ -191,30 +191,32 @@ export default function UXPage() {
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)' }}>
-              {UX_STATS.map((s, i) => (
-                <div
-                  key={s.num}
-                  onClick={() => setActiveStat(activeStat === i ? null : i)}
-                  style={{
-                    padding: isMobile ? '24px 0' : `0 ${i === 0 ? '48px 0 0' : i === 1 ? '0 48px' : '0 0 0 48px'}`,
-                    borderRight: !isMobile && i < 2 ? LINE : 'none',
-                    borderBottom: isMobile && i < 2 ? LINE : 'none',
-                    cursor: 'none',
-                    position: 'relative' as const,
-                    paddingBottom: isMobile ? 24 : 0,
-                  }}
-                >
-                  <div style={{ fontSize: isMobile ? 44 : 52, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.05em', lineHeight: 1, marginBottom: 10 }}>{s.num}</div>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div style={{ fontSize: 11, color: '#888', letterSpacing: '0.04em' }}>{s.label}</div>
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transition: 'transform 0.2s', transform: activeStat === i ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0 }}>
-                      <path d="M2 4l4 4 4-4" stroke="#bbb" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+              {UX_STATS.map((s, i) => {
+                const desktopPadding = i === 0 ? '40px 40px 40px 0' : i === 2 ? '40px 0 40px 40px' : '40px 40px 40px 40px'
+                return (
+                  <div
+                    key={s.num}
+                    onClick={() => setActiveStat(activeStat === i ? null : i)}
+                    style={{
+                      padding: isMobile ? '28px 0' : desktopPadding,
+                      borderRight: !isMobile && i < 2 ? LINE : 'none',
+                      borderBottom: isMobile && i < 2 ? LINE : 'none',
+                      cursor: 'none',
+                      position: 'relative' as const,
+                    }}
+                  >
+                    <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 44 : 52, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.05em', lineHeight: 1 }}>{s.num}</div>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '12px' }}>
+                      <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: activeStat === i ? ACCENT : '#767676', letterSpacing: '0.04em', transition: 'color 0.2s ease' }}>{s.label}</span>
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ flexShrink: 0, marginLeft: 8, transition: 'transform 0.2s ease, color 0.2s ease', transform: activeStat === i ? 'rotate(180deg)' : 'rotate(0deg)', color: activeStat === i ? ACCENT : '#999' }}>
+                        <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                    <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: '#999', lineHeight: 1.6, marginTop: activeStat === i ? 10 : 0, maxHeight: activeStat === i ? 60 : 0, overflow: 'hidden', transition: 'max-height 0.3s ease, margin-top 0.3s ease', opacity: activeStat === i ? 1 : 0 }}>{s.detail}</div>
+                    <div style={{ position: 'absolute' as const, bottom: 0, left: 0, height: 2, background: ACCENT, width: activeStat === i ? '100%' : '0%', transition: 'width 0.3s ease', borderRadius: 999 }} />
                   </div>
-                  <div style={{ fontSize: 12, color: '#6b6b6b', lineHeight: 1.6, marginTop: activeStat === i ? 10 : 0, maxHeight: activeStat === i ? 80 : 0, overflow: 'hidden', transition: 'max-height 0.3s ease, margin-top 0.3s ease', opacity: activeStat === i ? 1 : 0 }}>{s.detail}</div>
-                  <div style={{ position: 'absolute' as const, bottom: 0, left: 0, height: 2, background: '#1a1a1a', width: activeStat === i ? '100%' : '0%', transition: 'width 0.3s ease', borderRadius: 999 }} />
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </div>
