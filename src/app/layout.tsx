@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import SegmentSwitcher from '@/components/SegmentSwitcher'
+import SiteFooter from '@/components/SiteFooter'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import CustomCursor from '@/components/CustomCursor'
 import { Analytics } from '@vercel/analytics/next'
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CustomCursor />
           <SegmentSwitcher />
           {children}
+          <SiteFooter />
         </div>
       </body>
     </html>
