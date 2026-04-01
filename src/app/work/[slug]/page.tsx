@@ -841,7 +841,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
       },
       { rootMargin: '-20% 0px -70% 0px', threshold: 0 }
     )
-    SECTION_KEYS.forEach(key => {
+    visibleSectionKeys.forEach(key => {
       const el = sectionRefs.current[key]
       if (el) observer.observe(el)
     })
@@ -861,6 +861,14 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
     ? '#F3EEF8'
     : '#EFF6FF'
   const content = CONTENT_MAP[slug] ?? null
+
+  const HIDDEN_SECTIONS: Partial<Record<string, SectionKey[]>> = {
+    'linear-cro': ['system'],
+  }
+
+  const visibleSectionKeys = SECTION_KEYS.filter(
+    key => !(HIDDEN_SECTIONS[slug] ?? []).includes(key)
+  )
   const meta = META_MAP[slug] ?? [
     { label: 'Role', value: 'Designer' },
     { label: 'Scope', value: 'Design' },
@@ -902,7 +910,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
           WebkitBackdropFilter: 'blur(8px)',
         }}
       >
-        {SECTION_KEYS.map(key => (
+        {visibleSectionKeys.map(key => (
           <button
             key={key}
             onClick={() => sectionRefs.current[key]?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
@@ -975,7 +983,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
             On this page
           </p>
 
-          {SECTION_KEYS.map(key => {
+          {visibleSectionKeys.map(key => {
             const isActive = activeSection === key
             return (
               <button
@@ -1129,12 +1137,12 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
 
                 {/* Accordion list */}
                 <div style={{ border: '1px solid rgba(0,0,0,0.07)', borderRadius: '14px', overflow: 'hidden', background: '#F0F2F5', marginTop: '16px' }}>
-                  {SECTION_KEYS.map((key, i) => {
+                  {visibleSectionKeys.map((key, i) => {
                     const section = content
                       ? content[key]
                       : { title: key.charAt(0).toUpperCase() + key.slice(1), content: 'Content coming soon.', tldr: 'Content coming soon.' }
                     const isOpen = openSections.has(key)
-                    const isLastRow = i === SECTION_KEYS.length - 1
+                    const isLastRow = i === visibleSectionKeys.length - 1
                     const sectionNum = String(i + 1).padStart(2, '0')
 
                     return (
@@ -1227,11 +1235,11 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
               </>
             ) : (
               <>
-                {SECTION_KEYS.map((key, i) => {
+                {visibleSectionKeys.map((key, i) => {
                   const section = content
                     ? content[key]
                     : { title: key.charAt(0).toUpperCase() + key.slice(1), content: 'Content coming soon.', tldr: 'Content coming soon.' }
-                  const hasImage = i < SECTION_KEYS.length - 1
+                  const hasImage = i < visibleSectionKeys.length - 1
 
                   return (
                     <div
