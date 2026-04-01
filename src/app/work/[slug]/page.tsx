@@ -1,6 +1,6 @@
 'use client'
 
-import { use, useState, useEffect, useRef } from 'react'
+import React, { use, useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { CASE_STUDIES, SEGMENTS } from '@/lib/segments'
 import ContactCta from '@/components/ContactCta'
@@ -585,6 +585,44 @@ const SECTION_KEYS = [
 
 type SectionKey = typeof SECTION_KEYS[number]
 
+const SECTION_ICONS: Record<string, React.ReactNode> = {
+  overview: (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+  ),
+  problem: (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+    </svg>
+  ),
+  research: (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+  ),
+  decisions: (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>
+    </svg>
+  ),
+  system: (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+    </svg>
+  ),
+  outcome: (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </svg>
+  ),
+  reflections: (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/>
+    </svg>
+  ),
+}
+
 // ── Lightbox ───────────────────────────────────────────────────────────────
 
 function Lightbox({ src, alt, onClose }: {
@@ -776,7 +814,17 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
   const project = CASE_STUDIES.find(c => c.slug === slug)
   const [activeSection, setActiveSection] = useState<SectionKey>('overview')
   const [tldr, setTldr] = useState(false)
+  const [openSections, setOpenSections] = useState<Set<SectionKey>>(new Set())
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
+
+  function toggleSection(key: SectionKey) {
+    setOpenSections(prev => {
+      const next = new Set(prev)
+      if (next.has(key)) next.delete(key)
+      else next.add(key)
+      return next
+    })
+  }
 
   useEffect(() => {
     if (!project || project.hidden) {
@@ -799,6 +847,10 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
     })
     return () => observer.disconnect()
   }, [])
+
+  useEffect(() => {
+    setOpenSections(new Set())
+  }, [tldr])
 
   if (!project || project.hidden) return null
 
@@ -1048,107 +1100,196 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
             />
 
             {/* Sections */}
-            {SECTION_KEYS.map((key, i) => {
-              const section = content
-                ? content[key]
-                : { title: key.charAt(0).toUpperCase() + key.slice(1), content: 'Content coming soon.', tldr: 'Content coming soon.' }
-              const hasImage = i < SECTION_KEYS.length - 1
-
-              return (
-                <div
-                  key={key}
-                  id={key}
-                  ref={el => { sectionRefs.current[key] = el }}
-                  style={{ marginBottom: '80px', scrollMarginTop: '80px' }}
-                >
-                  <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    marginBottom: '20px',
-                  }}>
-                    <span style={{
-                      fontSize: '10px',
-                      fontWeight: 700,
-                      color: segment.accentColor,
-                      background: tagBg,
-                      padding: '3px 8px',
-                      borderRadius: '4px',
-                      letterSpacing: '0.06em',
-                      textTransform: 'uppercase',
-                      flexShrink: 0,
-                    }}>
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <h2 style={{
-                      fontSize: '18px',
-                      fontWeight: 400,
-                      color: '#1a1a1a',
-                      letterSpacing: '-0.02em',
-                      fontFamily: "'Outfit', sans-serif",
-                    }}>
-                      {section.title}
-                    </h2>
+            {tldr ? (
+              <>
+                {/* TL;DR summary card */}
+                <div style={{ background: '#F0F2F5', border: '1px solid rgba(0,0,0,0.07)', borderRadius: '14px', padding: '20px 24px' }}>
+                  <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '9px', fontWeight: 600, letterSpacing: '0.1em', color: '#bbb', textTransform: 'uppercase', marginBottom: '14px' }}>KEY POINTS</p>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'rgba(0,0,0,0.06)', borderRadius: '8px', overflow: 'hidden', marginBottom: '16px' }}>
+                    {meta.slice(0, 3).map(item => (
+                      <div key={item.label} style={{ background: '#F0F2F5', padding: '10px 14px' }}>
+                        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#bbb', marginBottom: '3px' }}>{item.label}</p>
+                        <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '12px', fontWeight: 500, color: '#1a1a1a' }}>{item.value}</p>
+                      </div>
+                    ))}
                   </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {(['overview', 'problem', 'decisions', 'outcome'] as SectionKey[]).map(key => {
+                      const section = content ? content[key] : null
+                      if (!section) return null
+                      return (
+                        <div key={key} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                          <div style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'rgba(0,0,0,0.2)', marginTop: '8px', flexShrink: 0 }} />
+                          <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '12px', color: '#767676', lineHeight: 1.65, margin: 0 }}>{section.tldr}</p>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
 
-                  {tldr ? (
+                {/* Accordion list */}
+                <div style={{ border: '1px solid rgba(0,0,0,0.07)', borderRadius: '14px', overflow: 'hidden', background: '#F0F2F5', marginTop: '16px' }}>
+                  {SECTION_KEYS.map((key, i) => {
+                    const section = content
+                      ? content[key]
+                      : { title: key.charAt(0).toUpperCase() + key.slice(1), content: 'Content coming soon.', tldr: 'Content coming soon.' }
+                    const isOpen = openSections.has(key)
+                    const isLastRow = i === SECTION_KEYS.length - 1
+                    const sectionNum = String(i + 1).padStart(2, '0')
+
+                    return (
+                      <div
+                        key={key}
+                        id={key}
+                        ref={el => { sectionRefs.current[key] = el }}
+                        style={{ borderBottom: isLastRow ? 'none' : '1px solid rgba(0,0,0,0.07)' }}
+                      >
+                        <button
+                          onClick={() => toggleSection(key)}
+                          style={{
+                            width: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            padding: '13px 20px',
+                            background: 'none',
+                            border: 'none',
+                            borderBottom: isOpen ? '1px solid rgba(0,0,0,0.07)' : 'none',
+                            cursor: 'pointer',
+                            textAlign: 'left',
+                            transition: 'background 0.15s',
+                          }}
+                        >
+                          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '9px', fontWeight: 700, letterSpacing: '0.08em', color: '#bbb', width: '20px', flexShrink: 0 }}>
+                            {sectionNum}
+                          </span>
+                          <div style={{
+                            width: '28px',
+                            height: '28px',
+                            borderRadius: '7px',
+                            background: isOpen ? 'rgba(0,0,0,0.06)' : 'rgba(0,0,0,0.04)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            flexShrink: 0,
+                            transition: 'background 0.2s',
+                          }}>
+                            {React.cloneElement(SECTION_ICONS[key] as React.ReactElement<{ stroke?: string }>, {
+                              stroke: isOpen ? segment.accentColor : '#bbb',
+                            })}
+                          </div>
+                          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '13px', fontWeight: 500, color: '#1a1a1a', letterSpacing: '-0.01em', flex: 1 }}>
+                            {section.title}
+                          </span>
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke={isOpen ? segment.accentColor : '#bbb'}
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            style={{ transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }}
+                          >
+                            <polyline points="9 18 15 12 9 6"/>
+                          </svg>
+                        </button>
+                        <div style={{
+                          maxHeight: isOpen ? '400px' : '0',
+                          opacity: isOpen ? 1 : 0,
+                          overflow: 'hidden',
+                          transition: 'max-height 0.25s ease, opacity 0.2s ease',
+                        }}>
+                          <div style={{ padding: '0 20px 18px 60px' }}>
+                            <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+                              <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '13px', color: '#4a4a4a', lineHeight: 1.75, margin: 0, flex: 1 }}>
+                                {section.tldr}
+                              </p>
+                              {images[key] && key !== 'reflections' && (
+                                <div style={{ width: '100px', height: '64px', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(0,0,0,0.07)', flexShrink: 0 }}>
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img src={images[key]} alt={section.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </>
+            ) : (
+              <>
+                {SECTION_KEYS.map((key, i) => {
+                  const section = content
+                    ? content[key]
+                    : { title: key.charAt(0).toUpperCase() + key.slice(1), content: 'Content coming soon.', tldr: 'Content coming soon.' }
+                  const hasImage = i < SECTION_KEYS.length - 1
+
+                  return (
                     <div
-                      className="tldr-grid"
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns: hasImage ? '1fr 180px' : '1fr',
-                        gap: '24px',
-                        alignItems: 'center',
-                      }}
+                      key={key}
+                      id={key}
+                      ref={el => { sectionRefs.current[key] = el }}
+                      style={{ marginBottom: '80px', scrollMarginTop: '80px' }}
                     >
-                      <p style={{
-                        fontSize: '16px',
-                        color: '#1a1a1a',
-                        lineHeight: 1.75,
-                        fontWeight: 500,
-                        borderLeft: `3px solid ${segment.accentColor}`,
-                        paddingLeft: '16px',
-                        margin: 0,
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        marginBottom: '20px',
                       }}>
-                        {section.tldr}
-                      </p>
-                      {hasImage && (
-                        <div className="tldr-image">
+                        <span style={{
+                          fontSize: '10px',
+                          fontWeight: 700,
+                          color: segment.accentColor,
+                          background: tagBg,
+                          padding: '3px 8px',
+                          borderRadius: '4px',
+                          letterSpacing: '0.06em',
+                          textTransform: 'uppercase',
+                          flexShrink: 0,
+                        }}>
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <h2 style={{
+                          fontSize: '18px',
+                          fontWeight: 400,
+                          color: '#1a1a1a',
+                          letterSpacing: '-0.02em',
+                          fontFamily: "'Outfit', sans-serif",
+                        }}>
+                          {section.title}
+                        </h2>
+                      </div>
+
+                      <>
+                        {section.content.split('\n\n').map((para, j) => (
+                          <p key={j} style={{
+                            fontSize: '15px',
+                            color: '#4a4a4a',
+                            lineHeight: 1.85,
+                            marginBottom: '16px',
+                          }}>
+                            {para}
+                          </p>
+                        ))}
+                        {hasImage && (
                           <ImageOrPlaceholder
                             src={images[key]}
                             alt={`${project.title} — ${section.title}`}
-                            label={section.title}
-                            style={{ borderRadius: '6px' }}
-                            clickable
+                            label={`${section.title} — image`}
+                            style={{ marginTop: '32px' }}
                           />
-                        </div>
-                      )}
+                        )}
+                      </>
                     </div>
-                  ) : (
-                    <>
-                      {section.content.split('\n\n').map((para, j) => (
-                        <p key={j} style={{
-                          fontSize: '15px',
-                          color: '#4a4a4a',
-                          lineHeight: 1.85,
-                          marginBottom: '16px',
-                        }}>
-                          {para}
-                        </p>
-                      ))}
-                      {hasImage && (
-                        <ImageOrPlaceholder
-                          src={images[key]}
-                          alt={`${project.title} — ${section.title}`}
-                          label={`${section.title} — image`}
-                          style={{ marginTop: '32px' }}
-                        />
-                      )}
-                    </>
-                  )}
-                </div>
-              )
-            })}
+                  )
+                })}
+              </>
+            )}
 
             {/* Footer */}
             <div style={{
