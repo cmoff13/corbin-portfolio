@@ -73,16 +73,16 @@ export default function UXPage() {
         {/* HERO */}
         <div style={{ padding: `80px ${P} 88px` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase' as const, marginBottom: 22 }}>
+            <div style={{ fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase' as const, marginBottom: 22, fontFamily: "'Inter', sans-serif" }}>
               UX & Product
             </div>
-            <div style={{ fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26, maxWidth: 640 }}>
+            <div style={{ fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontFamily: "'Outfit', sans-serif", fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26, maxWidth: 640 }}>
               {segment.headline[0]}<br />{segment.headline[1]}
             </div>
-            <div style={{ fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500 }}>
+            <div style={{ fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500, fontFamily: "'Inter', sans-serif" }}>
               Good UX is invisible.
             </div>
-            <div style={{ fontSize: 15, fontWeight: 300, color: '#6b6b6b', lineHeight: 1.75, maxWidth: 460, marginBottom: 36 }}>
+            <div style={{ fontSize: 15, fontWeight: 300, color: '#6b6b6b', lineHeight: 1.75, maxWidth: 460, marginBottom: 36, fontFamily: "'Inter', sans-serif" }}>
               The user never notices the decision hierarchy, the cognitive load trade-offs, or the three flows that got cut before the one that shipped. This section documents the thinking.
             </div>
             <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' as const }}>
