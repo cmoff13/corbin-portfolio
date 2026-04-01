@@ -886,7 +886,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
       `}</style>
 
       {/* Mobile nav — sticky */}
-      <div
+      {!tldr && <div
         className="case-mobile-nav"
         style={{
           display: 'none',
@@ -923,12 +923,12 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
             {content ? content[key].title : key}
           </button>
         ))}
-      </div>
+      </div>}
 
       <div style={{ display: 'flex', minHeight: '100vh' }}>
 
         {/* Sidebar */}
-        <aside
+        {!tldr && <aside
           className="case-sidebar"
           style={{
             width: '220px',
@@ -1014,7 +1014,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
               </button>
             )
           })}
-        </aside>
+        </aside>}
 
         {/* Main content */}
         <main
