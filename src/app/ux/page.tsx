@@ -190,7 +190,7 @@ export default function UXPage() {
         {/* STATS */}
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)' }}>
+            <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', borderTop: LINE, borderBottom: LINE }}>
               {UX_STATS.map((s, i) => {
                 const desktopPadding = i === 0 ? '40px 40px 40px 0' : i === 2 ? '40px 0 40px 40px' : '40px 40px 40px 40px'
                 return (
