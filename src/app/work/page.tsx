@@ -39,7 +39,13 @@ const SEGMENT_ICONS: Record<string, React.ReactNode> = {
 export default function WorkPage() {
   const router = useRouter()
   const [copied, setCopied] = useState(false)
-  const visibleProjects = CASE_STUDIES.filter(p => !p.hidden)
+  const [activeFilter, setActiveFilter] = useState<string>('all')
+
+  const visibleProjects = CASE_STUDIES.filter(p => {
+    if (p.hidden) return false
+    if (activeFilter === 'all') return true
+    return p.primarySegment === activeFilter
+  })
 
   function handleCopy() {
     navigator.clipboard.writeText('cmoff13@gmail.com')
@@ -101,47 +107,76 @@ export default function WorkPage() {
 
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
-          {/* Segment legend */}
+          {/* Segment filter pills */}
           <div style={{
             display: 'flex',
-            gap: '12px',
-            marginBottom: '40px',
-            paddingBottom: '24px',
-            borderBottom: LINE,
+            gap: 8,
             flexWrap: 'wrap',
+            paddingBottom: 24,
+            borderBottom: LINE,
+            marginBottom: 24,
           }}>
+            <button
+              onClick={() => setActiveFilter('all')}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                background: activeFilter === 'all' ? 'rgba(0,0,0,0.08)' : 'none',
+                border: '1px solid rgba(0,0,0,0.08)',
+                borderRadius: 999,
+                padding: '5px 14px',
+                cursor: 'none',
+                fontFamily: "'Inter', sans-serif",
+                fontSize: 12,
+                fontWeight: activeFilter === 'all' ? 600 : 400,
+                color: activeFilter === 'all' ? '#1a1a1a' : '#999',
+                transition: 'all 0.15s ease',
+              }}
+            >
+              All
+            </button>
             {Object.values(SEGMENTS).map(seg => (
               <button
                 key={seg.id}
-                onClick={() => router.push(`/${seg.id}`)}
+                onClick={() => setActiveFilter(activeFilter === seg.id ? 'all' : seg.id)}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px',
-                  background: 'none',
-                  border: `1px solid ${seg.accentColor}22`,
-                  borderRadius: '999px',
+                  gap: 6,
+                  background: activeFilter === seg.id ? `${seg.accentColor}12` : 'none',
+                  border: `1px solid ${activeFilter === seg.id ? seg.accentColor + '30' : 'rgba(0,0,0,0.08)'}`,
+                  borderRadius: 999,
                   padding: '5px 14px 5px 8px',
                   cursor: 'none',
                   fontFamily: "'Inter', sans-serif",
-                  fontSize: '12px',
-                  fontWeight: 500,
-                  color: seg.accentColor,
-                  transition: 'border-color 0.2s ease',
+                  fontSize: 12,
+                  fontWeight: activeFilter === seg.id ? 600 : 400,
+                  color: activeFilter === seg.id ? seg.accentColor : '#999',
+                  transition: 'all 0.15s ease',
                 }}
-                onMouseEnter={e => (e.currentTarget.style.borderColor = seg.accentColor + '55')}
-                onMouseLeave={e => (e.currentTarget.style.borderColor = seg.accentColor + '22')}
+                onMouseEnter={e => {
+                  if (activeFilter !== seg.id) {
+                    e.currentTarget.style.borderColor = seg.accentColor + '30'
+                    e.currentTarget.style.color = seg.accentColor
+                  }
+                }}
+                onMouseLeave={e => {
+                  if (activeFilter !== seg.id) {
+                    e.currentTarget.style.borderColor = 'rgba(0,0,0,0.08)'
+                    e.currentTarget.style.color = '#999'
+                  }
+                }}
               >
                 <span style={{
                   width: 18,
                   height: 18,
                   borderRadius: 5,
-                  background: seg.gradientSubtle,
+                  background: activeFilter === seg.id ? `${seg.accentColor}15` : 'rgba(0,0,0,0.04)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: seg.accentColor,
-                  border: `1px solid ${seg.accentColor}22`,
+                  color: activeFilter === seg.id ? seg.accentColor : '#bbb',
                 }}>
                   {SEGMENT_ICONS[seg.id]}
                 </span>
@@ -151,7 +186,7 @@ export default function WorkPage() {
           </div>
 
           {/* Project list */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             {visibleProjects.map(project => {
               const segment = SEGMENTS[project.primarySegment]
               const thumbnail = THUMBNAILS[project.slug]
@@ -159,136 +194,145 @@ export default function WorkPage() {
                 <div
                   key={project.slug}
                   onClick={() => router.push(`/work/${project.slug}`)}
-                  onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-                  onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                   style={{
-                    borderRadius: '18px',
-                    background: BG,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    borderRadius: 14,
+                    overflow: 'hidden',
                     border: '1px solid rgba(0,0,0,0.07)',
+                    background: BG,
                     cursor: 'none',
                     transition: 'opacity 0.2s',
-                    overflow: 'hidden',
-                    alignItems: 'stretch',
+                    marginBottom: 10,
                   }}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
                 >
-                  <div style={{ display: 'flex', flexDirection: 'row' }}>
-                    {/* Left frame */}
-                    <div style={{
-                      width: '260px',
-                      height: '200px',
-                      flexShrink: 0,
-                      background: segment.accentColor + '0f',
-                      overflow: 'hidden',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      position: 'relative',
-                    }}>
-                      {thumbnail ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={thumbnail}
-                          alt={project.title}
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                            display: 'block',
-                            position: 'absolute',
-                            inset: 0,
-                          }}
-                        />
-                      ) : (
-                        <span style={{
-                          fontFamily: "'Climate Crisis', cursive",
-                          fontSize: '40px',
-                          color: 'rgba(0,0,0,0.1)',
-                          textAlign: 'center',
-                          pointerEvents: 'none',
-                          userSelect: 'none',
-                          padding: '0 16px',
-                          lineHeight: 1.2,
-                        }}>
-                          {project.title}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Right content */}
-                    <div style={{
-                      flex: 1,
-                      padding: '28px 32px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      background: BG,
-                    }}>
+                  {/* Left thumbnail */}
+                  <div style={{
+                    width: 200,
+                    height: 200,
+                    flexShrink: 0,
+                    background: BG,
+                    overflow: 'hidden',
+                    position: 'relative',
+                    borderRight: '1px solid rgba(0,0,0,0.07)',
+                  }}>
+                    {thumbnail ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={thumbnail}
+                        alt={project.title}
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          display: 'block',
+                        }}
+                      />
+                    ) : (
                       <div style={{
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: '10px',
-                        fontWeight: 600,
-                        letterSpacing: '0.08em',
-                        textTransform: 'uppercase',
-                        color: segment.accentColor,
-                        marginBottom: '8px',
+                        position: 'absolute',
+                        inset: 0,
+                        background: segment.accentColor + '0f',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '5px',
+                        justifyContent: 'center',
                       }}>
-                        {SEGMENT_ICONS[project.primarySegment]}
-                        {segment.label}
+                        <span style={{
+                          fontFamily: "'Outfit', sans-serif",
+                          fontSize: 13,
+                          fontWeight: 300,
+                          color: 'rgba(0,0,0,0.2)',
+                          letterSpacing: '-0.02em',
+                          textAlign: 'center',
+                          padding: '0 16px',
+                          lineHeight: 1.3,
+                        }}>{project.title}</span>
                       </div>
-                      <div style={{
-                        fontFamily: "'Outfit', sans-serif",
-                        fontSize: '20px',
-                        fontWeight: 400,
-                        color: '#1a1a1a',
-                        letterSpacing: '-0.02em',
-                        lineHeight: 1.2,
-                        marginBottom: '6px',
-                      }}>
-                        {project.title}
-                      </div>
-                      <div style={{
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: '13px',
-                        color: '#767676',
-                        lineHeight: 1.6,
-                        marginBottom: '14px',
-                      }}>
-                        {project.subtitle}
-                      </div>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '16px' }}>
-                        {project.tags.slice(0, 3).map(tag => (
-                          <span
-                            key={tag}
-                            style={{
-                              fontFamily: "'Inter', sans-serif",
-                              fontSize: '11px',
-                              color: '#999',
-                              background: 'rgba(0,0,0,0.05)',
-                              borderRadius: 999,
-                              padding: '4px 12px',
-                              display: 'inline-block',
-                            }}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <div style={{
-                        fontFamily: "'Inter', sans-serif",
-                        fontSize: '12px',
-                        color: segment.accentColor,
-                        fontWeight: 500,
-                      }}>
-                        View case study →
-                      </div>
+                    )}
+                  </div>
+
+                  {/* Right content */}
+                  <div style={{
+                    flex: 1,
+                    padding: '28px 32px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    background: BG,
+                  }}>
+                    <div style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: 10,
+                      fontWeight: 600,
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      color: segment.accentColor,
+                      marginBottom: 8,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 5,
+                    }}>
+                      {SEGMENT_ICONS[project.primarySegment]}
+                      {segment.label}
                     </div>
+                    <div style={{
+                      fontFamily: "'Outfit', sans-serif",
+                      fontSize: 20,
+                      fontWeight: 400,
+                      color: '#1a1a1a',
+                      letterSpacing: '-0.02em',
+                      lineHeight: 1.2,
+                      marginBottom: 6,
+                    }}>
+                      {project.title}
+                    </div>
+                    <div style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: 13,
+                      color: '#767676',
+                      lineHeight: 1.6,
+                      marginBottom: 14,
+                    }}>
+                      {project.subtitle}
+                    </div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 16 }}>
+                      {project.tags.slice(0, 3).map(tag => (
+                        <span key={tag} style={{
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: 11,
+                          color: '#999',
+                          background: 'rgba(0,0,0,0.05)',
+                          borderRadius: 999,
+                          padding: '4px 12px',
+                        }}>{tag}</span>
+                      ))}
+                    </div>
+                    <span style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: 12,
+                      color: segment.accentColor,
+                      fontWeight: 500,
+                    }}>View case study →</span>
                   </div>
                 </div>
               )
             })}
+
+            {visibleProjects.length === 0 && (
+              <div style={{
+                padding: '48px 0',
+                fontFamily: "'Inter', sans-serif",
+                fontSize: 14,
+                color: '#bbb',
+                textAlign: 'center',
+              }}>
+                No projects in this category yet.
+              </div>
+            )}
           </div>
 
           {/* Contact footer */}
