@@ -117,7 +117,7 @@ function ProcessCard({
       }}
     >
       <div ref={previewRef} style={{
-        height: isMobile ? '100px' : '120px',
+        height: isMobile ? '90px' : '120px',
         borderRadius: '16px',
         overflow: 'hidden',
         position: 'relative',
@@ -181,7 +181,7 @@ export default function ProcessCards({
       <div style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-        gap: '12px',
+        gap: isMobile ? '8px' : '12px',
       }}>
         {steps.map((step, i) => (
           <ProcessCard

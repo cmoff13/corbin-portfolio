@@ -127,7 +127,7 @@ export default function WebPage() {
           </div>
           <div style={{ ...fadeUp(240), fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500 }}>Most designers stop at how it looks.</div>
           <div style={{ ...fadeUp(340), fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 300, color: '#999', lineHeight: 1.75, maxWidth: 460, marginBottom: 36 }}>The work here goes further — landing pages built around message match, conversion audits that diagnose why a page isn&apos;t performing, ad creative systems designed to scale.</div>
-          <div style={{ ...fadeUp(440), display: 'flex', gap: 7, flexWrap: 'wrap' }}>
+          <div style={{ ...fadeUp(440), display: 'flex', gap: 7, flexWrap: isMobile ? 'nowrap' : 'wrap', overflowX: isMobile ? 'auto' : 'visible', paddingBottom: isMobile ? 4 : 0 }}>
             {['Landing pages', 'Social advertising', 'Email marketing', 'CRO & growth'].map(pill)}
           </div>
           </div>
@@ -185,7 +185,7 @@ export default function WebPage() {
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           {sectionLabel('What people say')}
           <div style={{ maxWidth: 560 }}>
-            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 20 : 26, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.03em', lineHeight: 1.3, marginBottom: 22 }}>
+            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 20 : 26, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.03em', lineHeight: 1.3, marginBottom: 22, maxWidth: '100%', wordBreak: 'break-word' }}>
               &ldquo;{TESTIMONIALS[activeTestimonial].quote}&rdquo;
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
@@ -257,7 +257,7 @@ export default function WebPage() {
                     position: 'relative',
                   }}
                 >
-                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 44 : 52, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.05em', lineHeight: 1, marginBottom: 10 }}>{s.num}</div>
+                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 36 : 52, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.05em', lineHeight: 1, marginBottom: 10 }}>{s.num}</div>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#bbb', letterSpacing: '0.04em' }}>{s.label}</div>
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transition: 'transform 0.2s', transform: activeStat === i ? 'rotate(180deg)' : 'rotate(0deg)', flexShrink: 0, marginLeft: 8 }}>

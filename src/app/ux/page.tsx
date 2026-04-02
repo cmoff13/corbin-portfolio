@@ -122,7 +122,7 @@ export default function UXPage() {
             <div style={{ ...fadeUp(340), fontSize: 15, fontWeight: 300, color: '#6b6b6b', lineHeight: 1.75, maxWidth: 460, marginBottom: 36, fontFamily: "'Inter', sans-serif" }}>
               The user never notices the decision hierarchy, the cognitive load trade-offs, or the three flows that got cut before the one that shipped. This section documents the thinking.
             </div>
-            <div style={{ ...fadeUp(440), display: 'flex', gap: 7, flexWrap: 'wrap' as const }}>
+            <div style={{ ...fadeUp(440), display: 'flex', gap: 7, flexWrap: isMobile ? 'nowrap' : 'wrap' as any, overflowX: isMobile ? 'auto' : 'visible', paddingBottom: isMobile ? 4 : 0 }}>
               {['Wireframes', 'IA maps', 'Interaction design', 'Figma prototypes'].map(pill)}
             </div>
           </div>
@@ -249,7 +249,7 @@ export default function UXPage() {
                       position: 'relative' as const,
                     }}
                   >
-                    <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 44 : 52, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.05em', lineHeight: 1 }}>{s.num}</div>
+                    <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 36 : 52, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.05em', lineHeight: 1 }}>{s.num}</div>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '12px' }}>
                       <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: activeStat === i ? ACCENT : '#767676', letterSpacing: '0.04em', transition: 'color 0.2s ease' }}>{s.label}</span>
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ flexShrink: 0, marginLeft: 8, transition: 'transform 0.2s ease, color 0.2s ease', transform: activeStat === i ? 'rotate(180deg)' : 'rotate(0deg)', color: activeStat === i ? ACCENT : '#999' }}>

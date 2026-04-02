@@ -816,6 +816,15 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
   const [tldr, setTldr] = useState(false)
   const [openSections, setOpenSections] = useState<Set<SectionKey>>(new Set())
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)')
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   function toggleSection(key: SectionKey) {
     setOpenSections(prev => {
@@ -885,7 +894,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
         @media (max-width: 768px) {
           .case-sidebar { display: none !important; }
           .case-mobile-nav { display: flex !important; }
-          .case-main { padding: 32px 0 120px !important; border-left: none !important; padding-left: 0 !important; }
+          .case-main { padding: 24px 20px 120px !important; border-left: none !important; padding-left: 20px !important; }
         }
         @media (max-width: 600px) {
           .tldr-grid { grid-template-columns: 1fr !important; }
@@ -926,6 +935,9 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
               fontWeight: activeSection === key ? 600 : 400,
               color: activeSection === key ? segment.accentColor : '#888',
               whiteSpace: 'nowrap',
+              maxWidth: '120px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
             }}
           >
             {content ? content[key].title : key}
@@ -1101,7 +1113,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
               src={images.hero}
               alt={`${project.title} hero`}
               label="Hero image"
-              style={{ marginBottom: '72px' }}
+              style={{ marginBottom: '48px', ...(isMobile ? { maxHeight: '280px', overflow: 'hidden', borderRadius: '8px' } : {}) }}
               clickable
             />
 
@@ -1111,8 +1123,8 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
                 {/* TL;DR summary card */}
                 <div style={{ background: '#F0F2F5', border: '1px solid rgba(0,0,0,0.07)', borderRadius: '14px', padding: '20px 24px' }}>
                   <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '9px', fontWeight: 600, letterSpacing: '0.1em', color: '#bbb', textTransform: 'uppercase', marginBottom: '14px' }}>KEY POINTS</p>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1px', background: 'rgba(0,0,0,0.06)', borderRadius: '8px', overflow: 'hidden', marginBottom: '16px' }}>
-                    {meta.slice(0, 3).map(item => (
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)', gap: '1px', background: 'rgba(0,0,0,0.06)', borderRadius: '8px', overflow: 'hidden', marginBottom: '16px' }}>
+                    {meta.slice(0, isMobile ? 2 : 3).map(item => (
                       <div key={item.label} style={{ background: '#F0F2F5', padding: '10px 14px' }}>
                         <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#bbb', marginBottom: '3px' }}>{item.label}</p>
                         <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '12px', fontWeight: 500, color: '#1a1a1a' }}>{item.value}</p>
@@ -1207,7 +1219,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
                           overflow: 'hidden',
                           transition: 'max-height 0.25s ease, opacity 0.2s ease',
                         }}>
-                          <div style={{ padding: '20px 20px 24px 60px' }}>
+                          <div style={{ padding: isMobile ? '16px 16px 20px 48px' : '20px 20px 24px 60px' }}>
                             <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
                               <p style={{ fontFamily: "'Inter', sans-serif", fontSize: '14px', color: '#4a4a4a', lineHeight: 1.85, margin: 0, flex: 1 }}>
                                 {section.tldr}
@@ -1249,7 +1261,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
                       <div style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '12px',
+                        gap: isMobile ? '8px' : '12px',
                         marginBottom: '20px',
                       }}>
                         <span style={{

@@ -219,7 +219,7 @@ function GalleryCard({ item, onClick }: { item: typeof ARCHIVE_ITEMS[0], onClick
         </div>
         <div style={{
           fontFamily: "'Inter', sans-serif",
-          fontSize: '11px',
+          fontSize: '12px',
           color: '#767676',
           lineHeight: 1.55,
         }}>

@@ -112,6 +112,15 @@ export default function WorkPage() {
   const router = useRouter()
   const [copied, setCopied] = useState(false)
   const [activeFilter, setActiveFilter] = useState<string>('all')
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 768px)')
+    setIsMobile(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   const visibleProjects = CASE_STUDIES.filter(p => {
     if (p.hidden) return false
@@ -144,7 +153,7 @@ export default function WorkPage() {
             }}>All work</div>
             <div style={{
               fontFamily: "'Outfit', sans-serif",
-              fontSize: 'clamp(44px, 5.5vw, 68px)',
+              fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px, 5.5vw, 68px)',
               fontWeight: 300,
               color: '#1a1a1a',
               letterSpacing: '-0.055em',
@@ -183,7 +192,8 @@ export default function WorkPage() {
           <div style={{
             display: 'flex',
             gap: 8,
-            flexWrap: 'wrap',
+            flexWrap: isMobile ? 'nowrap' : 'wrap',
+            overflowX: isMobile ? 'auto' : 'visible',
             paddingBottom: 24,
             borderBottom: LINE,
             marginBottom: 24,
@@ -268,7 +278,7 @@ export default function WorkPage() {
                   onClick={() => router.push(`/work/${project.slug}`)}
                   style={{
                     display: 'flex',
-                    flexDirection: 'row',
+                    flexDirection: isMobile ? 'column' : 'row',
                     borderRadius: 14,
                     overflow: 'hidden',
                     border: '1px solid rgba(0,0,0,0.07)',
@@ -282,13 +292,15 @@ export default function WorkPage() {
                 >
                   {/* Left thumbnail */}
                   <div style={{
-                    width: 200,
+                    width: isMobile ? '100%' : 200,
                     flexShrink: 0,
-                    alignSelf: 'stretch',
+                    alignSelf: isMobile ? 'auto' : 'stretch',
+                    minHeight: isMobile ? 160 : 0,
                     background: BG,
                     overflow: 'hidden',
                     position: 'relative',
-                    borderRight: '1px solid rgba(0,0,0,0.07)',
+                    borderRight: isMobile ? 'none' : '1px solid rgba(0,0,0,0.07)',
+                    borderBottom: isMobile ? '1px solid rgba(0,0,0,0.07)' : 'none',
                   }}>
                     {thumbnail ? (
                       // eslint-disable-next-line @next/next/no-img-element
@@ -330,7 +342,7 @@ export default function WorkPage() {
                   {/* Right content */}
                   <div style={{
                     flex: 1,
-                    padding: '28px 32px',
+                    padding: isMobile ? '20px' : '28px 32px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
