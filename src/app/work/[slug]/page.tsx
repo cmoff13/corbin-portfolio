@@ -1102,6 +1102,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
               alt={`${project.title} hero`}
               label="Hero image"
               style={{ marginBottom: '72px' }}
+              clickable
             />
 
             {/* Sections */}
@@ -1292,6 +1293,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
                             alt={`${project.title} — ${section.title}`}
                             label={`${section.title} — image`}
                             style={{ marginTop: '32px' }}
+                            clickable
                           />
                         )}
                       </>
