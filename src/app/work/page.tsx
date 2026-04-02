@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { CASE_STUDIES, SEGMENTS } from '@/lib/segments'
-import AmbientBlob from '@/components/AmbientBlob'
 
 const BG = '#F0F2F5'
 const LINE = '1px solid rgba(0,0,0,0.07)'
@@ -36,6 +35,79 @@ const SEGMENT_ICONS: Record<string, React.ReactNode> = {
   ),
 }
 
+function WorkAmbientBlob() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const rafRef = useRef<number>(0)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const blobs = [
+      { x: 0, y: 0, ox: 0.15, oy: 0.25, r: 380, color: '#3B0764' },
+      { x: 0, y: 0, ox: 0.85, oy: 0.55, r: 340, color: '#DC2626' },
+      { x: 0, y: 0, ox: 0.55, oy: 0.15, r: 300, color: '#1D4ED8' },
+    ]
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth
+      canvas.height = canvas.offsetHeight
+      blobs.forEach((b, i) => {
+        blobs[i].x = b.ox * canvas.width
+        blobs[i].y = b.oy * canvas.height
+      })
+    }
+    resize()
+    window.addEventListener('resize', resize)
+
+    let t = 0
+    function tick() {
+      t += 0.004
+      const W = canvas!.width
+      const H = canvas!.height
+      ctx!.clearRect(0, 0, W, H)
+
+      blobs.forEach((blob, i) => {
+        blob.x = blob.ox * W + Math.sin(t + i * 2.1) * W * 0.06
+        blob.y = blob.oy * H + Math.cos(t * 0.7 + i * 1.5) * H * 0.08
+
+        const g = ctx!.createRadialGradient(blob.x, blob.y, 0, blob.x, blob.y, blob.r)
+        g.addColorStop(0, blob.color + '18')
+        g.addColorStop(1, blob.color + '00')
+        ctx!.fillStyle = g
+        ctx!.beginPath()
+        ctx!.arc(blob.x, blob.y, blob.r, 0, Math.PI * 2)
+        ctx!.fill()
+      })
+
+      rafRef.current = requestAnimationFrame(tick)
+    }
+    tick()
+
+    return () => {
+      cancelAnimationFrame(rafRef.current)
+      window.removeEventListener('resize', resize)
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={canvasRef}
+      aria-hidden="true"
+      style={{
+        position: 'fixed',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+        zIndex: 0,
+      }}
+    />
+  )
+}
+
 export default function WorkPage() {
   const router = useRouter()
   const [copied, setCopied] = useState(false)
@@ -55,7 +127,7 @@ export default function WorkPage() {
 
   return (
     <div style={{ background: 'transparent', minHeight: '100vh', position: 'relative', cursor: 'none' }}>
-      <AmbientBlob color="#3B0764" />
+      <WorkAmbientBlob />
 
       <div style={{ position: 'relative', zIndex: 1, padding: '0 clamp(24px, 6vw, 120px)' }}>
 
@@ -186,7 +258,7 @@ export default function WorkPage() {
           </div>
 
           {/* Project list */}
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', maxWidth: 880 }}>
             {visibleProjects.map(project => {
               const segment = SEGMENTS[project.primarySegment]
               const thumbnail = THUMBNAILS[project.slug]
@@ -211,8 +283,8 @@ export default function WorkPage() {
                   {/* Left thumbnail */}
                   <div style={{
                     width: 200,
-                    height: 200,
                     flexShrink: 0,
+                    alignSelf: 'stretch',
                     background: BG,
                     overflow: 'hidden',
                     position: 'relative',
