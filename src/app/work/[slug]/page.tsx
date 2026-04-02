@@ -885,7 +885,7 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
         @media (max-width: 768px) {
           .case-sidebar { display: none !important; }
           .case-mobile-nav { display: flex !important; }
-          .case-main { padding: 32px 20px 120px !important; }
+          .case-main { padding: 32px 0 120px !important; border-left: none !important; padding-left: 0 !important; }
         }
         @media (max-width: 600px) {
           .tldr-grid { grid-template-columns: 1fr !important; }
@@ -933,96 +933,91 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
         ))}
       </div>}
 
-      <div style={{ display: 'flex', minHeight: '100vh' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 clamp(24px, 6vw, 80px)', display: 'flex', gap: 0, minHeight: '100vh' }}>
 
         {/* Sidebar */}
-        {!tldr && <aside
-          className="case-sidebar"
-          style={{
-            width: '220px',
-            flexShrink: 0,
-            padding: '48px 24px 48px 32px',
-            position: 'sticky',
-            top: '57px',
-            height: 'calc(100vh - 57px)',
-            overflowY: 'auto',
-            borderRight: '1px solid #f0f0f0',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '2px',
-          }}
-        >
-          <button
-            onClick={() => router.back()}
+        {!tldr && (
+          <aside
+            className="case-sidebar"
             style={{
-              fontSize: '12px',
-              color: '#999',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              textAlign: 'left',
-              padding: '0',
-              marginBottom: '32px',
+              width: '200px',
+              flexShrink: 0,
+              padding: '48px 0 48px 0',
+              position: 'sticky',
+              top: '57px',
+              height: 'calc(100vh - 57px)',
+              overflowY: 'auto',
               display: 'flex',
-              alignItems: 'center',
-              gap: '4px',
+              flexDirection: 'column',
+              paddingRight: '32px',
             }}
           >
-            <span aria-hidden="true">← </span>Back
-          </button>
+            <button
+              onClick={() => router.back()}
+              style={{
+                fontSize: '11px',
+                color: '#bbb',
+                background: 'none',
+                border: 'none',
+                cursor: 'none',
+                textAlign: 'left',
+                padding: '0',
+                marginBottom: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                fontFamily: "'Inter', sans-serif",
+                transition: 'color 0.15s',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#999')}
+              onMouseLeave={e => (e.currentTarget.style.color = '#bbb')}
+            >
+              ← Back
+            </button>
 
-          <p style={{
-            fontSize: '10px',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            color: '#ccc',
-            marginBottom: '12px',
-            paddingLeft: '10px',
-          }}>
-            On this page
-          </p>
-
-          {visibleSectionKeys.map(key => {
-            const isActive = activeSection === key
-            return (
-              <button
-                key={key}
-                onClick={() => sectionRefs.current[key]?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  width: '100%',
-                  textAlign: 'left',
-                  padding: '10px 10px',
-                  minHeight: '44px',
-                  borderRadius: '6px',
-                  border: 'none',
-                  background: isActive ? '#f0f2f5' : 'none',
-                  cursor: 'pointer',
-                  fontSize: '13px',
-                  fontWeight: isActive ? 600 : 400,
-                  color: isActive ? segment.accentColor : '#888',
-                  transition: 'all 0.15s ease',
-                  borderLeft: `2px solid ${isActive ? segment.accentColor : 'transparent'}`,
-                }}
-              >
-                {isActive && (
-                  <span style={{
-                    width: '6px',
-                    height: '6px',
-                    borderRadius: '50%',
-                    background: segment.gradient,
-                    flexShrink: 0,
-                    display: 'inline-block',
-                  }} />
-                )}
-                {content ? content[key].title : key.charAt(0).toUpperCase() + key.slice(1)}
-              </button>
-            )
-          })}
-        </aside>}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+              {visibleSectionKeys.map(key => {
+                const isActive = activeSection === key
+                return (
+                  <button
+                    key={key}
+                    onClick={() => sectionRefs.current[key]?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      width: '100%',
+                      textAlign: 'left',
+                      padding: '7px 10px',
+                      borderRadius: '6px',
+                      border: 'none',
+                      background: isActive ? `${segment.accentColor}0f` : 'transparent',
+                      cursor: 'none',
+                      transition: 'background 0.15s ease',
+                    }}
+                    onMouseEnter={e => {
+                      if (!isActive) e.currentTarget.style.background = `${segment.accentColor}0f`
+                    }}
+                    onMouseLeave={e => {
+                      if (!isActive) e.currentTarget.style.background = 'transparent'
+                    }}
+                  >
+                    <span style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: '12px',
+                      fontWeight: isActive ? 500 : 400,
+                      color: isActive ? segment.accentColor : '#bbb',
+                      letterSpacing: '-0.01em',
+                      lineHeight: 1.4,
+                      transition: 'color 0.15s ease',
+                    }}>
+                      {content ? content[key].title : key.charAt(0).toUpperCase() + key.slice(1)}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </aside>
+        )}
 
         {/* Main content */}
         <main
@@ -1031,7 +1026,9 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
             flex: 1,
             display: 'flex',
             justifyContent: 'center',
-            padding: '48px 40px 120px',
+            padding: '48px 0 120px',
+            borderLeft: !tldr ? '1px solid rgba(0,0,0,0.07)' : 'none',
+            paddingLeft: !tldr ? '48px' : '0',
           }}
         >
           <div style={{ width: '100%', maxWidth: '720px' }}>
