@@ -569,13 +569,13 @@ const IMAGE_MAP: Record<string, Record<string, string>> = {
       outcome: '/images/kirrin-finch/outcome.jpg',
     },
     'heybud-skincare': {
-      hero: '/images/heybud/hero.jpg',
-      overview: '/images/heybud/overview.jpg',
-      problem: '/images/heybud/problem.jpg',
-      research: '/images/heybud/research.jpg',
-      decisions: '/images/heybud/decisions.jpg',
-      system: '/images/heybud/system.jpg',
-      outcome: '/images/heybud/outcome.jpg',
+      hero: '/images/heybud-skincare/hero.jpg',
+      overview: '/images/heybud-skincare/overview.jpg',
+      problem: '/images/heybud-skincare/problem.jpg',
+      research: '/images/heybud-skincare/research.jpg',
+      decisions: '/images/heybud-skincare/decisions.jpg',
+      system: '/images/heybud-skincare/system.jpg',
+      outcome: '/images/heybud-skincare/outcome.jpg',
     },
   }
 
