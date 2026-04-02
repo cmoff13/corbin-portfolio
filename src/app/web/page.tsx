@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 import AmbientBlob from '@/components/AmbientBlob'
@@ -39,6 +39,25 @@ const STATS = [
   { num: '63%', label: 'CVR lift for Linear', detail: '5.5% to 9.02% in 30 days. One section change backed by heatmap data.' },
 ]
 
+function useInView(delay = 0) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
+      { threshold: 0.15 }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [])
+  const style: React.CSSProperties = {
+    opacity: visible ? 1 : 0,
+    transform: visible ? 'translateY(0)' : 'translateY(16px)',
+    transition: `opacity 0.6s ease ${delay}ms, transform 0.6s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
+  }
+  return { ref, style }
+}
+
 export default function WebPage() {
   const router = useRouter()
   const [activeTestimonial, setActiveTestimonial] = useState(0)
@@ -54,6 +73,24 @@ export default function WebPage() {
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)
   }, [])
+
+  const [started, setStarted] = useState(false)
+  useEffect(() => {
+    const t = setTimeout(() => setStarted(true), 80)
+    return () => clearTimeout(t)
+  }, [])
+
+  const fadeUp = (delay: number): React.CSSProperties => ({
+    opacity: started ? 1 : 0,
+    transform: started ? 'translateY(0)' : 'translateY(10px)',
+    transition: `opacity 0.55s ease ${delay}ms, transform 0.55s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
+  })
+
+  const inViewProjects    = useInView(0)
+  const inViewTestimonial = useInView(0)
+  const inViewProcess     = useInView(0)
+  const inViewStats       = useInView(0)
+  const inViewContact     = useInView(0)
 
   useEffect(() => {
     const t = setInterval(() => setActiveTestimonial(p => (p + 1) % TESTIMONIALS.length), 5000)
@@ -84,13 +121,13 @@ export default function WebPage() {
         {/* HERO */}
         <div style={{ padding: `80px ${P} 88px` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: 22 }}>Web &amp; Digital</div>
-          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26, maxWidth: 640 }}>
+          <div style={{ ...fadeUp(0), fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: 22 }}>Web &amp; Digital</div>
+          <div style={{ ...fadeUp(120), fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26, maxWidth: 640 }}>
             {segment.headline[0]}<br />{segment.headline[1]}
           </div>
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500 }}>Most designers stop at how it looks.</div>
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 300, color: '#999', lineHeight: 1.75, maxWidth: 460, marginBottom: 36 }}>The work here goes further — landing pages built around message match, conversion audits that diagnose why a page isn&apos;t performing, ad creative systems designed to scale.</div>
-          <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
+          <div style={{ ...fadeUp(240), fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500 }}>Most designers stop at how it looks.</div>
+          <div style={{ ...fadeUp(340), fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 300, color: '#999', lineHeight: 1.75, maxWidth: 460, marginBottom: 36 }}>The work here goes further — landing pages built around message match, conversion audits that diagnose why a page isn&apos;t performing, ad creative systems designed to scale.</div>
+          <div style={{ ...fadeUp(440), display: 'flex', gap: 7, flexWrap: 'wrap' }}>
             {['Landing pages', 'Social advertising', 'Email marketing', 'CRO & growth'].map(pill)}
           </div>
           </div>
@@ -99,6 +136,7 @@ export default function WebPage() {
         <div style={{ borderTop: LINE }} />
 
         {/* PROJECTS */}
+        <div ref={inViewProjects.ref} style={inViewProjects.style}>
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           {sectionLabel('Selected work')}
@@ -137,10 +175,12 @@ export default function WebPage() {
           </div>
           </div>
         </div>
+        </div>{/* /inViewProjects */}
 
         <div style={{ borderTop: LINE }} />
 
         {/* TESTIMONIALS */}
+        <div ref={inViewTestimonial.ref} style={inViewTestimonial.style}>
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           {sectionLabel('What people say')}
@@ -169,12 +209,12 @@ export default function WebPage() {
           </div>
           </div>
         </div>
-
-        <div style={{ borderTop: LINE }} />
+        </div>{/* /inViewTestimonial */}
 
         <div style={{ borderTop: LINE }} />
 
         {/* PROCESS */}
+        <div ref={inViewProcess.ref} style={inViewProcess.style}>
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           {sectionLabel('How I work')}
@@ -192,8 +232,10 @@ export default function WebPage() {
           />
           </div>
         </div>
+        </div>{/* /inViewProcess */}
 
         {/* STATS */}
+        <div ref={inViewStats.ref} style={inViewStats.style}>
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', borderTop: LINE, borderBottom: LINE }}>
@@ -230,10 +272,12 @@ export default function WebPage() {
           </div>
           </div>
         </div>
+        </div>{/* /inViewStats */}
 
         <div style={{ borderTop: LINE }} />
 
         {/* CONTACT */}
+        <div ref={inViewContact.ref} style={inViewContact.style}>
         <div style={{ padding: `72px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ maxWidth: 560 }}>
@@ -259,6 +303,7 @@ export default function WebPage() {
           </div>
           </div>
         </div>
+        </div>{/* /inViewContact */}
 
       </div>
     </div>

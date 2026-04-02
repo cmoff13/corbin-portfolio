@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 import AmbientBlob from '@/components/AmbientBlob'
@@ -34,6 +34,25 @@ const TESTIMONIAL = {
   initials: 'VC',
 }
 
+function useInView(delay = 0) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
+      { threshold: 0.15 }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => observer.disconnect()
+  }, [])
+  const style: React.CSSProperties = {
+    opacity: visible ? 1 : 0,
+    transform: visible ? 'translateY(0)' : 'translateY(16px)',
+    transition: `opacity 0.6s ease ${delay}ms, transform 0.6s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
+  }
+  return { ref, style }
+}
+
 export default function UXPage() {
   const router = useRouter()
   const [activeStat, setActiveStat] = useState<number | null>(null)
@@ -46,6 +65,24 @@ export default function UXPage() {
     setIsMobile(mq.matches)
     mq.addEventListener('change', e => setIsMobile(e.matches))
   }, [])
+
+  const [started, setStarted] = useState(false)
+  useEffect(() => {
+    const t = setTimeout(() => setStarted(true), 80)
+    return () => clearTimeout(t)
+  }, [])
+
+  const fadeUp = (delay: number): React.CSSProperties => ({
+    opacity: started ? 1 : 0,
+    transform: started ? 'translateY(0)' : 'translateY(10px)',
+    transition: `opacity 0.55s ease ${delay}ms, transform 0.55s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
+  })
+
+  const inViewProjects = useInView(0)
+  const inViewApproach = useInView(0)
+  const inViewProcess  = useInView(0)
+  const inViewStats    = useInView(0)
+  const inViewContact  = useInView(0)
 
   const visibleProjects = CASE_STUDIES.filter(
     c => c.primarySegment === 'ux' && !c.hidden
@@ -73,19 +110,19 @@ export default function UXPage() {
         {/* HERO */}
         <div style={{ padding: `80px ${P} 88px` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase' as const, marginBottom: 22, fontFamily: "'Inter', sans-serif" }}>
+            <div style={{ ...fadeUp(0), fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase' as const, marginBottom: 22, fontFamily: "'Inter', sans-serif" }}>
               UX & Product
             </div>
-            <div style={{ fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontFamily: "'Outfit', sans-serif", fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26, maxWidth: 640 }}>
+            <div style={{ ...fadeUp(120), fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontFamily: "'Outfit', sans-serif", fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26, maxWidth: 640 }}>
               {segment.headline[0]}<br />{segment.headline[1]}
             </div>
-            <div style={{ fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500, fontFamily: "'Inter', sans-serif" }}>
+            <div style={{ ...fadeUp(240), fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500, fontFamily: "'Inter', sans-serif" }}>
               Good UX is invisible.
             </div>
-            <div style={{ fontSize: 15, fontWeight: 300, color: '#6b6b6b', lineHeight: 1.75, maxWidth: 460, marginBottom: 36, fontFamily: "'Inter', sans-serif" }}>
+            <div style={{ ...fadeUp(340), fontSize: 15, fontWeight: 300, color: '#6b6b6b', lineHeight: 1.75, maxWidth: 460, marginBottom: 36, fontFamily: "'Inter', sans-serif" }}>
               The user never notices the decision hierarchy, the cognitive load trade-offs, or the three flows that got cut before the one that shipped. This section documents the thinking.
             </div>
-            <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' as const }}>
+            <div style={{ ...fadeUp(440), display: 'flex', gap: 7, flexWrap: 'wrap' as const }}>
               {['Wireframes', 'IA maps', 'Interaction design', 'Figma prototypes'].map(pill)}
             </div>
           </div>
@@ -94,6 +131,7 @@ export default function UXPage() {
         <div style={{ borderTop: LINE }} />
 
         {/* PROJECTS */}
+        <div ref={inViewProjects.ref} style={inViewProjects.style}>
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             {sectionLabel('Selected work')}
@@ -140,10 +178,12 @@ export default function UXPage() {
             </div>
           </div>
         </div>
+        </div>{/* /inViewProjects */}
 
         <div style={{ borderTop: LINE }} />
 
         {/* TESTIMONIAL */}
+        <div ref={inViewApproach.ref} style={inViewApproach.style}>
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             {sectionLabel('What people say')}
@@ -163,10 +203,12 @@ export default function UXPage() {
             </div>
           </div>
         </div>
+        </div>{/* /inViewApproach */}
 
         <div style={{ borderTop: LINE }} />
 
         {/* PROCESS */}
+        <div ref={inViewProcess.ref} style={inViewProcess.style}>
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             {sectionLabel('How I work')}
@@ -184,10 +226,12 @@ export default function UXPage() {
             />
           </div>
         </div>
+        </div>{/* /inViewProcess */}
 
         <div style={{ borderTop: LINE }} />
 
         {/* STATS */}
+        <div ref={inViewStats.ref} style={inViewStats.style}>
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', borderTop: LINE, borderBottom: LINE }}>
@@ -220,10 +264,12 @@ export default function UXPage() {
             </div>
           </div>
         </div>
+        </div>{/* /inViewStats */}
 
         <div style={{ borderTop: LINE }} />
 
         {/* CONTACT */}
+        <div ref={inViewContact.ref} style={inViewContact.style}>
         <div style={{ padding: `72px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ maxWidth: 560 }}>
@@ -249,6 +295,7 @@ export default function UXPage() {
             </div>
           </div>
         </div>
+        </div>{/* /inViewContact */}
 
       </div>
     </div>
