@@ -12,7 +12,7 @@ const THUMBNAILS: Record<string, string> = {
   'black-coast-estates': '/images/black-coast/thumbnail.jpg',
   'skygate-growth-strategies': '/images/skygate/thumbnail.jpg',
   'portfolio-nav-system': '/images/portfolio-nav-system/thumbnail.jpg',
-  'kirrin-finch': '/images/kirrin/thumbnail.jpg',
+  'kirrin-finch': '/images/kirrin-finch/thumbnail.jpg',
   'heybud-skincare': '/images/heybud-skincare/thumbnail.jpg',
   'linear-cro': '/images/linear-cro/thumbnail.jpg',
 }
