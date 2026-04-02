@@ -13,7 +13,7 @@ const LINE = '1px solid rgba(0,0,0,0.07)'
 
 const WEB_THUMBNAILS: Record<string, string> = {
   'linear-cro': '/images/linear-cro/thumbnail.jpg',
-  'kirrin-finch': '/images/kirrin-finch/thumbnail.jpg',
+  'kirrin-finch': '/images/kirrin/thumbnail.jpg',
   'heybud-skincare': '/images/heybud-skincare/thumbnail.jpg',
   'skygate-growth-strategies': '/images/skygate/thumbnail.jpg',
 }
