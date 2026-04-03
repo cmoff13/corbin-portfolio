@@ -5,7 +5,6 @@ import type { ReactNode } from 'react'
 
 const BG = '#F0F2F5'
 const LINE = '1px solid rgba(0,0,0,0.07)'
-const CARD_HEIGHT = 220
 
 interface CaseStudyCardProps {
   slug: string
@@ -24,19 +23,8 @@ interface CaseStudyCardProps {
 }
 
 export default function CaseStudyCard({
-  slug,
-  title,
-  subtitle,
-  tags,
-  thumbnail,
-  accentColor,
-  segmentLabel,
-  segmentIcon,
-  metric,
-  isMobile,
-  cardIndex = 0,
-  cardNumber,
-  onClick,
+  title, subtitle, thumbnail, accentColor,
+  metric, isMobile, cardIndex = 0, onClick,
 }: CaseStudyCardProps) {
   const [visible, setVisible] = useState(false)
   const [hovered, setHovered] = useState(false)
@@ -46,11 +34,11 @@ export default function CaseStudyCard({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => setVisible(true), cardIndex * 60)
+          setTimeout(() => setVisible(true), cardIndex * 80)
           observer.disconnect()
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     )
     if (cardRef.current) observer.observe(cardRef.current)
     return () => observer.disconnect()
@@ -63,10 +51,7 @@ export default function CaseStudyCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        display: 'flex',
-        flexDirection: isMobile ? 'column' : 'row',
         width: '100%',
-        height: isMobile ? 'auto' : CARD_HEIGHT,
         borderRadius: 14,
         overflow: 'hidden',
         border: LINE,
@@ -74,24 +59,22 @@ export default function CaseStudyCard({
         cursor: 'none',
         opacity: visible ? 1 : 0,
         transform: visible
-          ? hovered ? 'translateY(-3px)' : 'translateY(0)'
-          : 'translateY(20px)',
+          ? hovered ? 'translateY(-4px)' : 'translateY(0)'
+          : 'translateY(24px)',
         transition: visible
           ? 'transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease, opacity 0.1s ease'
-          : `opacity 0.5s ease ${cardIndex * 60}ms, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${cardIndex * 60}ms`,
+          : `opacity 0.5s ease ${cardIndex * 80}ms, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${cardIndex * 80}ms`,
         boxShadow: hovered ? '0 8px 32px rgba(0,0,0,0.08)' : 'none',
       }}
     >
-      {/* Image */}
+      {/* Square image */}
       <div style={{
-        width: isMobile ? '100%' : '38%',
-        height: isMobile ? 200 : '100%',
-        flexShrink: 0,
+        width: '100%',
+        paddingBottom: '100%',
         position: 'relative',
         overflow: 'hidden',
-        borderRight: isMobile ? 'none' : LINE,
-        borderBottom: isMobile ? LINE : 'none',
-        background: BG,
+        background: accentColor + '0f',
+        borderBottom: LINE,
       }}>
         {thumbnail ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -113,20 +96,18 @@ export default function CaseStudyCard({
           <div style={{
             position: 'absolute',
             inset: 0,
-            background: accentColor + '0f',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}>
             <span style={{
               fontFamily: "'Outfit', sans-serif",
-              fontSize: 36,
+              fontSize: 32,
               fontWeight: 300,
               color: 'rgba(0,0,0,0.10)',
               letterSpacing: '-0.05em',
               textAlign: 'center',
               padding: '0 16px',
-              lineHeight: 1.2,
             }}>
               {metric || title}
             </span>
@@ -134,86 +115,33 @@ export default function CaseStudyCard({
         )}
       </div>
 
-      {/* Content */}
+      {/* Text */}
       <div style={{
-        flex: 1,
-        padding: isMobile ? '20px' : '28px 32px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        minWidth: 0,
+        padding: isMobile ? '16px' : '20px 22px 22px',
       }}>
-        {cardNumber && (
-          <div style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: 9,
-            fontWeight: 700,
-            color: '#ccc',
-            letterSpacing: '0.12em',
-            marginBottom: 6,
-          }}>
-            {cardNumber}
-          </div>
-        )}
-        {(segmentIcon || segmentLabel) && (
-          <div style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: 10,
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            color: accentColor,
-            marginBottom: 8,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 5,
-          }}>
-            {segmentIcon}
-            {segmentLabel}
-          </div>
-        )}
         <div style={{
           fontFamily: "'Outfit', sans-serif",
-          fontSize: isMobile ? 17 : 20,
+          fontSize: isMobile ? 16 : 18,
           fontWeight: 400,
           color: '#1a1a1a',
           letterSpacing: '-0.02em',
-          lineHeight: 1.2,
+          lineHeight: 1.25,
           marginBottom: 6,
         }}>
           {title}
         </div>
         <div style={{
           fontFamily: "'Inter', sans-serif",
-          fontSize: 13,
-          color: '#767676',
+          fontSize: 12,
+          color: '#999',
           lineHeight: 1.6,
-          marginBottom: 16,
+          marginBottom: 14,
           display: '-webkit-box',
           WebkitLineClamp: 2,
-          WebkitBoxOrient: 'vertical',
+          WebkitBoxOrient: 'vertical' as const,
           overflow: 'hidden',
         }}>
           {subtitle}
-        </div>
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: 6,
-          marginBottom: 16,
-        }}>
-          {tags.slice(0, 3).map(tag => (
-            <span key={tag} style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: 11,
-              color: '#999',
-              background: 'rgba(0,0,0,0.05)',
-              borderRadius: 999,
-              padding: '4px 12px',
-            }}>
-              {tag}
-            </span>
-          ))}
         </div>
         <span style={{
           fontFamily: "'Inter', sans-serif",

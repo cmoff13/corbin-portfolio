@@ -136,7 +136,12 @@ export default function UXPage() {
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             {sectionLabel('Selected work')}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 880 }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+              gap: 12,
+              maxWidth: 880,
+            }}>
               {visibleProjects.map((p, i) => (
                 <CaseStudyCard
                   key={p.slug}
