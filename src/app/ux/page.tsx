@@ -195,10 +195,26 @@ export default function UXPage() {
             {sectionLabel('How I work')}
             <ProcessCards
               steps={[
-                { number: '01', title: 'Discover', description: 'User goals, mental models, and jobs to be done. Research before wireframes — always.' },
-                { number: '02', title: 'Map', description: 'Information architecture, user flows, and decision trees. Structure before pixels.' },
-                { number: '03', title: 'Design', description: 'High-fidelity Figma prototypes. Every interaction decision documented with rationale.' },
-                { number: '04', title: 'Validate', description: 'Usability testing and iteration. Shipping the version that works, not the version that looked good in the mockup.' },
+                {
+                  number: '01',
+                  title: 'Discover',
+                  description: "I start with what people are actually trying to do — not what they say they want, but what their behavior reveals. User goals, mental models, jobs to be done. Research before wireframes, always.",
+                },
+                {
+                  number: '02',
+                  title: 'Map',
+                  description: 'Structure before pixels. Information architecture, user flows, decision trees — the invisible skeleton that determines whether a product feels intuitive or exhausting. I get this right before anything gets visual.',
+                },
+                {
+                  number: '03',
+                  title: 'Design',
+                  description: 'High-fidelity Figma prototypes communicate how something works, not just how it looks. Every interaction decision is documented with rationale — so the handoff is a conversation, not a guessing game.',
+                },
+                {
+                  number: '04',
+                  title: 'Validate',
+                  description: "Usability testing reveals what confidence in your own work cannot. I ship the version that works — not the version that looked good in the mockup. The user always wins the argument.",
+                },
               ]}
               accent="#1D4ED8"
               isMobile={isMobile}

@@ -209,10 +209,26 @@ export default function WebPage() {
           {sectionLabel('How I work')}
           <ProcessCards
             steps={[
-              { number: '01', title: 'Audit', description: 'Read the data before redesigning anything. Heatmaps, scroll depth, form drop-off.' },
-              { number: '02', title: 'Strategy', description: 'Every element earns its place. Hierarchy, CTA placement, copy framing.' },
-              { number: '03', title: 'Design', description: 'Brand-quality craft applied to performance outcomes.' },
-              { number: '04', title: 'Measure', description: "What moved, what didn't, and what to test next." },
+              {
+                number: '01',
+                title: 'Audit',
+                description: 'Before touching a frame, I read the data. Heatmaps show where attention dies. Scroll depth reveals what people never see. Form drop-off pinpoints where intent collapses. The redesign starts here — not in Figma.',
+              },
+              {
+                number: '02',
+                title: 'Strategy',
+                description: 'Every element on a page is a decision. Message hierarchy, CTA placement, copy framing — none of it happens by accident in work that converts. I build the argument before I build the layout.',
+              },
+              {
+                number: '03',
+                title: 'Design',
+                description: "Performance creative doesn't mean ugly creative. Brand-quality craft applied to conversion outcomes — ads that earn attention before they ask for action.",
+              },
+              {
+                number: '04',
+                title: 'Measure',
+                description: "Shipping is the beginning, not the end. What moved, what didn't, and what to test next. Every result teaches you something about the audience — if you're paying attention.",
+              },
             ]}
             accent="#DC2626"
             isMobile={isMobile}
