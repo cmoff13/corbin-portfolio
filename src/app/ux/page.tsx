@@ -110,7 +110,7 @@ export default function UXPage() {
 
         {/* HERO */}
         <div style={{ padding: `80px ${P} 88px` }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div>
             <div style={{ ...fadeUp(0), fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase' as const, marginBottom: 22, fontFamily: "'Inter', sans-serif" }}>
               UX & Product
             </div>
@@ -134,13 +134,12 @@ export default function UXPage() {
         {/* PROJECTS */}
         <div ref={inViewProjects.ref} style={inViewProjects.style}>
         <div style={{ padding: `52px ${P}` }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div>
             {sectionLabel('Selected work')}
             <div style={{
               display: 'grid',
               gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
               gap: 12,
-              maxWidth: 880,
             }}>
               {visibleProjects.map((p, i) => (
                 <CaseStudyCard
@@ -167,7 +166,7 @@ export default function UXPage() {
         {/* TESTIMONIAL */}
         <div ref={inViewApproach.ref} style={inViewApproach.style}>
         <div style={{ padding: `52px ${P}` }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div>
             {sectionLabel('What people say')}
             <div style={{ maxWidth: 560 }}>
               <div style={{ fontSize: isMobile ? 20 : 26, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.03em', lineHeight: 1.3, marginBottom: 22 }}>
@@ -192,7 +191,7 @@ export default function UXPage() {
         {/* PROCESS */}
         <div ref={inViewProcess.ref} style={inViewProcess.style}>
         <div style={{ padding: `52px ${P}` }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div>
             {sectionLabel('How I work')}
             <ProcessCards
               steps={[
@@ -215,8 +214,8 @@ export default function UXPage() {
         {/* STATS */}
         <div ref={inViewStats.ref} style={inViewStats.style}>
         <div style={{ padding: `52px ${P}` }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', borderTop: LINE, borderBottom: LINE }}>
+          <div>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', borderTop: LINE, borderBottom: LINE }}>
               {UX_STATS.map((s, i) => {
                 const desktopPadding = i === 0 ? '40px 40px 40px 0' : i === 2 ? '40px 0 40px 40px' : '40px 40px 40px 40px'
                 return (
@@ -253,7 +252,7 @@ export default function UXPage() {
         {/* CONTACT */}
         <div ref={inViewContact.ref} style={inViewContact.style}>
         <div style={{ padding: `72px ${P}` }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div>
             <div style={{ maxWidth: 560 }}>
               <div style={{ fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
               <div style={{ fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>

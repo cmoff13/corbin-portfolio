@@ -121,14 +121,14 @@ export default function WebPage() {
 
         {/* HERO */}
         <div style={{ padding: `80px ${P} 88px` }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div style={{ textAlign: 'center' }}>
           <div style={{ ...fadeUp(0), fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: 22 }}>Web &amp; Digital</div>
-          <div style={{ ...fadeUp(120), fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26, maxWidth: 640 }}>
+          <div style={{ ...fadeUp(120), fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26, maxWidth: 640, margin: '0 auto 26px' }}>
             {segment.headline[0]}<br />{segment.headline[1]}
           </div>
-          <div style={{ ...fadeUp(240), fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500 }}>Most designers stop at how it looks.</div>
-          <div style={{ ...fadeUp(340), fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 300, color: '#999', lineHeight: 1.75, maxWidth: 460, marginBottom: 36 }}>The work here goes further — landing pages built around message match, conversion audits that diagnose why a page isn&apos;t performing, ad creative systems designed to scale.</div>
-          <div style={{ ...fadeUp(440), display: 'flex', gap: 7, flexWrap: isMobile ? 'nowrap' : 'wrap', overflowX: isMobile ? 'auto' : 'visible', paddingBottom: isMobile ? 4 : 0 }}>
+          <div style={{ ...fadeUp(240), fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500, margin: '0 auto 6px' }}>Most designers stop at how it looks.</div>
+          <div style={{ ...fadeUp(340), fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 300, color: '#999', lineHeight: 1.75, maxWidth: 460, marginBottom: 36, margin: '0 auto 36px' }}>The work here goes further — landing pages built around message match, conversion audits that diagnose why a page isn&apos;t performing, ad creative systems designed to scale.</div>
+          <div style={{ ...fadeUp(440), display: 'flex', gap: 7, flexWrap: isMobile ? 'nowrap' : 'wrap', overflowX: isMobile ? 'auto' : 'visible', paddingBottom: isMobile ? 4 : 0, justifyContent: 'center' }}>
             {['Landing pages', 'Social advertising', 'Email marketing', 'CRO & growth'].map(pill)}
           </div>
           </div>
@@ -139,13 +139,12 @@ export default function WebPage() {
         {/* PROJECTS */}
         <div ref={inViewProjects.ref} style={inViewProjects.style}>
         <div style={{ padding: `52px ${P}` }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div>
           {sectionLabel('Selected work')}
           <div style={{
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
             gap: 12,
-            maxWidth: 880,
           }}>
             {visibleProjects.map((p, i) => (
               <CaseStudyCard
@@ -172,7 +171,7 @@ export default function WebPage() {
         {/* TESTIMONIALS */}
         <div ref={inViewTestimonial.ref} style={inViewTestimonial.style}>
         <div style={{ padding: `52px ${P}` }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div>
           {sectionLabel('What people say')}
           <div style={{ maxWidth: 560 }}>
             <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 20 : 26, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.03em', lineHeight: 1.3, marginBottom: 22, maxWidth: '100%', wordBreak: 'break-word' }}>
@@ -206,7 +205,7 @@ export default function WebPage() {
         {/* PROCESS */}
         <div ref={inViewProcess.ref} style={inViewProcess.style}>
         <div style={{ padding: `52px ${P}` }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div>
           {sectionLabel('How I work')}
           <ProcessCards
             steps={[
@@ -227,8 +226,8 @@ export default function WebPage() {
         {/* STATS */}
         <div ref={inViewStats.ref} style={inViewStats.style}>
         <div style={{ padding: `52px ${P}` }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ maxWidth: 880, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', borderTop: LINE, borderBottom: LINE }}>
+          <div>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3,1fr)', borderTop: LINE, borderBottom: LINE }}>
             {STATS.map((s, i) => {
               const desktopPadding = i === 0
                 ? '40px 40px 40px 0'
@@ -269,7 +268,7 @@ export default function WebPage() {
         {/* CONTACT */}
         <div ref={inViewContact.ref} style={inViewContact.style}>
         <div style={{ padding: `72px ${P}` }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div>
           <div style={{ maxWidth: 560 }}>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
             <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Seven years of performance thinking.</div>

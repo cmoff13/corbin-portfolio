@@ -143,7 +143,7 @@ export default function WorkPage() {
 
         {/* Hero */}
         <div style={{ paddingTop: 80, paddingBottom: 56, marginBottom: 32 }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          <div>
             <div style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: 10,
@@ -187,7 +187,7 @@ export default function WorkPage() {
           </div>
         </div>
 
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div>
 
           {/* Segment filter pills */}
           <div style={{
@@ -273,7 +273,6 @@ export default function WorkPage() {
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
             gap: 12,
-            maxWidth: 880,
           }}>
             {visibleProjects.map((project, i) => {
               const segment = SEGMENTS[project.primarySegment]

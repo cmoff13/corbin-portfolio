@@ -177,7 +177,7 @@ export default function ProcessCards({
   onStepChange: (i: number) => void
 }) {
   return (
-    <div style={{ maxWidth: 880 }}>
+    <div>
       <div style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
