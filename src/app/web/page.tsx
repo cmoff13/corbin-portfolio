@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 import AmbientBlob from '@/components/AmbientBlob'
 import ProcessCards from '@/components/ProcessCards'
+import CaseStudyCard from '@/components/CaseStudyCard'
 
 const segment = SEGMENTS.web
 const ACCENT = '#DC2626'
@@ -140,37 +141,21 @@ export default function WebPage() {
         <div style={{ padding: `52px ${P}` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           {sectionLabel('Selected work')}
-          <div style={{ maxWidth: 880, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {visibleProjects.map(p => (
-              <div
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 880 }}>
+            {visibleProjects.map((p, i) => (
+              <CaseStudyCard
                 key={p.slug}
+                slug={p.slug}
+                title={p.title}
+                subtitle={p.what}
+                tags={p.tags}
+                thumbnail={WEB_THUMBNAILS[p.slug]}
+                accentColor={ACCENT}
+                metric={p.metric}
+                isMobile={isMobile}
+                cardIndex={i}
                 onClick={() => router.push('/work/' + p.slug)}
-                style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', borderRadius: 14, overflow: 'hidden', border: LINE, cursor: 'none', transition: 'opacity 0.2s' }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-              >
-                <div style={{ width: isMobile ? '100%' : 260, flexShrink: 0, background: BG, minHeight: isMobile ? 120 : 180, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: isMobile ? 'none' : LINE, borderBottom: isMobile ? LINE : 'none', position: 'relative', overflow: 'hidden' }}>
-                  {(() => {
-                    const thumb = WEB_THUMBNAILS[p.slug]
-                    return thumb ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={thumb}
-                        alt={p.title}
-                        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                      />
-                    ) : (
-                      <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 36 : 44, fontWeight: 300, color: 'rgba(0,0,0,0.12)', letterSpacing: '-0.05em' }}>{p.metric}</span>
-                    )
-                  })()}
-                </div>
-                <div style={{ flex: 1, padding: isMobile ? '20px' : '28px 32px', display: 'flex', flexDirection: 'column', justifyContent: 'center', background: BG }}>
-                  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 12 }}>{p.tags.map(pill)}</div>
-                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 17 : 20, color: '#1a1a1a', letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: 8 }}>{p.title}</div>
-                  <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 13, color: '#999', lineHeight: 1.65, marginBottom: 16, maxWidth: 400 }}>{p.what}</div>
-                  <span style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: ACCENT, fontWeight: 500 }}>View case study →</span>
-                </div>
-              </div>
+              />
             ))}
           </div>
           </div>

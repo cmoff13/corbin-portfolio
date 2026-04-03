@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { CASE_STUDIES, SEGMENTS } from '@/lib/segments'
+import CaseStudyCard from '@/components/CaseStudyCard'
 
 const BG = '#F0F2F5'
 const LINE = '1px solid rgba(0,0,0,0.07)'
@@ -268,141 +269,24 @@ export default function WorkPage() {
           </div>
 
           {/* Project list */}
-          <div style={{ display: 'flex', flexDirection: 'column', maxWidth: 880 }}>
-            {visibleProjects.map(project => {
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 880 }}>
+            {visibleProjects.map((project, i) => {
               const segment = SEGMENTS[project.primarySegment]
-              const thumbnail = THUMBNAILS[project.slug]
               return (
-                <div
+                <CaseStudyCard
                   key={project.slug}
+                  slug={project.slug}
+                  title={project.title}
+                  subtitle={project.subtitle}
+                  tags={project.tags}
+                  thumbnail={THUMBNAILS[project.slug]}
+                  accentColor={segment.accentColor}
+                  segmentLabel={segment.label}
+                  segmentIcon={SEGMENT_ICONS[project.primarySegment]}
+                  isMobile={isMobile}
+                  cardIndex={i}
                   onClick={() => router.push(`/work/${project.slug}`)}
-                  style={{
-                    display: 'flex',
-                    flexDirection: isMobile ? 'column' : 'row',
-                    borderRadius: 14,
-                    overflow: 'hidden',
-                    border: '1px solid rgba(0,0,0,0.07)',
-                    background: BG,
-                    cursor: 'none',
-                    transition: 'opacity 0.2s',
-                    marginBottom: 10,
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-                  onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-                >
-                  {/* Left thumbnail */}
-                  <div style={{
-                    width: isMobile ? '100%' : 200,
-                    flexShrink: 0,
-                    alignSelf: isMobile ? 'auto' : 'stretch',
-                    minHeight: isMobile ? 160 : 0,
-                    background: BG,
-                    overflow: 'hidden',
-                    position: 'relative',
-                    borderRight: isMobile ? 'none' : '1px solid rgba(0,0,0,0.07)',
-                    borderBottom: isMobile ? '1px solid rgba(0,0,0,0.07)' : 'none',
-                  }}>
-                    {thumbnail ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={thumbnail}
-                        alt={project.title}
-                        style={{
-                          position: 'absolute',
-                          inset: 0,
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          display: 'block',
-                        }}
-                      />
-                    ) : (
-                      <div style={{
-                        position: 'absolute',
-                        inset: 0,
-                        background: segment.accentColor + '0f',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                        <span style={{
-                          fontFamily: "'Outfit', sans-serif",
-                          fontSize: 13,
-                          fontWeight: 300,
-                          color: 'rgba(0,0,0,0.2)',
-                          letterSpacing: '-0.02em',
-                          textAlign: 'center',
-                          padding: '0 16px',
-                          lineHeight: 1.3,
-                        }}>{project.title}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Right content */}
-                  <div style={{
-                    flex: 1,
-                    padding: isMobile ? '20px' : '28px 32px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    background: BG,
-                  }}>
-                    <div style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: 10,
-                      fontWeight: 600,
-                      letterSpacing: '0.08em',
-                      textTransform: 'uppercase',
-                      color: segment.accentColor,
-                      marginBottom: 8,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 5,
-                    }}>
-                      {SEGMENT_ICONS[project.primarySegment]}
-                      {segment.label}
-                    </div>
-                    <div style={{
-                      fontFamily: "'Outfit', sans-serif",
-                      fontSize: 20,
-                      fontWeight: 400,
-                      color: '#1a1a1a',
-                      letterSpacing: '-0.02em',
-                      lineHeight: 1.2,
-                      marginBottom: 6,
-                    }}>
-                      {project.title}
-                    </div>
-                    <div style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: 13,
-                      color: '#767676',
-                      lineHeight: 1.6,
-                      marginBottom: 14,
-                    }}>
-                      {project.subtitle}
-                    </div>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 16 }}>
-                      {project.tags.slice(0, 3).map(tag => (
-                        <span key={tag} style={{
-                          fontFamily: "'Inter', sans-serif",
-                          fontSize: 11,
-                          color: '#999',
-                          background: 'rgba(0,0,0,0.05)',
-                          borderRadius: 999,
-                          padding: '4px 12px',
-                        }}>{tag}</span>
-                      ))}
-                    </div>
-                    <span style={{
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: 12,
-                      color: segment.accentColor,
-                      fontWeight: 500,
-                    }}>View case study →</span>
-                  </div>
-                </div>
+                />
               )
             })}
 
