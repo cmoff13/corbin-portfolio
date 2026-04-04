@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 
 const BG = '#F0F2F5'
 const LINE = '1px solid rgba(0,0,0,0.07)'
+const STEP_HEIGHT = 600
 
 function getProcessSVG(index: number, c: string) {
   switch (index) {
@@ -154,48 +155,36 @@ function BlobCanvas({ accent }: { accent: string }) {
       const H = canvas!.height
       const cx = W / 2
       const cy = H / 2
-
       const dx = mouse.current.x - blob.current.x
       const dy = mouse.current.y - blob.current.y
       const dist = Math.hypot(dx, dy)
       const MAGNET = 300
-
       if (dist < MAGNET && mouse.current.x > -500) {
         const str = 0.006 * (1 - dist / MAGNET)
         blob.current.vx += dx * str
         blob.current.vy += dy * str
       }
-
       blob.current.vx += (cx - blob.current.x) * 0.003
       blob.current.vy += (cy - blob.current.y) * 0.003
       blob.current.vx *= 0.92
       blob.current.vy *= 0.92
-
       const speed = Math.hypot(blob.current.vx, blob.current.vy)
       if (speed > 4) {
         blob.current.vx = blob.current.vx / speed * 4
         blob.current.vy = blob.current.vy / speed * 4
       }
-
       blob.current.x += blob.current.vx
       blob.current.y += blob.current.vy
-
       ctx!.clearRect(0, 0, W, H)
       const radius = Math.min(W, H) * 0.55
-
-      const grad = ctx!.createRadialGradient(
-        blob.current.x, blob.current.y, 0,
-        blob.current.x, blob.current.y, radius
-      )
+      const grad = ctx!.createRadialGradient(blob.current.x, blob.current.y, 0, blob.current.x, blob.current.y, radius)
       grad.addColorStop(0, `rgba(${r},${g},${b},0.14)`)
       grad.addColorStop(0.5, `rgba(${r},${g},${b},0.06)`)
       grad.addColorStop(1, `rgba(${r},${g},${b},0)`)
-
       ctx!.fillStyle = grad
       ctx!.beginPath()
       ctx!.arc(blob.current.x, blob.current.y, radius, 0, Math.PI * 2)
       ctx!.fill()
-
       rafRef.current = requestAnimationFrame(tick)
     }
     tick()
@@ -235,32 +224,40 @@ export default function ProcessCards({
   activeStep: number
   onStepChange: (i: number) => void
 }) {
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([])
+  const outerRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
+  const [vh, setVh] = useState(800)
+
+  useEffect(() => {
+    setVh(window.innerHeight)
+    const onResize = () => setVh(window.innerHeight)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
 
   useEffect(() => {
     if (isMobile) return
-    const observers: IntersectionObserver[] = []
-    stepRefs.current.forEach((el, i) => {
+
+    const onScroll = () => {
+      const el = outerRef.current
       if (!el) return
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveIndex(i)
-            onStepChange(i)
-          }
-        },
-        { rootMargin: '-35% 0px -35% 0px', threshold: 0 }
-      )
-      obs.observe(el)
-      observers.push(obs)
-    })
-    return () => observers.forEach(o => o.disconnect())
-  }, [isMobile, onStepChange])
+      const rect = el.getBoundingClientRect()
+      const scrolled = -rect.top
+      const total = el.offsetHeight - window.innerHeight
+      if (scrolled < 0 || scrolled > total) return
+      const progress = scrolled / total
+      const idx = Math.min(steps.length - 1, Math.floor(progress * steps.length))
+      setActiveIndex(idx)
+      onStepChange(idx)
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [isMobile, steps.length, onStepChange])
 
   if (isMobile) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 48 }}>
         {steps.map((step, i) => (
           <div key={i}>
             <div style={{
@@ -272,14 +269,9 @@ export default function ProcessCards({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              marginBottom: 20,
-              position: 'relative',
-              overflow: 'hidden',
+              marginBottom: 24,
             }}>
-              <BlobCanvas accent={accent} />
-              <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}>
-                {getProcessSVG(i, accent)}
-              </div>
+              {getProcessSVG(i, accent)}
             </div>
             <div style={{
               fontFamily: "'Inter', sans-serif",
@@ -288,7 +280,7 @@ export default function ProcessCards({
               letterSpacing: '0.1em',
               textTransform: 'uppercase' as const,
               color: accent,
-              marginBottom: 8,
+              marginBottom: 10,
             }}>{step.number}</div>
             <div style={{
               fontFamily: "'Outfit', sans-serif",
@@ -310,71 +302,86 @@ export default function ProcessCards({
     )
   }
 
-  return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: 80,
-      alignItems: 'start',
-    }}>
-      {/* Left — scrolling copy */}
-      <div>
-        {steps.map((step, i) => (
-          <div
-            key={i}
-            ref={el => { stepRefs.current[i] = el }}
-            style={{
-              padding: '80px 0',
-              borderBottom: i < steps.length - 1 ? LINE : 'none',
-            }}
-          >
-            <div style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: 10,
-              fontWeight: 600,
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase' as const,
-              color: activeIndex === i ? accent : '#ccc',
-              marginBottom: 16,
-              transition: 'color 0.5s ease',
-            }}>
-              {step.number}
-            </div>
-            <div style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: 32,
-              fontWeight: 300,
-              color: activeIndex === i ? '#1a1a1a' : '#ccc',
-              letterSpacing: '-0.03em',
-              lineHeight: 1.15,
-              marginBottom: 16,
-              transition: 'color 0.5s ease',
-            }}>
-              {step.title}
-            </div>
-            <div style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: 15,
-              color: activeIndex === i ? '#767676' : '#ccc',
-              lineHeight: 1.75,
-              transition: 'color 0.5s ease',
-            }}>
-              {step.description}
-            </div>
-          </div>
-        ))}
-      </div>
+  const totalHeight = steps.length * STEP_HEIGHT + vh
 
-      {/* Right — sticky panel */}
+  return (
+    <div
+      ref={outerRef}
+      style={{ height: totalHeight, position: 'relative' }}
+    >
       <div style={{
         position: 'sticky',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        height: 'fit-content',
+        top: 0,
+        height: '100vh',
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: 80,
+        alignItems: 'center',
       }}>
+        {/* Left — copy */}
+        <div style={{ position: 'relative', height: 280 }}>
+          {steps.map((step, i) => (
+            <div
+              key={i}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                opacity: activeIndex === i ? 1 : 0,
+                transform: activeIndex === i
+                  ? 'translateY(0)'
+                  : activeIndex > i
+                  ? 'translateY(-24px)'
+                  : 'translateY(24px)',
+                transition: 'opacity 0.5s cubic-bezier(0.16,1,0.3,1), transform 0.5s cubic-bezier(0.16,1,0.3,1)',
+                pointerEvents: activeIndex === i ? 'auto' : 'none',
+              }}
+            >
+              <div style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: 10,
+                fontWeight: 600,
+                letterSpacing: '0.1em',
+                textTransform: 'uppercase' as const,
+                color: accent,
+                marginBottom: 16,
+              }}>{step.number}</div>
+              <div style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: 36,
+                fontWeight: 300,
+                color: '#1a1a1a',
+                letterSpacing: '-0.03em',
+                lineHeight: 1.1,
+                marginBottom: 18,
+              }}>{step.title}</div>
+              <div style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: 15,
+                color: '#767676',
+                lineHeight: 1.75,
+                maxWidth: 380,
+              }}>{step.description}</div>
+              <div style={{ display: 'flex', gap: 6, marginTop: 32 }}>
+                {steps.map((_, j) => (
+                  <div key={j} style={{
+                    width: activeIndex === j ? 20 : 6,
+                    height: 6,
+                    borderRadius: 999,
+                    background: activeIndex === j ? accent : 'rgba(0,0,0,0.12)',
+                    transition: 'width 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s ease',
+                  }} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Right — SVG panel */}
         <div style={{
-          width: '100%',
-          aspectRatio: '1 / 1',
+          aspectRatio: '1/1',
           borderRadius: 20,
           border: LINE,
           background: BG,
@@ -400,29 +407,6 @@ export default function ProcessCards({
               {getProcessSVG(i, accent)}
             </div>
           ))}
-          <div style={{
-            position: 'absolute',
-            bottom: 20,
-            left: 0,
-            right: 0,
-            display: 'flex',
-            justifyContent: 'center',
-            gap: 6,
-            zIndex: 2,
-          }}>
-            {steps.map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  width: activeIndex === i ? 20 : 6,
-                  height: 6,
-                  borderRadius: 999,
-                  background: activeIndex === i ? accent : 'rgba(0,0,0,0.12)',
-                  transition: 'width 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s ease',
-                }}
-              />
-            ))}
-          </div>
         </div>
       </div>
     </div>
