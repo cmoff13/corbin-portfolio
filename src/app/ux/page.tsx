@@ -111,7 +111,7 @@ export default function UXPage() {
         {/* HERO */}
         <div style={{ padding: `80px ${P} 88px` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ maxWidth: 640, margin: '0 auto' }}>
+            <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center' }}>
               <div style={{ ...fadeUp(0), fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase' as const, marginBottom: 22, fontFamily: "'Inter', sans-serif" }}>
                 UX & Product
               </div>
@@ -124,7 +124,7 @@ export default function UXPage() {
               <div style={{ ...fadeUp(340), fontSize: 15, fontWeight: 300, color: '#6b6b6b', lineHeight: 1.75, marginBottom: 36, fontFamily: "'Inter', sans-serif" }}>
                 The user never notices the decision hierarchy, the cognitive load trade-offs, or the three flows that got cut before the one that shipped. This section documents the thinking.
               </div>
-              <div style={{ ...fadeUp(440), display: 'flex', gap: 7, flexWrap: isMobile ? 'nowrap' : 'wrap' as any, overflowX: isMobile ? 'auto' : 'visible', paddingBottom: isMobile ? 4 : 0 }}>
+              <div style={{ ...fadeUp(440), display: 'flex', gap: 7, justifyContent: 'center', flexWrap: isMobile ? 'nowrap' : 'wrap' as any, overflowX: isMobile ? 'auto' : 'visible', paddingBottom: isMobile ? 4 : 0 }}>
                 {['Wireframes', 'IA maps', 'Interaction design', 'Figma prototypes'].map(pill)}
               </div>
             </div>
