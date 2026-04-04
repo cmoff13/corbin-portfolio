@@ -818,6 +818,22 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const [isMobile, setIsMobile] = useState(false)
 
+  const sameSeg = CASE_STUDIES.filter(
+    c => c.primarySegment === project?.primarySegment && c.slug !== slug && !c.hidden
+  )
+  const nextProject = sameSeg.length > 0
+    ? sameSeg[Math.floor(Math.random() * sameSeg.length)]
+    : null
+
+  const nextThumbnails: Record<string, string> = {
+    'black-coast-estates': '/images/black-coast/thumbnail.jpg',
+    'portfolio-nav-system': '/images/portfolio/thumbnail.jpg',
+    'skygate-growth-strategies': '/images/skygate/thumbnail.jpg',
+    'linear-cro': '/images/linear-cro/thumbnail.jpg',
+    'kirrin-finch': '/images/kirrin-finch/thumbnail.jpg',
+    'heybud-skincare': '/images/heybud-skincare/thumbnail.jpg',
+  }
+
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)')
     setIsMobile(mq.matches)
@@ -1347,6 +1363,100 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
               </button>
               <p style={{ fontSize: '12px', color: '#ccc' }}>More projects coming</p>
             </div>
+
+            {nextProject && (
+              <div style={{
+                borderTop: '1px solid rgba(0,0,0,0.07)',
+                marginTop: 0,
+              }}>
+                <div
+                  onClick={() => router.push(`/work/${nextProject.slug}`)}
+                  style={{
+                    display: 'flex',
+                    flexDirection: isMobile ? 'column' : 'row',
+                    alignItems: isMobile ? 'flex-start' : 'center',
+                    justifyContent: 'space-between',
+                    padding: isMobile ? '32px 0' : '48px 0',
+                    cursor: 'none',
+                    gap: 24,
+                    transition: 'opacity 0.2s ease',
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = '0.7')}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+                >
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                    <div style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: 10,
+                      fontWeight: 600,
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase' as const,
+                      color: '#bbb',
+                      marginBottom: 4,
+                    }}>
+                      Next case study
+                    </div>
+                    <div style={{
+                      fontFamily: "'Outfit', sans-serif",
+                      fontSize: isMobile ? 20 : 28,
+                      fontWeight: 300,
+                      color: '#1a1a1a',
+                      letterSpacing: '-0.03em',
+                      lineHeight: 1.15,
+                    }}>
+                      {nextProject.title}
+                    </div>
+                    <div style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: 13,
+                      color: '#999',
+                      lineHeight: 1.6,
+                      maxWidth: 400,
+                    }}>
+                      {nextProject.subtitle}
+                    </div>
+                    <div style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: 12,
+                      color: segment.accentColor,
+                      fontWeight: 500,
+                      marginTop: 8,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 4,
+                    }}>
+                      View case study →
+                    </div>
+                  </div>
+
+                  {nextThumbnails[nextProject.slug] && !isMobile && (
+                    <div style={{
+                      width: 180,
+                      height: 120,
+                      borderRadius: 10,
+                      overflow: 'hidden',
+                      flexShrink: 0,
+                      border: '1px solid rgba(0,0,0,0.07)',
+                      position: 'relative',
+                    }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={nextThumbnails[nextProject.slug]}
+                        alt={nextProject.title}
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
+                          display: 'block',
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
 
           </div>
         </main>
