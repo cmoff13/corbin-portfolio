@@ -111,7 +111,7 @@ export default function UXPage() {
         {/* HERO */}
         <div style={{ padding: `80px ${P} 88px` }}>
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ maxWidth: 640 }}>
+            <div style={{ maxWidth: 640, margin: '0 auto' }}>
               <div style={{ ...fadeUp(0), fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase' as const, marginBottom: 22, fontFamily: "'Inter', sans-serif" }}>
                 UX & Product
               </div>
