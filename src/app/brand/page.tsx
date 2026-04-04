@@ -545,7 +545,7 @@ export default function BrandSegment() {
       {/* Hero */}
       <div style={{ padding: '80px 0 88px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <div style={{ maxWidth: 640 }}>
+        <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center' }}>
         <p style={{
           ...fadeUp(0),
           fontFamily: "'Inter', sans-serif",
@@ -567,6 +567,7 @@ export default function BrandSegment() {
           color: '#1a1a1a',
           marginBottom: 24,
           maxWidth: 640,
+          margin: '0 auto 24px',
         }}>
           {segment.headline[0]}<br />{segment.headline[1]}
         </h1>
@@ -578,6 +579,7 @@ export default function BrandSegment() {
           color: '#1a1a1a',
           marginBottom: 6,
           maxWidth: 520,
+          margin: '0 auto 6px',
         }}>
           Before landing pages and product flows, there were marks.
         </p>
@@ -589,6 +591,7 @@ export default function BrandSegment() {
           color: '#999',
           lineHeight: 1.75,
           maxWidth: 520,
+          margin: '0 auto',
         }}>
           Logos for businesses being named for the first time. Type systems built from scratch. This is where the eye came from.
         </p>
@@ -605,6 +608,7 @@ export default function BrandSegment() {
         flexWrap: isMobile ? 'nowrap' : 'wrap',
         overflowX: isMobile ? 'auto' : 'visible',
         paddingBottom: isMobile ? '8px' : 0,
+        justifyContent: 'center',
       }}>
         {FILTERS.map(f => (
           <button
