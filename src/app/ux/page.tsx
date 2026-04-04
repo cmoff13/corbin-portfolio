@@ -110,21 +110,23 @@ export default function UXPage() {
 
         {/* HERO */}
         <div style={{ padding: `80px ${P} 88px` }}>
-          <div>
-            <div style={{ ...fadeUp(0), fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase' as const, marginBottom: 22, fontFamily: "'Inter', sans-serif" }}>
-              UX & Product
-            </div>
-            <div style={{ ...fadeUp(120), fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontFamily: "'Outfit', sans-serif", fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26, maxWidth: 640 }}>
-              {segment.headline[0]}<br />{segment.headline[1]}
-            </div>
-            <div style={{ ...fadeUp(240), fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500, fontFamily: "'Inter', sans-serif" }}>
-              Good UX is invisible.
-            </div>
-            <div style={{ ...fadeUp(340), fontSize: 15, fontWeight: 300, color: '#6b6b6b', lineHeight: 1.75, maxWidth: 460, marginBottom: 36, fontFamily: "'Inter', sans-serif" }}>
-              The user never notices the decision hierarchy, the cognitive load trade-offs, or the three flows that got cut before the one that shipped. This section documents the thinking.
-            </div>
-            <div style={{ ...fadeUp(440), display: 'flex', gap: 7, flexWrap: isMobile ? 'nowrap' : 'wrap' as any, overflowX: isMobile ? 'auto' : 'visible', paddingBottom: isMobile ? 4 : 0 }}>
-              {['Wireframes', 'IA maps', 'Interaction design', 'Figma prototypes'].map(pill)}
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div style={{ maxWidth: 640 }}>
+              <div style={{ ...fadeUp(0), fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase' as const, marginBottom: 22, fontFamily: "'Inter', sans-serif" }}>
+                UX & Product
+              </div>
+              <div style={{ ...fadeUp(120), fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontFamily: "'Outfit', sans-serif", fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26 }}>
+                {segment.headline[0]}<br />{segment.headline[1]}
+              </div>
+              <div style={{ ...fadeUp(240), fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, fontFamily: "'Inter', sans-serif" }}>
+                Good UX is invisible.
+              </div>
+              <div style={{ ...fadeUp(340), fontSize: 15, fontWeight: 300, color: '#6b6b6b', lineHeight: 1.75, marginBottom: 36, fontFamily: "'Inter', sans-serif" }}>
+                The user never notices the decision hierarchy, the cognitive load trade-offs, or the three flows that got cut before the one that shipped. This section documents the thinking.
+              </div>
+              <div style={{ ...fadeUp(440), display: 'flex', gap: 7, flexWrap: isMobile ? 'nowrap' : 'wrap' as any, overflowX: isMobile ? 'auto' : 'visible', paddingBottom: isMobile ? 4 : 0 }}>
+                {['Wireframes', 'IA maps', 'Interaction design', 'Figma prototypes'].map(pill)}
+              </div>
             </div>
           </div>
         </div>

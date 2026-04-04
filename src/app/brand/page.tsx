@@ -543,7 +543,9 @@ export default function BrandSegment() {
       <div style={{ padding: '0 clamp(24px, 6vw, 120px)' }}>
 
       {/* Hero */}
-      <div style={{ paddingTop: 80, paddingBottom: 72, marginBottom: 48 }}>
+      <div style={{ padding: '80px 0 88px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+        <div style={{ maxWidth: 640 }}>
         <p style={{
           ...fadeUp(0),
           fontFamily: "'Inter', sans-serif",
@@ -564,6 +566,7 @@ export default function BrandSegment() {
           lineHeight: 0.97,
           color: '#1a1a1a',
           marginBottom: 24,
+          maxWidth: 640,
         }}>
           {segment.headline[0]}<br />{segment.headline[1]}
         </h1>
@@ -589,6 +592,8 @@ export default function BrandSegment() {
         }}>
           Logos for businesses being named for the first time. Type systems built from scratch. This is where the eye came from.
         </p>
+        </div>
+        </div>
       </div>
 
       {/* Filter pills */}
@@ -661,7 +666,7 @@ export default function BrandSegment() {
       <div ref={inViewProcess.ref} style={inViewProcess.style}>
       <div style={{
         borderTop: LINE,
-        paddingTop: '56px',
+        padding: `${isMobile ? '40px' : '64px'} 0`,
         marginTop: '72px',
         marginBottom: '64px',
       }}>
@@ -785,7 +790,7 @@ export default function BrandSegment() {
       <div ref={inViewQuote.ref} style={inViewQuote.style}>
       <div style={{
         borderTop: LINE,
-        paddingTop: '64px',
+        padding: `${isMobile ? '40px' : '64px'} 0`,
         marginTop: '80px',
         textAlign: 'center',
       }}>
