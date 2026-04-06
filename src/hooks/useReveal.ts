@@ -27,9 +27,10 @@ export function useWordReveal(text: string, started: boolean, baseDelay = 0) {
       display: 'inline-block',
       overflow: 'hidden',
       verticalAlign: 'bottom',
-      marginRight: '0.22em',
-      paddingBottom: '0.15em',
-      marginBottom: '-0.15em',
+      paddingBottom: '0.2em',
+      marginBottom: '-0.2em',
+      paddingRight: '0.06em',
+      marginRight: '0.16em',
     } as React.CSSProperties,
     innerStyle: {
       display: 'inline-block',
