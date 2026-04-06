@@ -19,12 +19,13 @@ interface CaseStudyCardProps {
   isMobile: boolean
   cardIndex?: number
   cardNumber?: string
+  ctaLabel?: string
   onClick: () => void
 }
 
 export default function CaseStudyCard({
   title, subtitle, thumbnail, accentColor,
-  metric, isMobile, cardIndex = 0, onClick,
+  metric, isMobile, cardIndex = 0, ctaLabel, onClick,
 }: CaseStudyCardProps) {
   const [visible, setVisible] = useState(false)
   const [hovered, setHovered] = useState(false)
@@ -152,7 +153,7 @@ export default function CaseStudyCard({
           alignItems: 'center',
           gap: 4,
         }}>
-          View case study
+          {ctaLabel || 'View case study'}
           <span style={{
             display: 'inline-block',
             transform: hovered ? 'translateX(4px)' : 'translateX(0)',

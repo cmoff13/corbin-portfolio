@@ -2,14 +2,25 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { SEGMENTS } from '@/lib/segments'
+import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 import AmbientBlob from '@/components/AmbientBlob'
 import ProcessCards from '@/components/ProcessCards'
+import CaseStudyCard from '@/components/CaseStudyCard'
 
 const segment = SEGMENTS.brand
 const ACCENT = '#3B0764'
 const BG = '#F0F2F5'
 const LINE = '1px solid rgba(0,0,0,0.07)'
+
+const BRAND_THUMBNAILS: Record<string, string> = {
+  'swift-powerwashing': '/images/brand/swift-logo.jpg',
+  'mypetdx': '/images/brand/mypetdx-palette.jpg',
+  'p-mobile-notary': '/images/brand/poppy-palette.jpg',
+}
+
+const brandProjects = CASE_STUDIES.filter(
+  c => c.primarySegment === 'brand' && !c.hidden
+)
 
 const ARCHIVE_ITEMS = [
   {
@@ -503,10 +514,8 @@ function useInView(delay = 0) {
 
 export default function BrandSegment() {
   const router = useRouter()
-  const [activeFilter, setActiveFilter] = useState('all')
   const [activeStep, setActiveStep] = useState(0)
   const [activeStat, setActiveStat] = useState(-1)
-  const [lightboxItem, setLightboxItem] = useState<typeof ARCHIVE_ITEMS[0] | null>(null)
   const [isMobile, setIsMobile] = useState(false)
   const [started, setStarted] = useState(false)
   const [copied, setCopied] = useState(false)
@@ -599,72 +608,30 @@ export default function BrandSegment() {
         </div>
       </div>
 
-      {/* Filter pills */}
-      <div style={{
-        ...fadeUp(750),
-        display: 'flex',
-        gap: '8px',
-        marginBottom: '24px',
-        flexWrap: isMobile ? 'nowrap' : 'wrap',
-        overflowX: isMobile ? 'auto' : 'visible',
-        paddingBottom: isMobile ? '8px' : 0,
-        justifyContent: 'center',
-      }}>
-        {FILTERS.map(f => (
-          <button
-            key={f.id}
-            onClick={() => setActiveFilter(f.id)}
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              padding: '6px 16px',
-              borderRadius: '999px',
-              border: activeFilter === f.id ? 'none' : LINE,
-              background: activeFilter === f.id ? ACCENT : 'rgba(0,0,0,0.05)',
-              color: activeFilter === f.id ? '#ffffff' : '#999',
-              cursor: 'none',
-              transition: 'all 0.2s ease',
-            }}
-          >
-            {f.label}
-          </button>
-        ))}
-      </div>
-
       {/* Gallery grid */}
       <div style={{
-        ...fadeUp(900),
         display: 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-        gap: '12px',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+        gap: 12,
         marginBottom: '48px',
       }}>
-        {(activeFilter === 'all'
-          ? ARCHIVE_ITEMS
-          : ARCHIVE_ITEMS.filter(item =>
-              activeFilter === 'logo' ? item.tag === 'Logo mark' :
-              activeFilter === 'color' ? item.tag === 'Color palette' :
-              activeFilter === 'type' ? item.tag === 'Type system' : true
-            )
-        ).map(item => (
-          <GalleryCard
-            key={item.id}
-            item={item}
-            onClick={() => { if (item.image) setLightboxItem(item) }}
+        {brandProjects.map((project, i) => (
+          <CaseStudyCard
+            key={project.slug}
+            slug={project.slug}
+            title={project.title}
+            subtitle={project.subtitle}
+            tags={project.tags}
+            thumbnail={BRAND_THUMBNAILS[project.slug]}
+            accentColor={ACCENT}
+            segmentLabel=""
+            isMobile={isMobile}
+            cardIndex={i}
+            ctaLabel="View project"
+            onClick={() => router.push(`/work/${project.slug}/gallery`)}
           />
         ))}
       </div>
-
-      {lightboxItem && lightboxItem.image && (
-        <Lightbox
-          src={lightboxItem.image}
-          alt={lightboxItem.name}
-          onClose={() => setLightboxItem(null)}
-        />
-      )}
 
       {/* Process section */}
       <div ref={inViewProcess.ref} style={inViewProcess.style}>
@@ -825,11 +792,11 @@ export default function BrandSegment() {
 
       {/* Contact */}
       <div ref={inViewCta.ref} style={{ ...inViewCta.style, borderTop: LINE, padding: `72px 0` }}>
-        <div style={{ maxWidth: 560 }}>
+        <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
           <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Let&apos;s build something worth looking at.</div>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: '#999', fontWeight: 300, marginBottom: 32 }}>Senior design roles and select freelance.</div>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
             <button
               onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
               style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: ACCENT, color: 'white', fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, borderRadius: 999, border: 'none', cursor: 'none', transition: 'opacity 0.2s' }}

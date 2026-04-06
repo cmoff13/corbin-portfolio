@@ -173,11 +173,11 @@ export default function WebPage() {
         <div style={{ padding: `52px ${P}` }}>
           <div>
           {sectionLabel('What people say')}
-          <div style={{ maxWidth: 560 }}>
+          <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
             <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 20 : 26, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.03em', lineHeight: 1.3, marginBottom: 22, maxWidth: '100%', wordBreak: 'break-word' }}>
               &ldquo;{TESTIMONIALS[activeTestimonial].quote}&rdquo;
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24, justifyContent: 'center' }}>
               <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 600, color: '#888', flexShrink: 0, fontFamily: "'Inter', sans-serif" }}>
                 {TESTIMONIALS[activeTestimonial].initials}
               </div>
@@ -186,7 +186,7 @@ export default function WebPage() {
                 <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#bbb' }}>{TESTIMONIALS[activeTestimonial].title}</div>
               </div>
             </div>
-            <div style={{ display: 'flex', gap: 6 }}>
+            <div style={{ display: 'flex', gap: 6, justifyContent: 'center' }}>
               {TESTIMONIALS.map((_, i) => (
                 <div
                   key={i}
@@ -285,11 +285,11 @@ export default function WebPage() {
         <div ref={inViewContact.ref} style={inViewContact.style}>
         <div style={{ padding: `72px ${P}` }}>
           <div>
-          <div style={{ maxWidth: 560 }}>
+          <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
             <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Seven years of performance thinking.</div>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: '#999', fontWeight: 300, marginBottom: 32 }}>Senior design roles and select freelance.</div>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
               <button
                 onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: '#1a1a1a', color: 'white', fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, borderRadius: 999, border: 'none', cursor: 'none', transition: 'opacity 0.2s' }}

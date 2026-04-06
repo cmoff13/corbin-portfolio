@@ -29,6 +29,30 @@ export interface Segment {
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
+    slug: 'swift-powerwashing',
+    title: 'Swift Powerwashing',
+    subtitle: 'Primary mark for a residential and commercial powerwashing business.',
+    primarySegment: 'brand',
+    alsoIn: [],
+    tags: ['Logo mark', 'Brand identity'],
+  },
+  {
+    slug: 'mypetdx',
+    title: 'MyPetDx — Color system',
+    subtitle: 'Brand color palette for a pet lab diagnostics platform.',
+    primarySegment: 'brand',
+    alsoIn: [],
+    tags: ['Color palette', 'Brand identity'],
+  },
+  {
+    slug: 'p-mobile-notary',
+    title: 'Poppy Mobile Notary',
+    subtitle: 'Color system and type scale for a mobile notary service.',
+    primarySegment: 'brand',
+    alsoIn: [],
+    tags: ['Color palette', 'Type system'],
+  },
+  {
     slug: 'skygate-growth-strategies',
     title: 'Skygate Growth Strategies',
     subtitle: 'Brand system + Webflow build, 0→1',

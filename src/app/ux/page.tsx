@@ -115,13 +115,13 @@ export default function UXPage() {
               <div style={{ ...fadeUp(0), fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase' as const, marginBottom: 22, fontFamily: "'Inter', sans-serif" }}>
                 UX & Product
               </div>
-              <div style={{ ...fadeUp(120), fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontFamily: "'Outfit', sans-serif", fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26 }}>
+              <div style={{ ...fadeUp(120), fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontFamily: "'Outfit', sans-serif", fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, margin: '0 auto 26px' }}>
                 {segment.headline[0]}<br />{segment.headline[1]}
               </div>
-              <div style={{ ...fadeUp(240), fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, fontFamily: "'Inter', sans-serif" }}>
+              <div style={{ ...fadeUp(240), fontSize: 17, fontWeight: 400, color: '#1a1a1a', margin: '0 auto 6px', fontFamily: "'Inter', sans-serif" }}>
                 Good UX is invisible.
               </div>
-              <div style={{ ...fadeUp(340), fontSize: 15, fontWeight: 300, color: '#6b6b6b', lineHeight: 1.75, marginBottom: 36, fontFamily: "'Inter', sans-serif" }}>
+              <div style={{ ...fadeUp(340), fontSize: 15, fontWeight: 300, color: '#6b6b6b', lineHeight: 1.75, margin: '0 auto 36px', fontFamily: "'Inter', sans-serif" }}>
                 The user never notices the decision hierarchy, the cognitive load trade-offs, or the three flows that got cut before the one that shipped. This section documents the thinking.
               </div>
               <div style={{ ...fadeUp(440), display: 'flex', gap: 7, justifyContent: 'center', flexWrap: isMobile ? 'nowrap' : 'wrap' as any, overflowX: isMobile ? 'auto' : 'visible', paddingBottom: isMobile ? 4 : 0 }}>
@@ -170,11 +170,11 @@ export default function UXPage() {
         <div style={{ padding: `52px ${P}` }}>
           <div>
             {sectionLabel('What people say')}
-            <div style={{ maxWidth: 560 }}>
+            <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
               <div style={{ fontSize: isMobile ? 20 : 26, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.03em', lineHeight: 1.3, marginBottom: 22 }}>
                 "{TESTIMONIAL.quote}"
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'center' }}>
                 <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'rgba(0,0,0,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 600, color: '#888', flexShrink: 0 }}>
                   {TESTIMONIAL.initials}
                 </div>
@@ -271,13 +271,13 @@ export default function UXPage() {
         <div ref={inViewContact.ref} style={inViewContact.style}>
         <div style={{ padding: `72px ${P}` }}>
           <div>
-            <div style={{ maxWidth: 560 }}>
+            <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
               <div style={{ fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
               <div style={{ fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>
                 Thinking in systems, designing for people.
               </div>
               <div style={{ fontSize: 15, color: '#6b6b6b', fontWeight: 300, marginBottom: 32 }}>Senior UX roles and select freelance.</div>
-              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' as const, alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' as const, alignItems: 'center', justifyContent: 'center' }}>
                 <button
                   onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
                   style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: ACCENT, color: 'white', fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 600, borderRadius: 999, border: 'none', cursor: 'none' }}
