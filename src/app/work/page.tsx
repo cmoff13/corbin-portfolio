@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { CASE_STUDIES, SEGMENTS } from '@/lib/segments'
 import CaseStudyCard from '@/components/CaseStudyCard'
@@ -132,6 +132,12 @@ export default function WorkPage() {
 
   const inViewContact = useReveal(0)
 
+  const fadeUp = (delay: number): React.CSSProperties => ({
+    opacity: started ? 1 : 0,
+    transform: started ? 'translateY(0)' : 'translateY(10px)',
+    transition: `opacity 0.55s ease ${delay}ms, transform 0.55s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
+  })
+
   const visibleProjects = CASE_STUDIES.filter(p => {
     if (p.hidden) return false
     if (activeFilter === 'all') return true
@@ -151,50 +157,53 @@ export default function WorkPage() {
       <div style={{ position: 'relative', zIndex: 1, padding: '0 clamp(24px, 6vw, 120px)' }}>
 
         {/* Hero */}
-        <div style={{ paddingTop: 80, paddingBottom: 56, marginBottom: 32 }}>
-          <div style={{ textAlign: 'center', margin: '0 auto' }}>
+        <div style={{ paddingTop: 80, paddingBottom: 72, textAlign: 'center' }}>
+          <div style={{ maxWidth: 640, margin: '0 auto' }}>
             <div style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: 10,
               color: '#bbb',
               letterSpacing: '0.16em',
-              textTransform: 'uppercase',
+              textTransform: 'uppercase' as const,
               marginBottom: 20,
-            }}>All work</div>
+              ...fadeUp(0),
+            }}>
+              All work
+            </div>
             <div style={{
               fontFamily: "'Outfit', sans-serif",
-              fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px, 5.5vw, 68px)',
+              fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)',
               fontWeight: 300,
               color: '#1a1a1a',
               letterSpacing: '-0.055em',
               lineHeight: 0.97,
-              marginBottom: 20,
-              margin: '0 auto 20px',
+              marginBottom: 24,
             }}>
-              <div>{useWordReveal('Everything,', started, 80).map(({ word, wrapStyle, innerStyle }, i) => (
+              {useWordReveal('Everything,', started, 80).map(({ word, wrapStyle, innerStyle }, i) => (
                 <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
-              ))}</div>
-              <div>{useWordReveal('unfiltered.', started, 80 + 1 * 65).map(({ word, wrapStyle, innerStyle }, i) => (
+              ))}
+              <br />
+              {useWordReveal('unfiltered.', started, 80 + 65).map(({ word, wrapStyle, innerStyle }, i) => (
                 <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
-              ))}</div>
+              ))}
             </div>
             <div style={{
+              ...fadeUp(320),
               fontFamily: "'Inter', sans-serif",
               fontSize: 15,
               fontWeight: 400,
               color: '#1a1a1a',
-              marginBottom: 6,
-              maxWidth: 480,
+              marginBottom: 8,
             }}>
               Seven years across brand, web, and product.
             </div>
             <div style={{
+              ...fadeUp(400),
               fontFamily: "'Inter', sans-serif",
               fontSize: 14,
               fontWeight: 300,
               color: '#999',
               lineHeight: 1.75,
-              maxWidth: 480,
             }}>
               Browse everything in one place, or use the segment links below to filter by discipline.
             </div>

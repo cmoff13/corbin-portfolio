@@ -28,6 +28,8 @@ export function useWordReveal(text: string, started: boolean, baseDelay = 0) {
       overflow: 'hidden',
       verticalAlign: 'bottom',
       marginRight: '0.22em',
+      paddingBottom: '0.15em',
+      marginBottom: '-0.15em',
     } as React.CSSProperties,
     innerStyle: {
       display: 'inline-block',
