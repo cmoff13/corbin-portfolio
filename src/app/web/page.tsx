@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 import AmbientBlob from '@/components/AmbientBlob'
 import ProcessCards from '@/components/ProcessCards'
 import CaseStudyCard from '@/components/CaseStudyCard'
+import { useReveal, useWordReveal } from '@/hooks/useReveal'
 
 const segment = SEGMENTS.web
 const ACCENT = '#DC2626'
@@ -40,24 +41,6 @@ const STATS = [
   { num: '63%', label: 'CVR lift for Linear', detail: '5.5% to 9.02% in 30 days. One section change backed by heatmap data.' },
 ]
 
-function useInView(delay = 0) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
-      { threshold: 0.15 }
-    )
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [])
-  const style: React.CSSProperties = {
-    opacity: visible ? 1 : 0,
-    transform: visible ? 'translateY(0)' : 'translateY(16px)',
-    transition: `opacity 0.6s ease ${delay}ms, transform 0.6s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
-  }
-  return { ref, style }
-}
 
 export default function WebPage() {
   const router = useRouter()
@@ -87,11 +70,11 @@ export default function WebPage() {
     transition: `opacity 0.55s ease ${delay}ms, transform 0.55s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
   })
 
-  const inViewProjects    = useInView(0)
-  const inViewTestimonial = useInView(0)
-  const inViewProcess     = useInView(0)
-  const inViewStats       = useInView(0)
-  const inViewContact     = useInView(0)
+  const inViewProjects    = useReveal(0)
+  const inViewTestimonial = useReveal(0)
+  const inViewProcess     = useReveal(0)
+  const inViewStats       = useReveal(0)
+  const inViewContact     = useReveal(0)
 
   useEffect(() => {
     const t = setInterval(() => setActiveTestimonial(p => (p + 1) % TESTIMONIALS.length), 5000)
@@ -123,8 +106,13 @@ export default function WebPage() {
         <div style={{ padding: `80px ${P} 88px` }}>
           <div style={{ textAlign: 'center' }}>
           <div style={{ ...fadeUp(0), fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: 22 }}>Web &amp; Digital</div>
-          <div style={{ ...fadeUp(120), fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, marginBottom: 26, maxWidth: 640, margin: '0 auto 26px' }}>
-            {segment.headline[0]}<br />{segment.headline[1]}
+          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, margin: '0 auto 26px' }}>
+            <div>{useWordReveal(segment.headline[0], started, 80).map(({ word, wrapStyle, innerStyle }, i) => (
+              <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
+            ))}</div>
+            <div>{useWordReveal(segment.headline[1], started, 80 + segment.headline[0].split(' ').length * 65).map(({ word, wrapStyle, innerStyle }, i) => (
+              <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
+            ))}</div>
           </div>
           <div style={{ ...fadeUp(240), fontFamily: "'Inter', sans-serif", fontSize: 17, fontWeight: 400, color: '#1a1a1a', marginBottom: 6, maxWidth: 500, margin: '0 auto 6px' }}>Most designers stop at how it looks.</div>
           <div style={{ ...fadeUp(340), fontFamily: "'Inter', sans-serif", fontSize: 15, fontWeight: 300, color: '#999', lineHeight: 1.75, maxWidth: 460, marginBottom: 36, margin: '0 auto 36px' }}>The work here goes further — landing pages built around message match, conversion audits that diagnose why a page isn&apos;t performing, ad creative systems designed to scale.</div>
@@ -290,20 +278,24 @@ export default function WebPage() {
             <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Seven years of performance thinking.</div>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: '#999', fontWeight: 300, marginBottom: 32 }}>Senior design roles and select freelance.</div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
-              <button
-                onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: '#1a1a1a', color: 'white', fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, borderRadius: 999, border: 'none', cursor: 'none', transition: 'opacity 0.2s' }}
-                onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-              >
-                {copied ? 'Copied!' : 'Copy email'}
-              </button>
-              <button
-                onClick={() => router.push('/ux')}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: 'transparent', color: '#1a1a1a', fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 500, borderRadius: 999, border: LINE, cursor: 'none' }}
-              >
-                UX &amp; product →
-              </button>
+              <div style={{ opacity: inViewContact.visible ? 1 : 0, transform: inViewContact.visible ? 'translateY(0)' : 'translateY(16px)', transition: 'opacity 0.5s ease 100ms, transform 0.5s cubic-bezier(0.16,1,0.3,1) 100ms' }}>
+                <button
+                  onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: '#1a1a1a', color: 'white', fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, borderRadius: 999, border: 'none', cursor: 'none', transition: 'opacity 0.2s' }}
+                  onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+                  onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+                >
+                  {copied ? 'Copied!' : 'Copy email'}
+                </button>
+              </div>
+              <div style={{ opacity: inViewContact.visible ? 1 : 0, transform: inViewContact.visible ? 'translateY(0)' : 'translateY(16px)', transition: 'opacity 0.5s ease 180ms, transform 0.5s cubic-bezier(0.16,1,0.3,1) 180ms' }}>
+                <button
+                  onClick={() => router.push('/ux')}
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: 'transparent', color: '#1a1a1a', fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 500, borderRadius: 999, border: LINE, cursor: 'none' }}
+                >
+                  UX &amp; product →
+                </button>
+              </div>
             </div>
           </div>
           </div>

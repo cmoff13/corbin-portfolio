@@ -6,6 +6,7 @@ import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 import AmbientBlob from '@/components/AmbientBlob'
 import ProcessCards from '@/components/ProcessCards'
 import CaseStudyCard from '@/components/CaseStudyCard'
+import { useReveal, useWordReveal } from '@/hooks/useReveal'
 
 const segment = SEGMENTS.brand
 const ACCENT = '#3B0764'
@@ -475,42 +476,6 @@ function CtaBand({ isMobile }: { isMobile: boolean }) {
   )
 }
 
-function useWordReveal(text: string, started: boolean, baseDelay: number) {
-  return text.split(' ').map((word, i) => ({
-    word,
-    wrapStyle: {
-      display: 'inline-block',
-      overflow: 'hidden',
-      verticalAlign: 'bottom',
-      marginRight: '0.22em',
-    } as React.CSSProperties,
-    innerStyle: {
-      display: 'inline-block',
-      transform: started ? 'translateY(0)' : 'translateY(110%)',
-      opacity: started ? 1 : 0,
-      transition: `transform 0.75s cubic-bezier(0.16,1,0.3,1) ${baseDelay + i * 65}ms, opacity 0.5s ease ${baseDelay + i * 65}ms`,
-    } as React.CSSProperties,
-  }))
-}
-
-function useInView(delay = 0) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
-      { threshold: 0.15 }
-    )
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [])
-  const style: React.CSSProperties = {
-    opacity: visible ? 1 : 0,
-    transform: visible ? 'translateY(0)' : 'translateY(16px)',
-    transition: `opacity 0.6s ease ${delay}ms, transform 0.6s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
-  }
-  return { ref, style }
-}
 
 export default function BrandSegment() {
   const router = useRouter()
@@ -539,10 +504,10 @@ export default function BrandSegment() {
     transition: `opacity 0.55s ease ${delay}ms, transform 0.55s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
   })
 
-  const inViewProcess = useInView(0)
-  const inViewStats   = useInView(0)
-  const inViewQuote   = useInView(0)
-  const inViewCta     = useInView(0)
+  const inViewProcess = useReveal(0)
+  const inViewStats   = useReveal(0)
+  const inViewQuote   = useReveal(0)
+  const inViewCta     = useReveal(0)
 
   return (
     <div style={{ background: 'transparent', minHeight: '100vh', position: 'relative', cursor: 'none' }}>
@@ -567,19 +532,22 @@ export default function BrandSegment() {
         }}>
           Brand identity
         </p>
-        <h1 style={{
+        <div style={{
           fontFamily: "'Outfit', sans-serif",
           fontSize: 'clamp(44px, 5.5vw, 68px)',
           fontWeight: 300,
           letterSpacing: '-0.055em',
           lineHeight: 0.97,
           color: '#1a1a1a',
-          marginBottom: 24,
-          maxWidth: 640,
           margin: '0 auto 24px',
         }}>
-          {segment.headline[0]}<br />{segment.headline[1]}
-        </h1>
+          <div>{useWordReveal(segment.headline[0], started, 80).map(({ word, wrapStyle, innerStyle }, i) => (
+            <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
+          ))}</div>
+          <div>{useWordReveal(segment.headline[1], started, 80 + segment.headline[0].split(' ').length * 65).map(({ word, wrapStyle, innerStyle }, i) => (
+            <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
+          ))}</div>
+        </div>
         <p style={{
           ...fadeUp(400),
           fontFamily: "'Inter', sans-serif",
@@ -797,20 +765,24 @@ export default function BrandSegment() {
           <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Let&apos;s build something worth looking at.</div>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 15, color: '#999', fontWeight: 300, marginBottom: 32 }}>Senior design roles and select freelance.</div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
-            <button
-              onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: ACCENT, color: 'white', fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, borderRadius: 999, border: 'none', cursor: 'none', transition: 'opacity 0.2s' }}
-              onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-              onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-            >
-              {copied ? 'Copied!' : 'Copy email'}
-            </button>
-            <button
-              onClick={() => router.push('/web')}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: 'transparent', color: '#1a1a1a', fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 500, borderRadius: 999, border: LINE, cursor: 'none' }}
-            >
-              Web &amp; digital →
-            </button>
+            <div style={{ opacity: inViewCta.visible ? 1 : 0, transform: inViewCta.visible ? 'translateY(0)' : 'translateY(16px)', transition: 'opacity 0.5s ease 100ms, transform 0.5s cubic-bezier(0.16,1,0.3,1) 100ms' }}>
+              <button
+                onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: ACCENT, color: 'white', fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 600, borderRadius: 999, border: 'none', cursor: 'none', transition: 'opacity 0.2s' }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+                onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+              >
+                {copied ? 'Copied!' : 'Copy email'}
+              </button>
+            </div>
+            <div style={{ opacity: inViewCta.visible ? 1 : 0, transform: inViewCta.visible ? 'translateY(0)' : 'translateY(16px)', transition: 'opacity 0.5s ease 180ms, transform 0.5s cubic-bezier(0.16,1,0.3,1) 180ms' }}>
+              <button
+                onClick={() => router.push('/web')}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: 'transparent', color: '#1a1a1a', fontFamily: "'Inter', sans-serif", fontSize: 13, fontWeight: 500, borderRadius: 999, border: LINE, cursor: 'none' }}
+              >
+                Web &amp; digital →
+              </button>
+            </div>
           </div>
         </div>
       </div>

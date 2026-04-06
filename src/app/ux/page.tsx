@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
 import AmbientBlob from '@/components/AmbientBlob'
 import ProcessCards from '@/components/ProcessCards'
 import CaseStudyCard from '@/components/CaseStudyCard'
+import { useReveal, useWordReveal } from '@/hooks/useReveal'
 
 const segment = SEGMENTS.ux
 const ACCENT = '#1D4ED8'
@@ -35,24 +36,6 @@ const TESTIMONIAL = {
   initials: 'VC',
 }
 
-function useInView(delay = 0) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [visible, setVisible] = useState(false)
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
-      { threshold: 0.15 }
-    )
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [])
-  const style: React.CSSProperties = {
-    opacity: visible ? 1 : 0,
-    transform: visible ? 'translateY(0)' : 'translateY(16px)',
-    transition: `opacity 0.6s ease ${delay}ms, transform 0.6s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
-  }
-  return { ref, style }
-}
 
 export default function UXPage() {
   const router = useRouter()
@@ -79,11 +62,11 @@ export default function UXPage() {
     transition: `opacity 0.55s ease ${delay}ms, transform 0.55s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
   })
 
-  const inViewProjects = useInView(0)
-  const inViewApproach = useInView(0)
-  const inViewProcess  = useInView(0)
-  const inViewStats    = useInView(0)
-  const inViewContact  = useInView(0)
+  const inViewProjects = useReveal(0)
+  const inViewApproach = useReveal(0)
+  const inViewProcess  = useReveal(0)
+  const inViewStats    = useReveal(0)
+  const inViewContact  = useReveal(0)
 
   const visibleProjects = CASE_STUDIES.filter(
     c => c.primarySegment === 'ux' && !c.hidden
@@ -115,8 +98,13 @@ export default function UXPage() {
               <div style={{ ...fadeUp(0), fontSize: 10, color: '#bbb', letterSpacing: '0.16em', textTransform: 'uppercase' as const, marginBottom: 22, fontFamily: "'Inter', sans-serif" }}>
                 UX & Product
               </div>
-              <div style={{ ...fadeUp(120), fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontFamily: "'Outfit', sans-serif", fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, margin: '0 auto 26px' }}>
-                {segment.headline[0]}<br />{segment.headline[1]}
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 'clamp(36px,10vw,48px)' : 'clamp(44px,5.5vw,68px)', fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.055em', lineHeight: 0.97, margin: '0 auto 26px' }}>
+                <div>{useWordReveal(segment.headline[0], started, 80).map(({ word, wrapStyle, innerStyle }, i) => (
+                  <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
+                ))}</div>
+                <div>{useWordReveal(segment.headline[1], started, 80 + segment.headline[0].split(' ').length * 65).map(({ word, wrapStyle, innerStyle }, i) => (
+                  <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
+                ))}</div>
               </div>
               <div style={{ ...fadeUp(240), fontSize: 17, fontWeight: 400, color: '#1a1a1a', margin: '0 auto 6px', fontFamily: "'Inter', sans-serif" }}>
                 Good UX is invisible.
@@ -278,18 +266,22 @@ export default function UXPage() {
               </div>
               <div style={{ fontSize: 15, color: '#6b6b6b', fontWeight: 300, marginBottom: 32 }}>Senior UX roles and select freelance.</div>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' as const, alignItems: 'center', justifyContent: 'center' }}>
-                <button
-                  onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: ACCENT, color: 'white', fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 600, borderRadius: 999, border: 'none', cursor: 'none' }}
-                >
-                  {copied ? 'Copied!' : 'Copy email'}
-                </button>
-                <button
-                  onClick={() => router.push('/brand')}
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: 'transparent', color: '#1a1a1a', fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 500, borderRadius: 999, border: LINE, cursor: 'none' }}
-                >
-                  Brand identity →
-                </button>
+                <div style={{ opacity: inViewContact.visible ? 1 : 0, transform: inViewContact.visible ? 'translateY(0)' : 'translateY(16px)', transition: 'opacity 0.5s ease 100ms, transform 0.5s cubic-bezier(0.16,1,0.3,1) 100ms' }}>
+                  <button
+                    onClick={() => { navigator.clipboard.writeText('cmoff13@gmail.com'); setCopied(true); setTimeout(() => setCopied(false), 2000) }}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: ACCENT, color: 'white', fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 600, borderRadius: 999, border: 'none', cursor: 'none' }}
+                  >
+                    {copied ? 'Copied!' : 'Copy email'}
+                  </button>
+                </div>
+                <div style={{ opacity: inViewContact.visible ? 1 : 0, transform: inViewContact.visible ? 'translateY(0)' : 'translateY(16px)', transition: 'opacity 0.5s ease 180ms, transform 0.5s cubic-bezier(0.16,1,0.3,1) 180ms' }}>
+                  <button
+                    onClick={() => router.push('/brand')}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', background: 'transparent', color: '#1a1a1a', fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 500, borderRadius: 999, border: LINE, cursor: 'none' }}
+                  >
+                    Brand identity →
+                  </button>
+                </div>
               </div>
             </div>
           </div>

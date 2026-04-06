@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { CASE_STUDIES, SEGMENTS } from '@/lib/segments'
 import CaseStudyCard from '@/components/CaseStudyCard'
+import { useReveal, useWordReveal } from '@/hooks/useReveal'
 
 const BG = '#F0F2F5'
 const LINE = '1px solid rgba(0,0,0,0.07)'
@@ -114,6 +115,7 @@ export default function WorkPage() {
   const [copied, setCopied] = useState(false)
   const [activeFilter, setActiveFilter] = useState<string>('all')
   const [isMobile, setIsMobile] = useState(false)
+  const [started, setStarted] = useState(false)
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)')
@@ -122,6 +124,13 @@ export default function WorkPage() {
     mq.addEventListener('change', handler)
     return () => mq.removeEventListener('change', handler)
   }, [])
+
+  useEffect(() => {
+    const t = setTimeout(() => setStarted(true), 80)
+    return () => clearTimeout(t)
+  }, [])
+
+  const inViewContact = useReveal(0)
 
   const visibleProjects = CASE_STUDIES.filter(p => {
     if (p.hidden) return false
@@ -160,9 +169,14 @@ export default function WorkPage() {
               letterSpacing: '-0.055em',
               lineHeight: 0.97,
               marginBottom: 20,
-              maxWidth: 640,
+              margin: '0 auto 20px',
             }}>
-              Everything,<br />unfiltered.
+              <div>{useWordReveal('Everything,', started, 80).map(({ word, wrapStyle, innerStyle }, i) => (
+                <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
+              ))}</div>
+              <div>{useWordReveal('unfiltered.', started, 80 + 1 * 65).map(({ word, wrapStyle, innerStyle }, i) => (
+                <span key={i} style={wrapStyle}><span style={innerStyle}>{word}</span></span>
+              ))}</div>
             </div>
             <div style={{
               fontFamily: "'Inter', sans-serif",
@@ -309,11 +323,7 @@ export default function WorkPage() {
           </div>
 
           {/* Contact footer */}
-          <div style={{
-            borderTop: LINE,
-            padding: '72px 0 80px',
-            marginTop: '64px',
-          }}>
+          <div ref={inViewContact.ref} style={{ ...inViewContact.style, borderTop: LINE, padding: '72px 0 80px', marginTop: '64px' }}>
             <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
               <div style={{
                 fontFamily: "'Inter', sans-serif",
@@ -340,47 +350,51 @@ export default function WorkPage() {
                 marginBottom: 32,
               }}>Senior design roles and select freelance.</div>
               <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
-                <button
-                  onClick={handleCopy}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 8,
-                    padding: '12px 24px',
-                    background: '#1a1a1a',
-                    color: 'white',
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: 13,
-                    fontWeight: 600,
-                    borderRadius: 999,
-                    border: 'none',
-                    cursor: 'none',
-                    transition: 'opacity 0.2s',
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
-                  onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
-                >
-                  {copied ? 'Copied!' : 'Copy email'}
-                </button>
-                <button
-                  onClick={() => router.push('/')}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 8,
-                    padding: '12px 24px',
-                    background: 'transparent',
-                    color: '#1a1a1a',
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: 13,
-                    fontWeight: 500,
-                    borderRadius: 999,
-                    border: '1px solid rgba(0,0,0,0.12)',
-                    cursor: 'none',
-                  }}
-                >
-                  Back to home →
-                </button>
+                <div style={{ opacity: inViewContact.visible ? 1 : 0, transform: inViewContact.visible ? 'translateY(0)' : 'translateY(16px)', transition: 'opacity 0.5s ease 100ms, transform 0.5s cubic-bezier(0.16,1,0.3,1) 100ms' }}>
+                  <button
+                    onClick={handleCopy}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      padding: '12px 24px',
+                      background: '#1a1a1a',
+                      color: 'white',
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: 13,
+                      fontWeight: 600,
+                      borderRadius: 999,
+                      border: 'none',
+                      cursor: 'none',
+                      transition: 'opacity 0.2s',
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.opacity = '0.85')}
+                    onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+                  >
+                    {copied ? 'Copied!' : 'Copy email'}
+                  </button>
+                </div>
+                <div style={{ opacity: inViewContact.visible ? 1 : 0, transform: inViewContact.visible ? 'translateY(0)' : 'translateY(16px)', transition: 'opacity 0.5s ease 180ms, transform 0.5s cubic-bezier(0.16,1,0.3,1) 180ms' }}>
+                  <button
+                    onClick={() => router.push('/')}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      padding: '12px 24px',
+                      background: 'transparent',
+                      color: '#1a1a1a',
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: 13,
+                      fontWeight: 500,
+                      borderRadius: 999,
+                      border: '1px solid rgba(0,0,0,0.12)',
+                      cursor: 'none',
+                    }}
+                  >
+                    Back to home →
+                  </button>
+                </div>
               </div>
             </div>
           </div>

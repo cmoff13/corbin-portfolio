@@ -43,6 +43,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     primarySegment: 'brand',
     alsoIn: [],
     tags: ['Color palette', 'Brand identity'],
+    hidden: true,
   },
   {
     slug: 'p-mobile-notary',
@@ -51,6 +52,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     primarySegment: 'brand',
     alsoIn: [],
     tags: ['Color palette', 'Type system'],
+    hidden: true,
   },
   {
     slug: 'skygate-growth-strategies',
