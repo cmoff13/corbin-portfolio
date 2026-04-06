@@ -150,7 +150,6 @@ function Lightbox({ src, alt, onClose }: { src: string; alt: string; onClose: ()
         alt={alt}
         onMouseDown={(e) => e.stopPropagation()}
         style={{
-          maxWidth: '88vw',
           maxHeight: '82vh',
           borderRadius: '12px',
           objectFit: 'contain',
@@ -509,15 +508,16 @@ export default function BrandSegment() {
   const inViewQuote   = useReveal(0)
   const inViewCta     = useReveal(0)
 
+  const P = isMobile ? '24px' : 'clamp(24px, 6vw, 120px)'
+
   return (
     <div style={{ background: 'transparent', minHeight: '100vh', position: 'relative', cursor: 'none' }}>
       <AmbientBlob color={ACCENT} />
       <main className="segment-page" style={{ background: 'transparent' }}>
       <div style={{ position: 'relative', zIndex: 1 }}>
-      <div style={{ padding: '0 clamp(24px, 6vw, 120px)' }}>
 
       {/* Hero */}
-      <div style={{ padding: '80px 0 88px' }}>
+      <div style={{ padding: `80px ${P} 88px` }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center' }}>
         <p style={{
@@ -577,11 +577,12 @@ export default function BrandSegment() {
       </div>
 
       {/* Gallery grid */}
+      <div style={{ padding: `0 ${P} 48px` }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <div style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
         gap: 12,
-        marginBottom: '48px',
       }}>
         {brandProjects.map((project, i) => (
           <CaseStudyCard
@@ -600,15 +601,18 @@ export default function BrandSegment() {
           />
         ))}
       </div>
+      </div>
+      </div>
 
       {/* Process section */}
       <div ref={inViewProcess.ref} style={inViewProcess.style}>
       <div style={{
         borderTop: LINE,
-        padding: `${isMobile ? '40px' : '64px'} 0`,
+        padding: `${isMobile ? '40px' : '64px'} ${P}`,
         marginTop: '72px',
         marginBottom: '64px',
       }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, fontWeight: 400, marginBottom: 28 }}>How I work</div>
 
         <ProcessCards
@@ -618,6 +622,7 @@ export default function BrandSegment() {
           activeStep={activeStep}
           onStepChange={setActiveStep}
         />
+        </div>
       </div>
       </div>{/* /inViewProcess */}
 
@@ -626,7 +631,11 @@ export default function BrandSegment() {
       <div style={{
         borderTop: LINE,
         borderBottom: LINE,
+        padding: `0 ${P}`,
         marginTop: '64px',
+      }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
       }}>
@@ -723,13 +732,15 @@ export default function BrandSegment() {
           )
         })}
       </div>
+      </div>
+      </div>
       </div>{/* /inViewStats */}
 
       {/* Pull quote */}
       <div ref={inViewQuote.ref} style={inViewQuote.style}>
       <div style={{
         borderTop: LINE,
-        padding: `${isMobile ? '40px' : '64px'} 0`,
+        padding: `${isMobile ? '40px' : '64px'} ${P}`,
         marginTop: '80px',
         textAlign: 'center',
       }}>
@@ -759,7 +770,7 @@ export default function BrandSegment() {
       </div>{/* /inViewQuote */}
 
       {/* Contact */}
-      <div ref={inViewCta.ref} style={{ ...inViewCta.style, borderTop: LINE, padding: `72px 0` }}>
+      <div ref={inViewCta.ref} style={{ ...inViewCta.style, borderTop: LINE, padding: `72px ${P}` }}>
         <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
           <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Let&apos;s build something worth looking at.</div>
@@ -787,7 +798,6 @@ export default function BrandSegment() {
         </div>
       </div>
 
-      </div>
       </div>
       </main>
     </div>
