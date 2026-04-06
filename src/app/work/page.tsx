@@ -143,7 +143,7 @@ export default function WorkPage() {
 
         {/* Hero */}
         <div style={{ paddingTop: 80, paddingBottom: 56, marginBottom: 32 }}>
-          <div>
+          <div style={{ textAlign: 'center', margin: '0 auto' }}>
             <div style={{
               fontFamily: "'Inter', sans-serif",
               fontSize: 10,
@@ -198,6 +198,7 @@ export default function WorkPage() {
             paddingBottom: 24,
             borderBottom: LINE,
             marginBottom: 24,
+            justifyContent: 'center',
           }}>
             <button
               onClick={() => setActiveFilter('all')}
@@ -313,7 +314,7 @@ export default function WorkPage() {
             padding: '72px 0 80px',
             marginTop: '64px',
           }}>
-            <div style={{ maxWidth: 560 }}>
+            <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
               <div style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: 10,
@@ -338,7 +339,7 @@ export default function WorkPage() {
                 fontWeight: 300,
                 marginBottom: 32,
               }}>Senior design roles and select freelance.</div>
-              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center' }}>
                 <button
                   onClick={handleCopy}
                   style={{
