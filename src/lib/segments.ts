@@ -235,7 +235,14 @@ export interface GalleryImage {
 }
 
 export const COLLECTION_IMAGES: Record<string, GalleryImage[]> = {
-  'northstar': [],
+  'northstar': [
+    { src: '/images/brand/northstar/northstar-01.jpg', alt: 'Northstar 01', label: 'Northstar 01', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-02.jpg', alt: 'Northstar 02', label: 'Northstar 02', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-03.jpg', alt: 'Northstar 03', label: 'Northstar 03', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-04.jpg', alt: 'Northstar 04', label: 'Northstar 04', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-05.jpg', alt: 'Northstar 05', label: 'Northstar 05', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-06.jpg', alt: 'Northstar 06', label: 'Northstar 06', category: 'Brand' },
+  ],
   'five18-designs': [],
   'graphic-design': [],
   'personal': [],
