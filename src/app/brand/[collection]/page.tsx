@@ -75,11 +75,7 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
   const nextCollection = BRAND_COLLECTIONS[(currentIndex + 1) % BRAND_COLLECTIONS.length]
 
   const totalCanvasHeight = images.length > 0
-    ? Math.max(...parallaxImages.map(p => {
-        const estimatedMaxScroll = 80 + images.length * 720 + 1400
-        const maxParallaxOffset = estimatedMaxScroll * p.speed
-        return p.y + maxParallaxOffset + 600
-      }))
+    ? 80 + images.length * 800 + 3000
     : 1600
 
   useEffect(() => {
@@ -106,7 +102,7 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
       if (Math.abs(diff) < 0.1) {
         currentY = targetY
       } else {
-        currentY += diff * 0.08
+        currentY += diff * 0.11
       }
       setRenderScrollY(currentY)
       rafId = requestAnimationFrame(tick)
