@@ -15,35 +15,34 @@ interface ParallaxImage extends GalleryImage {
 }
 
 function buildParallaxLayout(images: GalleryImage[]): ParallaxImage[] {
-  const layouts = [
-    { x: 8,  width: 28, speed: 0.04, zIndex: 1 },
-    { x: 58, width: 26, speed: 0.03, zIndex: 1 },
-    { x: 12, width: 32, speed: 0.05, zIndex: 1 },
-    { x: 52, width: 30, speed: 0.04, zIndex: 1 },
-    { x: 15, width: 50, speed: 0.18, zIndex: 2 },
-    { x: 38, width: 48, speed: 0.20, zIndex: 2 },
-    { x: 6,  width: 52, speed: 0.16, zIndex: 2 },
-    { x: 30, width: 46, speed: 0.19, zIndex: 2 },
-    { x: 5,  width: 68, speed: 0.38, zIndex: 3 },
-    { x: 20, width: 72, speed: 0.42, zIndex: 3 },
-    { x: 8,  width: 65, speed: 0.35, zIndex: 3 },
-    { x: 18, width: 70, speed: 0.40, zIndex: 3 },
+  const sequence = [
+    { x: 55, width: 28, speed: 0.03, zIndex: 1 },
+    { x: 8,  width: 70, speed: 0.42, zIndex: 3 },
+    { x: 48, width: 26, speed: 0.04, zIndex: 1 },
+    { x: 12, width: 52, speed: 0.20, zIndex: 2 },
+    { x: 58, width: 68, speed: 0.38, zIndex: 3 },
+    { x: 6,  width: 30, speed: 0.05, zIndex: 1 },
+    { x: 22, width: 48, speed: 0.18, zIndex: 2 },
+    { x: 4,  width: 72, speed: 0.40, zIndex: 3 },
+    { x: 52, width: 32, speed: 0.04, zIndex: 1 },
+    { x: 16, width: 50, speed: 0.22, zIndex: 2 },
+    { x: 6,  width: 65, speed: 0.36, zIndex: 3 },
+    { x: 50, width: 28, speed: 0.03, zIndex: 1 },
   ]
 
-  const GAP = 1100
+  const GAP = 600
 
   return images.map((img, i) => {
-    const layout = layouts[i % layouts.length]
-    const row = Math.floor(i / 2)
-    const baseY = 160 + row * GAP + (i % 2 === 1 ? 280 : 0)
+    const s = sequence[i % sequence.length]
+    const baseY = 80 + i * GAP
 
     return {
       ...img,
-      x: layout.x,
+      x: s.x,
       y: baseY,
-      width: layout.width,
-      speed: layout.speed,
-      zIndex: layout.zIndex,
+      width: s.width,
+      speed: s.speed,
+      zIndex: s.zIndex,
     }
   })
 }
@@ -66,7 +65,7 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   const imgRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const totalCanvasHeight = images.length > 0
-    ? Math.max(...parallaxImages.map(p => p.y)) + 2000
+    ? 80 + images.length * 600 + 1200
     : 1600
 
   useEffect(() => {
