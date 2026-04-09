@@ -86,7 +86,7 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
           }
         })
       },
-      { threshold: 0.06, rootMargin: '0px 0px -20px 0px' }
+      { threshold: 0.01, rootMargin: '0px 0px -120px 0px' }
     )
 
     requestAnimationFrame(() => {
@@ -135,11 +135,12 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
       <style>{`
         .gallery-item {
           opacity: 0;
-          filter: blur(12px);
-          transform: scale(0.94);
-          transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
-                      filter 0.8s cubic-bezier(0.16,1,0.3,1),
-                      transform 0.8s cubic-bezier(0.16,1,0.3,1);
+          filter: blur(16px);
+          transform: scale(0.93);
+          transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1),
+                      filter 0.9s cubic-bezier(0.16,1,0.3,1),
+                      transform 0.9s cubic-bezier(0.16,1,0.3,1);
+          will-change: opacity, filter, transform;
         }
         .gallery-item.revealed {
           opacity: 1;
