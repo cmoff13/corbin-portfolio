@@ -40,7 +40,7 @@ function buildParallaxLayout(images: GalleryImage[]): ParallaxImage[] {
 
   return images.map((img, i) => {
     const s = sequence[i % sequence.length]
-    const baseY = 80 + i * GAP
+    const baseY = 300 + i * GAP
 
     return {
       ...img,
@@ -62,7 +62,6 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
 
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
-  const [renderScrollY, setRenderScrollY] = useState(0)
 
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
@@ -75,7 +74,7 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
   const nextCollection = BRAND_COLLECTIONS[(currentIndex + 1) % BRAND_COLLECTIONS.length]
 
   const totalCanvasHeight = images.length > 0
-    ? 80 + images.length * 800 + 3000
+    ? 80 + images.length * 800 + 1600
     : 1600
 
   useEffect(() => {
@@ -87,6 +86,8 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
   }, [])
 
   useEffect(() => {
+    if (isMobile) return
+
     let targetY = 0
     let currentY = 0
     let rafId: number
@@ -94,17 +95,23 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
     const onScroll = () => {
       targetY = window.scrollY
     }
-
     window.addEventListener('scroll', onScroll, { passive: true })
 
     function tick() {
       const diff = targetY - currentY
-      if (Math.abs(diff) < 0.1) {
+      if (Math.abs(diff) < 0.05) {
         currentY = targetY
       } else {
-        currentY += diff * 0.11
+        currentY += diff * 0.1
       }
-      setRenderScrollY(currentY)
+
+      parallaxImages.forEach((item, i) => {
+        const el = imgRefs.current[i]
+        if (!el) return
+        const offset = currentY * item.speed * -1
+        el.style.transform = `translateY(${offset}px)`
+      })
+
       rafId = requestAnimationFrame(tick)
     }
 
@@ -114,7 +121,7 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
       window.removeEventListener('scroll', onScroll)
       cancelAnimationFrame(rafId)
     }
-  }, [])
+  }, [isMobile, parallaxImages])
 
   useEffect(() => {
     if (isMobile) return
@@ -199,8 +206,6 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
           textTransform: 'uppercase' as const,
           color: '#bbb',
           marginBottom: 16,
-          opacity: Math.max(0, 1 - renderScrollY / 200),
-          transition: 'opacity 0.1s ease',
         }}>
           Brand identity
         </div>
@@ -212,9 +217,6 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
           letterSpacing: '-0.05em',
           lineHeight: 0.95,
           marginBottom: 20,
-          opacity: Math.max(0, 1 - renderScrollY / 300),
-          transform: `translateY(${Math.min(renderScrollY * 0.15, 40)}px)`,
-          transition: 'opacity 0.1s ease, transform 0.1s ease',
         }}>
           {collection.title}
         </div>
@@ -223,8 +225,6 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
           fontSize: 12,
           color: '#bbb',
           letterSpacing: '0.06em',
-          opacity: Math.max(0, 1 - renderScrollY / 150),
-          transition: 'opacity 0.1s ease',
         }}>
           {images.length} {images.length === 1 ? 'piece' : 'pieces'}
         </div>
@@ -252,7 +252,6 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
       ) : (
         <div style={{ position: 'relative', width: '100%', height: totalCanvasHeight, overflow: 'hidden' }}>
           {parallaxImages.map((item, i) => {
-            const translateY = renderScrollY * item.speed
             return (
               <div
                 key={i}
@@ -269,7 +268,6 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
                   borderRadius: 12,
                   overflow: 'hidden',
                   cursor: 'none',
-                  transform: `translateY(${translateY}px)`,
                   willChange: 'transform',
                   boxShadow: item.zIndex === 3
                     ? '0 20px 60px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.10)'
