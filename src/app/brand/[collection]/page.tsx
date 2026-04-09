@@ -16,21 +16,21 @@ interface ParallaxImage extends GalleryImage {
 
 function buildParallaxLayout(images: GalleryImage[]): ParallaxImage[] {
   const sequence = [
-    { x: 55, width: 28, speed: 0.03, zIndex: 1 },
-    { x: 8,  width: 70, speed: 0.42, zIndex: 3 },
-    { x: 48, width: 26, speed: 0.04, zIndex: 1 },
-    { x: 12, width: 52, speed: 0.20, zIndex: 2 },
-    { x: 58, width: 68, speed: 0.38, zIndex: 3 },
-    { x: 6,  width: 30, speed: 0.05, zIndex: 1 },
-    { x: 22, width: 48, speed: 0.18, zIndex: 2 },
-    { x: 4,  width: 72, speed: 0.40, zIndex: 3 },
-    { x: 52, width: 32, speed: 0.04, zIndex: 1 },
-    { x: 16, width: 50, speed: 0.22, zIndex: 2 },
-    { x: 6,  width: 65, speed: 0.36, zIndex: 3 },
-    { x: 50, width: 28, speed: 0.03, zIndex: 1 },
+    { x: 62, width: 18, speed: 0.02, zIndex: 1 },
+    { x: 3,  width: 78, speed: 0.55, zIndex: 3 },
+    { x: 5,  width: 20, speed: 0.02, zIndex: 1 },
+    { x: 18, width: 46, speed: 0.22, zIndex: 2 },
+    { x: 8,  width: 80, speed: 0.55, zIndex: 3 },
+    { x: 58, width: 16, speed: 0.02, zIndex: 1 },
+    { x: 36, width: 48, speed: 0.20, zIndex: 2 },
+    { x: 4,  width: 76, speed: 0.55, zIndex: 3 },
+    { x: 60, width: 18, speed: 0.02, zIndex: 1 },
+    { x: 10, width: 44, speed: 0.22, zIndex: 2 },
+    { x: 6,  width: 80, speed: 0.55, zIndex: 3 },
+    { x: 55, width: 20, speed: 0.02, zIndex: 1 },
   ]
 
-  const GAP = 600
+  const GAP = 680
 
   return images.map((img, i) => {
     const s = sequence[i % sequence.length]
@@ -65,7 +65,7 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   const imgRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const totalCanvasHeight = images.length > 0
-    ? 80 + images.length * 600 + 1200
+    ? 80 + images.length * 680 + 1400
     : 1600
 
   useEffect(() => {
@@ -238,9 +238,9 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
                   transform: `translateY(${translateY}px)`,
                   willChange: 'transform',
                   boxShadow: item.zIndex === 3
-                    ? '0 32px 80px rgba(0,0,0,0.14), 0 8px 24px rgba(0,0,0,0.08)'
+                    ? '0 40px 100px rgba(0,0,0,0.16), 0 12px 32px rgba(0,0,0,0.10)'
                     : item.zIndex === 2
-                    ? '0 8px 32px rgba(0,0,0,0.06)'
+                    ? '0 12px 40px rgba(0,0,0,0.07)'
                     : 'none',
                 }}
               >
