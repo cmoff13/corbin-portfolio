@@ -1,10 +1,12 @@
 'use client'
 
 import { use, useState, useEffect, useRef, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 import { BRAND_COLLECTIONS, COLLECTION_IMAGES, GalleryImage } from '@/lib/segments'
 
 const BG = '#F0F2F5'
 const ACCENT = '#3B0764'
+const LINE = '1px solid rgba(0,0,0,0.07)'
 
 interface ParallaxImage extends GalleryImage {
   x: number
@@ -53,7 +55,8 @@ function buildParallaxLayout(images: GalleryImage[]): ParallaxImage[] {
 
 export default function BrandCollectionPage({ params }: { params: Promise<{ collection: string }> }) {
   const { collection: collectionSlug } = use(params)
-const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
+  const router = useRouter()
+  const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   const images = COLLECTION_IMAGES[collectionSlug] ?? []
   const parallaxImages = buildParallaxLayout(images)
 
@@ -67,6 +70,9 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   const ringPosRef = useRef({ x: -100, y: -100 })
   const rafRef = useRef<number>(0)
   const imgRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  const currentIndex = BRAND_COLLECTIONS.findIndex(c => c.slug === collectionSlug)
+  const nextCollection = BRAND_COLLECTIONS[(currentIndex + 1) % BRAND_COLLECTIONS.length]
 
   const totalCanvasHeight = images.length > 0
     ? 80 + images.length * 720 + 1400
@@ -289,6 +295,116 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
           })}
         </div>
       )}
+
+      {/* Next collection CTA */}
+      <div style={{
+        padding: `120px ${P}`,
+        textAlign: 'center',
+        borderTop: LINE,
+        background: BG,
+        position: 'relative',
+        zIndex: 10,
+      }}>
+        <div style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 10,
+          fontWeight: 600,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase' as const,
+          color: '#bbb',
+          marginBottom: 20,
+        }}>
+          Next collection
+        </div>
+        <div
+          onClick={() => router.push(`/brand/${nextCollection.slug}`)}
+          style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: 'clamp(36px, 6vw, 72px)',
+            fontWeight: 300,
+            color: '#1a1a1a',
+            letterSpacing: '-0.05em',
+            lineHeight: 0.95,
+            marginBottom: 32,
+            cursor: 'none',
+            display: 'inline-block',
+            transition: 'opacity 0.2s ease',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.opacity = '0.5'
+            showRing()
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.opacity = '1'
+            hideRing()
+          }}
+        >
+          {nextCollection.title}
+        </div>
+        <div style={{ display: 'block' }}>
+          <button
+            onClick={() => router.push(`/brand/${nextCollection.slug}`)}
+            style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: 13,
+              fontWeight: 500,
+              color: ACCENT,
+              background: 'none',
+              border: 'none',
+              cursor: 'none',
+              padding: 0,
+              letterSpacing: '0.02em',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              transition: 'gap 0.25s cubic-bezier(0.16,1,0.3,1)',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.gap = '14px'
+              showRing()
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.gap = '8px'
+              hideRing()
+            }}
+          >
+            View collection →
+          </button>
+        </div>
+      </div>
+
+      {/* Back to brand */}
+      <div style={{
+        padding: `40px ${P}`,
+        textAlign: 'center',
+        borderTop: LINE,
+        background: BG,
+      }}>
+        <button
+          onClick={() => router.push('/brand')}
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: 12,
+            color: '#bbb',
+            background: 'none',
+            border: 'none',
+            cursor: 'none',
+            padding: 0,
+            transition: 'color 0.2s',
+            letterSpacing: '0.04em',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.color = '#1a1a1a'
+            showRing()
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.color = '#bbb'
+            hideRing()
+          }}
+        >
+          ← Back to brand identity
+        </button>
+      </div>
 
       {/* Lightbox */}
       {lightboxIndex !== null && images[lightboxIndex] && (
