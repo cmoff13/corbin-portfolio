@@ -8,56 +8,11 @@ const BG = '#F0F2F5'
 const ACCENT = '#3B0764'
 const LINE = '1px solid rgba(0,0,0,0.07)'
 
-function buildLayout(images: { src: string; alt: string; category: string }[]) {
-  const patterns = [
-    [{ span: 8, height: 320 }, { span: 4, height: 320 }],
-    [{ span: 4, height: 260 }, { span: 8, height: 260 }],
-    [{ span: 6, height: 300 }, { span: 6, height: 300 }],
-    [{ span: 5, height: 280 }, { span: 7, height: 280 }],
-    [{ span: 7, height: 300 }, { span: 5, height: 300 }],
-    [{ span: 12, height: 400 }],
-    [{ span: 4, height: 240 }, { span: 4, height: 240 }, { span: 4, height: 240 }],
-  ]
-
-  const result: { src: string; alt: string; category: string; span: number; height: number }[] = []
-  let i = 0
-  let patternIndex = 0
-
-  while (i < images.length) {
-    const pattern = patterns[patternIndex % patterns.length]
-    const slots = pattern.length
-    const available = images.length - i
-
-    if (available === 1) {
-      result.push({ ...images[i], span: 12, height: 480 })
-      i++
-    } else if (available < slots) {
-      const fallback = available === 2
-        ? [{ span: 6, height: 300 }, { span: 6, height: 300 }]
-        : [{ span: 4, height: 280 }, { span: 4, height: 280 }, { span: 4, height: 280 }]
-      fallback.slice(0, available).forEach((slot, j) => {
-        result.push({ ...images[i + j], ...slot })
-      })
-      i += available
-    } else {
-      pattern.forEach((slot, j) => {
-        result.push({ ...images[i + j], ...slot })
-      })
-      i += slots
-    }
-
-    patternIndex++
-  }
-
-  return result
-}
-
 export default function BrandCollectionPage({ params }: { params: Promise<{ collection: string }> }) {
   const { collection: collectionSlug } = use(params)
   const router = useRouter()
   const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   const images = COLLECTION_IMAGES[collectionSlug] ?? []
-  const layout = buildLayout(images)
 
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
@@ -133,7 +88,7 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
     })
 
     return () => observer.disconnect()
-  }, [layout.length, loaded])
+  }, [images.length, loaded])
 
   useEffect(() => {
     if (lightboxIndex === null) return
@@ -197,20 +152,60 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
           </>
         )}
 
+        {/* Fixed back button */}
+        <button
+          onClick={() => router.push('/brand')}
+          style={{
+            position: 'fixed',
+            top: 20,
+            left: 20,
+            zIndex: 50,
+            fontFamily: "'Inter', sans-serif",
+            fontSize: 12,
+            color: '#bbb',
+            background: BG,
+            border: LINE,
+            borderRadius: 999,
+            padding: '8px 16px',
+            cursor: 'none',
+            transition: 'color 0.2s',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.color = '#1a1a1a')}
+          onMouseLeave={e => (e.currentTarget.style.color = '#bbb')}
+        >
+          ← Back
+        </button>
+
         {/* Header */}
-        <div style={{ position: 'sticky', top: 0, zIndex: 10, background: BG, borderBottom: LINE, padding: `18px ${P}`, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <button
-            onClick={() => router.push('/brand')}
-            style={{ fontFamily: "'Inter', sans-serif", fontSize: 12, color: '#bbb', background: 'none', border: 'none', cursor: 'none', padding: 0, transition: 'color 0.2s' }}
-            onMouseEnter={e => (e.currentTarget.style.color = '#1a1a1a')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#bbb')}
-          >
-            ← Brand identity
-          </button>
-          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 16, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.02em' }}>
+        <div style={{ padding: `80px ${P} 48px`, textAlign: 'center' }}>
+          <div style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: 10,
+            fontWeight: 600,
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase' as const,
+            color: '#bbb',
+            marginBottom: 16,
+          }}>
+            Brand identity
+          </div>
+          <div style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: isMobile ? 36 : 52,
+            fontWeight: 300,
+            color: '#1a1a1a',
+            letterSpacing: '-0.04em',
+            lineHeight: 1,
+            marginBottom: 8,
+          }}>
             {collection.title}
           </div>
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#bbb', letterSpacing: '0.04em' }}>
+          <div style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: 13,
+            color: '#bbb',
+            letterSpacing: '0.04em',
+          }}>
             {images.length} {images.length === 1 ? 'piece' : 'pieces'}
           </div>
         </div>
@@ -238,8 +233,8 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
               ))}
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: 10, alignItems: 'start' }}>
-              {layout.map((item, i) => (
+            <div style={{ columns: '2', columnGap: 10, columnFill: 'balance' }}>
+              {images.map((img, i) => (
                 <div
                   key={i}
                   ref={el => setRevealRef(el, i)}
@@ -248,25 +243,20 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
                   onMouseEnter={showRing}
                   onMouseLeave={hideRing}
                   style={{
-                    gridColumn: `span ${item.span}`,
-                    height: item.height,
+                    breakInside: 'avoid',
+                    marginBottom: 10,
                     borderRadius: 10,
                     overflow: 'hidden',
                     cursor: 'none',
-                    position: 'relative',
-                    transitionDelay: `${(i % 3) * 60}ms`,
+                    transitionDelay: `${(i % 4) * 50}ms`,
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={item.src}
-                    alt={item.alt}
+                    src={img.src}
+                    alt={img.alt}
                     style={{
-                      position: 'absolute',
-                      inset: 0,
                       width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
                       display: 'block',
                       transition: 'transform 0.6s cubic-bezier(0.16,1,0.3,1)',
                     }}
