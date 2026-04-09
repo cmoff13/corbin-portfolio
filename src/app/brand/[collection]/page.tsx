@@ -16,26 +16,26 @@ interface ParallaxImage extends GalleryImage {
 
 function buildParallaxLayout(images: GalleryImage[]): ParallaxImage[] {
   const layouts = [
-    { x: 4,  width: 44, speed: 0.06, zIndex: 1 },
-    { x: 54, width: 36, speed: 0.05, zIndex: 1 },
-    { x: 18, width: 60, speed: 0.18, zIndex: 2 },
-    { x: 2,  width: 38, speed: 0.15, zIndex: 2 },
-    { x: 48, width: 46, speed: 0.16, zIndex: 2 },
-    { x: 8,  width: 82, speed: 0.30, zIndex: 3 },
-    { x: 5,  width: 42, speed: 0.28, zIndex: 3 },
-    { x: 52, width: 40, speed: 0.32, zIndex: 3 },
-    { x: 20, width: 55, speed: 0.20, zIndex: 2 },
-    { x: 3,  width: 36, speed: 0.07, zIndex: 1 },
-    { x: 45, width: 50, speed: 0.26, zIndex: 3 },
-    { x: 10, width: 78, speed: 0.22, zIndex: 2 },
+    { x: 8,  width: 28, speed: 0.04, zIndex: 1 },
+    { x: 58, width: 26, speed: 0.03, zIndex: 1 },
+    { x: 12, width: 32, speed: 0.05, zIndex: 1 },
+    { x: 52, width: 30, speed: 0.04, zIndex: 1 },
+    { x: 15, width: 50, speed: 0.18, zIndex: 2 },
+    { x: 38, width: 48, speed: 0.20, zIndex: 2 },
+    { x: 6,  width: 52, speed: 0.16, zIndex: 2 },
+    { x: 30, width: 46, speed: 0.19, zIndex: 2 },
+    { x: 5,  width: 68, speed: 0.38, zIndex: 3 },
+    { x: 20, width: 72, speed: 0.42, zIndex: 3 },
+    { x: 8,  width: 65, speed: 0.35, zIndex: 3 },
+    { x: 18, width: 70, speed: 0.40, zIndex: 3 },
   ]
 
-  const GAP = 900
+  const GAP = 1100
 
   return images.map((img, i) => {
     const layout = layouts[i % layouts.length]
     const row = Math.floor(i / 2)
-    const baseY = 120 + row * GAP + (i % 2 === 1 ? 200 : 0)
+    const baseY = 160 + row * GAP + (i % 2 === 1 ? 280 : 0)
 
     return {
       ...img,
@@ -66,8 +66,8 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   const imgRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const totalCanvasHeight = images.length > 0
-    ? Math.max(...parallaxImages.map(p => p.y)) + 1200
-    : 1200
+    ? Math.max(...parallaxImages.map(p => p.y)) + 2000
+    : 1600
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)')
@@ -239,10 +239,10 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
                   transform: `translateY(${translateY}px)`,
                   willChange: 'transform',
                   boxShadow: item.zIndex === 3
-                    ? '0 20px 60px rgba(0,0,0,0.10)'
+                    ? '0 32px 80px rgba(0,0,0,0.14), 0 8px 24px rgba(0,0,0,0.08)'
                     : item.zIndex === 2
                     ? '0 8px 32px rgba(0,0,0,0.06)'
-                    : '0 2px 12px rgba(0,0,0,0.04)',
+                    : 'none',
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
