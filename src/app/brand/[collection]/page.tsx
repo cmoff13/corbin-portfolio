@@ -1,12 +1,10 @@
 'use client'
 
 import { use, useState, useEffect, useRef, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
 import { BRAND_COLLECTIONS, COLLECTION_IMAGES, GalleryImage } from '@/lib/segments'
 
 const BG = '#F0F2F5'
 const ACCENT = '#3B0764'
-const LINE = '1px solid rgba(0,0,0,0.07)'
 
 interface ParallaxImage extends GalleryImage {
   x: number
@@ -52,8 +50,7 @@ function buildParallaxLayout(images: GalleryImage[]): ParallaxImage[] {
 
 export default function BrandCollectionPage({ params }: { params: Promise<{ collection: string }> }) {
   const { collection: collectionSlug } = use(params)
-  const router = useRouter()
-  const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
+const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   const images = COLLECTION_IMAGES[collectionSlug] ?? []
   const parallaxImages = buildParallaxLayout(images)
 
@@ -154,44 +151,48 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
         </>
       )}
 
-      {/* Sticky header */}
+      {/* Hero header */}
       <div style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 20,
-        background: BG,
-        borderBottom: LINE,
-        padding: `18px ${P}`,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        padding: '80px 0 64px',
+        textAlign: 'center',
+        position: 'relative',
+        zIndex: 5,
       }}>
-        <button
-          onClick={() => router.push('/brand')}
-          style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: 12,
-            color: '#bbb',
-            background: 'none',
-            border: 'none',
-            cursor: 'none',
-            padding: 0,
-            transition: 'color 0.2s',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.color = '#1a1a1a')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#bbb')}
-        >
-          ← Brand identity
-        </button>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase' as const, color: '#bbb', marginBottom: 4 }}>
-            Brand identity
-          </div>
-          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 18, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.03em' }}>
-            {collection.title}
-          </div>
+        <div style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 10,
+          fontWeight: 600,
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase' as const,
+          color: '#bbb',
+          marginBottom: 16,
+          opacity: Math.max(0, 1 - scrollY / 200),
+          transition: 'opacity 0.1s ease',
+        }}>
+          Brand identity
         </div>
-        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 11, color: '#bbb', letterSpacing: '0.04em' }}>
+        <div style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: 'clamp(48px, 8vw, 96px)',
+          fontWeight: 300,
+          color: '#1a1a1a',
+          letterSpacing: '-0.05em',
+          lineHeight: 0.95,
+          marginBottom: 20,
+          opacity: Math.max(0, 1 - scrollY / 300),
+          transform: `translateY(${Math.min(scrollY * 0.15, 40)}px)`,
+          transition: 'opacity 0.1s ease, transform 0.1s ease',
+        }}>
+          {collection.title}
+        </div>
+        <div style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: 12,
+          color: '#bbb',
+          letterSpacing: '0.06em',
+          opacity: Math.max(0, 1 - scrollY / 150),
+          transition: 'opacity 0.1s ease',
+        }}>
           {images.length} {images.length === 1 ? 'piece' : 'pieces'}
         </div>
       </div>
