@@ -67,9 +67,6 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   const ringPosRef = useRef({ x: -100, y: -100 })
   const rafRef = useRef<number>(0)
   const imgRefs = useRef<(HTMLDivElement | null)[]>([])
-  const renderScrollYRef = useRef(0)
-  const smoothScrollRef = useRef(0)
-  const scrollRafRef = useRef<number>(0)
 
   const totalCanvasHeight = images.length > 0
     ? 80 + images.length * 720 + 1400
@@ -84,25 +81,33 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   }, [])
 
   useEffect(() => {
-    function lerp(a: number, b: number, t: number) { return a + (b - a) * t }
+    let targetY = 0
+    let currentY = 0
+    let rafId: number
 
-    function tick() {
-      renderScrollYRef.current = window.scrollY
-      smoothScrollRef.current = lerp(smoothScrollRef.current, renderScrollYRef.current, 0.06)
-
-      if (Math.abs(smoothScrollRef.current - renderScrollYRef.current) > 0.1) {
-        setRenderScrollY(smoothScrollRef.current)
-      } else {
-        setRenderScrollY(renderScrollYRef.current)
-        smoothScrollRef.current = renderScrollYRef.current
-      }
-
-      scrollRafRef.current = requestAnimationFrame(tick)
+    const onScroll = () => {
+      targetY = window.scrollY
     }
 
-    scrollRafRef.current = requestAnimationFrame(tick)
+    window.addEventListener('scroll', onScroll, { passive: true })
 
-    return () => cancelAnimationFrame(scrollRafRef.current)
+    function tick() {
+      const diff = targetY - currentY
+      if (Math.abs(diff) < 0.1) {
+        currentY = targetY
+      } else {
+        currentY += diff * 0.08
+      }
+      setRenderScrollY(currentY)
+      rafId = requestAnimationFrame(tick)
+    }
+
+    rafId = requestAnimationFrame(tick)
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(rafId)
+    }
   }, [])
 
   useEffect(() => {
