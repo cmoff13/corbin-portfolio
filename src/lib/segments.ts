@@ -227,6 +227,20 @@ export const BRAND_COLLECTIONS: BrandCollection[] = [
   },
 ]
 
+export interface GalleryImage {
+  src: string
+  alt: string
+  label: string
+  category: string
+}
+
+export const COLLECTION_IMAGES: Record<string, GalleryImage[]> = {
+  'northstar': [],
+  'five18-designs': [],
+  'graphic-design': [],
+  'personal': [],
+}
+
 export const GATE_COPY = {
   eyebrow: 'Corbin Moffitt — Designer',
   headline: 'Seven years of design.\nThree ways to see it.',
