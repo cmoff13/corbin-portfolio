@@ -59,7 +59,7 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
 
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [isMobile, setIsMobile] = useState(false)
-  const [scrollY, setScrollY] = useState(0)
+  const [renderScrollY, setRenderScrollY] = useState(0)
 
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
@@ -67,6 +67,9 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   const ringPosRef = useRef({ x: -100, y: -100 })
   const rafRef = useRef<number>(0)
   const imgRefs = useRef<(HTMLDivElement | null)[]>([])
+  const renderScrollYRef = useRef(0)
+  const smoothScrollRef = useRef(0)
+  const scrollRafRef = useRef<number>(0)
 
   const totalCanvasHeight = images.length > 0
     ? 80 + images.length * 720 + 1400
@@ -81,9 +84,25 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   }, [])
 
   useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    function lerp(a: number, b: number, t: number) { return a + (b - a) * t }
+
+    function tick() {
+      renderScrollYRef.current = window.renderScrollY
+      smoothScrollRef.current = lerp(smoothScrollRef.current, renderScrollYRef.current, 0.06)
+
+      if (Math.abs(smoothScrollRef.current - renderScrollYRef.current) > 0.1) {
+        setRenderScrollY(smoothScrollRef.current)
+      } else {
+        setRenderScrollY(renderScrollYRef.current)
+        smoothScrollRef.current = renderScrollYRef.current
+      }
+
+      scrollRafRef.current = requestAnimationFrame(tick)
+    }
+
+    scrollRafRef.current = requestAnimationFrame(tick)
+
+    return () => cancelAnimationFrame(scrollRafRef.current)
   }, [])
 
   useEffect(() => {
@@ -169,7 +188,7 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
           textTransform: 'uppercase' as const,
           color: '#bbb',
           marginBottom: 16,
-          opacity: Math.max(0, 1 - scrollY / 200),
+          opacity: Math.max(0, 1 - renderScrollY / 200),
           transition: 'opacity 0.1s ease',
         }}>
           Brand identity
@@ -182,8 +201,8 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
           letterSpacing: '-0.05em',
           lineHeight: 0.95,
           marginBottom: 20,
-          opacity: Math.max(0, 1 - scrollY / 300),
-          transform: `translateY(${Math.min(scrollY * 0.15, 40)}px)`,
+          opacity: Math.max(0, 1 - renderScrollY / 300),
+          transform: `translateY(${Math.min(renderScrollY * 0.15, 40)}px)`,
           transition: 'opacity 0.1s ease, transform 0.1s ease',
         }}>
           {collection.title}
@@ -193,7 +212,7 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
           fontSize: 12,
           color: '#bbb',
           letterSpacing: '0.06em',
-          opacity: Math.max(0, 1 - scrollY / 150),
+          opacity: Math.max(0, 1 - renderScrollY / 150),
           transition: 'opacity 0.1s ease',
         }}>
           {images.length} {images.length === 1 ? 'piece' : 'pieces'}
@@ -222,7 +241,7 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
       ) : (
         <div style={{ position: 'relative', width: '100%', height: totalCanvasHeight, overflow: 'hidden' }}>
           {parallaxImages.map((item, i) => {
-            const translateY = scrollY * item.speed
+            const translateY = renderScrollY * item.speed
             return (
               <div
                 key={i}
