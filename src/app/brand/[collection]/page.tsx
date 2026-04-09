@@ -70,25 +70,35 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
   }, [isMobile])
 
   useEffect(() => {
+    if (!loaded) return
+
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('revealed')
+            const el = entry.target as HTMLElement
+            const index = revealRefs.current.indexOf(el as HTMLDivElement)
+            const delay = (index % 3) * 80
+            setTimeout(() => {
+              el.classList.add('revealed')
+            }, delay)
             observer.unobserve(entry.target)
           }
         })
       },
-      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.06, rootMargin: '0px 0px -20px 0px' }
     )
 
-    revealRefs.current.forEach((el, i) => {
-      if (!el) return
-      setTimeout(() => observer.observe(el), i * 50)
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        revealRefs.current.forEach(el => {
+          if (el) observer.observe(el)
+        })
+      })
     })
 
     return () => observer.disconnect()
-  }, [images.length, loaded])
+  }, [loaded])
 
   useEffect(() => {
     if (lightboxIndex === null) return
@@ -125,20 +135,22 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
       <style>{`
         .gallery-item {
           opacity: 0;
-          filter: blur(10px);
-          transform: scale(0.95);
-          transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1),
-                      filter 0.75s cubic-bezier(0.16,1,0.3,1),
-                      transform 0.75s cubic-bezier(0.16,1,0.3,1),
-                      box-shadow 0.3s ease;
+          filter: blur(12px);
+          transform: scale(0.94);
+          transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+                      filter 0.8s cubic-bezier(0.16,1,0.3,1),
+                      transform 0.8s cubic-bezier(0.16,1,0.3,1);
         }
         .gallery-item.revealed {
           opacity: 1;
           filter: blur(0px);
           transform: scale(1);
         }
+        .gallery-item img {
+          transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+        }
         .gallery-item:hover img {
-          transform: scale(1.04);
+          transform: scale(1.03);
         }
       `}</style>
 
@@ -248,7 +260,6 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
                     borderRadius: 10,
                     overflow: 'hidden',
                     cursor: 'none',
-                    transitionDelay: `${(i % 4) * 50}ms`,
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
