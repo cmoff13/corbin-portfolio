@@ -183,6 +183,50 @@ export const SEGMENTS: Record<SegmentId, Segment> = {
   },
 }
 
+export interface BrandCollection {
+  slug: string
+  title: string
+  description: string
+  tags: string[]
+  thumbnail: string
+  imageDir: string
+}
+
+export const BRAND_COLLECTIONS: BrandCollection[] = [
+  {
+    slug: 'northstar',
+    title: 'Northstar',
+    description: 'Print and digital art direction across a full creative engagement.',
+    tags: ['Art direction', 'Print', 'Digital'],
+    thumbnail: '/images/brand/northstar/thumbnail.jpg',
+    imageDir: '/images/brand/northstar',
+  },
+  {
+    slug: 'five18-designs',
+    title: 'Five18 Designs',
+    description: 'Logo marks and identity systems from my freelance design studio.',
+    tags: ['Logo marks', 'Brand identity', 'Identity systems'],
+    thumbnail: '/images/brand/five18/thumbnail.jpg',
+    imageDir: '/images/brand/five18',
+  },
+  {
+    slug: 'graphic-design',
+    title: 'Graphic design',
+    description: 'Ads, emails, social creative, and brand application work.',
+    tags: ['Advertising', 'Social', 'Email', 'Brand application'],
+    thumbnail: '/images/brand/graphic-design/thumbnail.jpg',
+    imageDir: '/images/brand/graphic-design',
+  },
+  {
+    slug: 'personal',
+    title: 'Personal work',
+    description: 'Passion projects, vehicle wraps, and designs created for fun.',
+    tags: ['Personal', 'Passion projects', 'Self-initiated'],
+    thumbnail: '/images/brand/personal/thumbnail.jpg',
+    imageDir: '/images/brand/personal',
+  },
+]
+
 export const GATE_COPY = {
   eyebrow: 'Corbin Moffitt — Designer',
   headline: 'Seven years of design.\nThree ways to see it.',

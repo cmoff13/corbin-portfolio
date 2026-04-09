@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { SEGMENTS, CASE_STUDIES } from '@/lib/segments'
+import { SEGMENTS, BRAND_COLLECTIONS } from '@/lib/segments'
 import AmbientBlob from '@/components/AmbientBlob'
 import ProcessCards from '@/components/ProcessCards'
 import CaseStudyCard from '@/components/CaseStudyCard'
@@ -12,16 +12,6 @@ const segment = SEGMENTS.brand
 const ACCENT = '#3B0764'
 const BG = '#F0F2F5'
 const LINE = '1px solid rgba(0,0,0,0.07)'
-
-const BRAND_THUMBNAILS: Record<string, string> = {
-  'swift-powerwashing': '/images/brand/swift-logo.jpg',
-  'mypetdx': '/images/brand/mypetdx-palette.jpg',
-  'p-mobile-notary': '/images/brand/poppy-palette.jpg',
-}
-
-const brandProjects = CASE_STUDIES.filter(
-  c => c.primarySegment === 'brand' && !c.hidden
-)
 
 const ARCHIVE_ITEMS = [
   {
@@ -576,7 +566,7 @@ export default function BrandSegment() {
         </div>
       </div>
 
-      {/* Gallery grid */}
+      {/* Collection cards */}
       <div style={{ padding: `0 ${P} 48px` }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
       <div style={{
@@ -584,20 +574,20 @@ export default function BrandSegment() {
         gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
         gap: 12,
       }}>
-        {brandProjects.map((project, i) => (
+        {BRAND_COLLECTIONS.map((collection, i) => (
           <CaseStudyCard
-            key={project.slug}
-            slug={project.slug}
-            title={project.title}
-            subtitle={project.subtitle}
-            tags={project.tags}
-            thumbnail={BRAND_THUMBNAILS[project.slug]}
+            key={collection.slug}
+            slug={collection.slug}
+            title={collection.title}
+            subtitle={collection.description}
+            tags={collection.tags}
+            thumbnail={collection.thumbnail}
             accentColor={ACCENT}
             segmentLabel=""
             isMobile={isMobile}
             cardIndex={i}
-            ctaLabel="View project"
-            onClick={() => router.push(`/work/${project.slug}/gallery`)}
+            ctaLabel="View collection →"
+            onClick={() => router.push(`/brand/${collection.slug}`)}
           />
         ))}
       </div>
