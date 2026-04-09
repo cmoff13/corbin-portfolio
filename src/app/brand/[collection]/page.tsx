@@ -36,7 +36,7 @@ function buildParallaxLayout(images: GalleryImage[]): ParallaxImage[] {
     { x: 20, width: 28, speed: 0.06, zIndex: 3 },
   ]
 
-  const GAP = 720
+  const GAP = 800
 
   return images.map((img, i) => {
     const s = sequence[i % sequence.length]
@@ -75,7 +75,11 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
   const nextCollection = BRAND_COLLECTIONS[(currentIndex + 1) % BRAND_COLLECTIONS.length]
 
   const totalCanvasHeight = images.length > 0
-    ? 80 + images.length * 720 + 1400
+    ? Math.max(...parallaxImages.map(p => {
+        const estimatedMaxScroll = 80 + images.length * 720 + 1400
+        const maxParallaxOffset = estimatedMaxScroll * p.speed
+        return p.y + maxParallaxOffset + 600
+      }))
     : 1600
 
   useEffect(() => {
