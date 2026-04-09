@@ -16,26 +16,26 @@ interface ParallaxImage extends GalleryImage {
 
 function buildParallaxLayout(images: GalleryImage[]): ParallaxImage[] {
   const layouts = [
-    { x: 4,  width: 44, speed: 0.12, zIndex: 1 },
-    { x: 54, width: 36, speed: 0.14, zIndex: 1 },
-    { x: 18, width: 60, speed: 0.35, zIndex: 2 },
-    { x: 2,  width: 38, speed: 0.30, zIndex: 2 },
-    { x: 48, width: 46, speed: 0.32, zIndex: 2 },
-    { x: 8,  width: 82, speed: 0.60, zIndex: 3 },
-    { x: 5,  width: 42, speed: 0.58, zIndex: 3 },
-    { x: 52, width: 40, speed: 0.62, zIndex: 3 },
-    { x: 20, width: 55, speed: 0.38, zIndex: 2 },
-    { x: 3,  width: 36, speed: 0.15, zIndex: 1 },
-    { x: 45, width: 50, speed: 0.55, zIndex: 3 },
-    { x: 10, width: 78, speed: 0.40, zIndex: 2 },
+    { x: 4,  width: 44, speed: 0.06, zIndex: 1 },
+    { x: 54, width: 36, speed: 0.05, zIndex: 1 },
+    { x: 18, width: 60, speed: 0.18, zIndex: 2 },
+    { x: 2,  width: 38, speed: 0.15, zIndex: 2 },
+    { x: 48, width: 46, speed: 0.16, zIndex: 2 },
+    { x: 8,  width: 82, speed: 0.30, zIndex: 3 },
+    { x: 5,  width: 42, speed: 0.28, zIndex: 3 },
+    { x: 52, width: 40, speed: 0.32, zIndex: 3 },
+    { x: 20, width: 55, speed: 0.20, zIndex: 2 },
+    { x: 3,  width: 36, speed: 0.07, zIndex: 1 },
+    { x: 45, width: 50, speed: 0.26, zIndex: 3 },
+    { x: 10, width: 78, speed: 0.22, zIndex: 2 },
   ]
 
-  const GAP = 480
+  const GAP = 900
 
   return images.map((img, i) => {
     const layout = layouts[i % layouts.length]
     const row = Math.floor(i / 2)
-    const baseY = 120 + row * GAP + (i % 2 === 1 ? 120 : 0)
+    const baseY = 120 + row * GAP + (i % 2 === 1 ? 200 : 0)
 
     return {
       ...img,
@@ -66,7 +66,7 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   const imgRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const totalCanvasHeight = images.length > 0
-    ? Math.max(...parallaxImages.map(p => p.y)) + 800
+    ? Math.max(...parallaxImages.map(p => p.y)) + 1200
     : 1200
 
   useEffect(() => {
