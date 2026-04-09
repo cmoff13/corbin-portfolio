@@ -87,7 +87,7 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
     function lerp(a: number, b: number, t: number) { return a + (b - a) * t }
 
     function tick() {
-      renderScrollYRef.current = window.renderScrollY
+      renderScrollYRef.current = window.scrollY
       smoothScrollRef.current = lerp(smoothScrollRef.current, renderScrollYRef.current, 0.06)
 
       if (Math.abs(smoothScrollRef.current - renderScrollYRef.current) > 0.1) {
