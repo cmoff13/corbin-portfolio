@@ -16,18 +16,18 @@ interface ParallaxImage extends GalleryImage {
 
 function buildParallaxLayout(images: GalleryImage[]): ParallaxImage[] {
   const sequence = [
-    { x: 3,  width: 80, speed: 0.55, zIndex: 1 },
-    { x: 62, width: 18, speed: 0.08, zIndex: 3 },
-    { x: 5,  width: 76, speed: 0.52, zIndex: 1 },
-    { x: 28, width: 46, speed: 0.28, zIndex: 2 },
-    { x: 58, width: 16, speed: 0.06, zIndex: 3 },
-    { x: 8,  width: 78, speed: 0.55, zIndex: 1 },
-    { x: 40, width: 44, speed: 0.26, zIndex: 2 },
-    { x: 60, width: 20, speed: 0.08, zIndex: 3 },
-    { x: 4,  width: 80, speed: 0.52, zIndex: 1 },
-    { x: 14, width: 42, speed: 0.28, zIndex: 2 },
-    { x: 56, width: 18, speed: 0.06, zIndex: 3 },
-    { x: 6,  width: 76, speed: 0.55, zIndex: 1 },
+    { x: 3,  width: 62, speed: 0.55, zIndex: 1 },
+    { x: 58, width: 30, speed: 0.08, zIndex: 3 },
+    { x: 5,  width: 60, speed: 0.52, zIndex: 1 },
+    { x: 24, width: 46, speed: 0.28, zIndex: 2 },
+    { x: 54, width: 28, speed: 0.06, zIndex: 3 },
+    { x: 8,  width: 64, speed: 0.55, zIndex: 1 },
+    { x: 36, width: 44, speed: 0.26, zIndex: 2 },
+    { x: 56, width: 32, speed: 0.08, zIndex: 3 },
+    { x: 4,  width: 60, speed: 0.52, zIndex: 1 },
+    { x: 18, width: 42, speed: 0.28, zIndex: 2 },
+    { x: 52, width: 30, speed: 0.06, zIndex: 3 },
+    { x: 6,  width: 62, speed: 0.55, zIndex: 1 },
   ]
 
   const GAP = 720
