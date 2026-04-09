@@ -16,21 +16,21 @@ interface ParallaxImage extends GalleryImage {
 
 function buildParallaxLayout(images: GalleryImage[]): ParallaxImage[] {
   const sequence = [
-    { x: 62, width: 18, speed: 0.02, zIndex: 1 },
-    { x: 3,  width: 78, speed: 0.55, zIndex: 3 },
-    { x: 5,  width: 20, speed: 0.02, zIndex: 1 },
-    { x: 18, width: 46, speed: 0.22, zIndex: 2 },
-    { x: 8,  width: 80, speed: 0.55, zIndex: 3 },
-    { x: 58, width: 16, speed: 0.02, zIndex: 1 },
-    { x: 36, width: 48, speed: 0.20, zIndex: 2 },
-    { x: 4,  width: 76, speed: 0.55, zIndex: 3 },
-    { x: 60, width: 18, speed: 0.02, zIndex: 1 },
-    { x: 10, width: 44, speed: 0.22, zIndex: 2 },
-    { x: 6,  width: 80, speed: 0.55, zIndex: 3 },
-    { x: 55, width: 20, speed: 0.02, zIndex: 1 },
+    { x: 3,  width: 80, speed: 0.55, zIndex: 1 },
+    { x: 62, width: 18, speed: 0.08, zIndex: 3 },
+    { x: 5,  width: 76, speed: 0.52, zIndex: 1 },
+    { x: 28, width: 46, speed: 0.28, zIndex: 2 },
+    { x: 58, width: 16, speed: 0.06, zIndex: 3 },
+    { x: 8,  width: 78, speed: 0.55, zIndex: 1 },
+    { x: 40, width: 44, speed: 0.26, zIndex: 2 },
+    { x: 60, width: 20, speed: 0.08, zIndex: 3 },
+    { x: 4,  width: 80, speed: 0.52, zIndex: 1 },
+    { x: 14, width: 42, speed: 0.28, zIndex: 2 },
+    { x: 56, width: 18, speed: 0.06, zIndex: 3 },
+    { x: 6,  width: 76, speed: 0.55, zIndex: 1 },
   ]
 
-  const GAP = 680
+  const GAP = 720
 
   return images.map((img, i) => {
     const s = sequence[i % sequence.length]
@@ -65,7 +65,7 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
   const imgRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const totalCanvasHeight = images.length > 0
-    ? 80 + images.length * 680 + 1400
+    ? 80 + images.length * 720 + 1400
     : 1600
 
   useEffect(() => {
@@ -238,10 +238,10 @@ const collection = BRAND_COLLECTIONS.find(c => c.slug === collectionSlug)
                   transform: `translateY(${translateY}px)`,
                   willChange: 'transform',
                   boxShadow: item.zIndex === 3
-                    ? '0 40px 100px rgba(0,0,0,0.16), 0 12px 32px rgba(0,0,0,0.10)'
+                    ? '0 20px 60px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.10)'
                     : item.zIndex === 2
-                    ? '0 12px 40px rgba(0,0,0,0.07)'
-                    : 'none',
+                    ? '0 8px 28px rgba(0,0,0,0.07)'
+                    : '0 2px 8px rgba(0,0,0,0.03)',
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
