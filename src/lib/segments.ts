@@ -226,12 +226,12 @@ export const BRAND_COLLECTIONS: BrandCollection[] = [
     imageDir: '/images/brand/email-design',
   },
   {
-    slug: 'landing-pages',
-    title: 'Landing pages',
-    description: 'Brand-quality landing page design built for conversion.',
-    tags: ['Landing pages', 'Web design', 'Brand application'],
-    thumbnail: '/images/brand/landing-pages/thumbnail.jpg',
-    imageDir: '/images/brand/landing-pages',
+    slug: 'digital-craft',
+    title: 'Digital craft',
+    description: 'Websites and landing pages. Craft over conversion.',
+    tags: ['Web design', 'Landing pages', 'Brand craft'],
+    thumbnail: '/images/brand/digital-craft/thumbnail.jpg',
+    imageDir: '/images/brand/digital-craft',
   },
   {
     slug: 'personal',
@@ -273,7 +273,7 @@ export const COLLECTION_IMAGES: Record<string, GalleryImage[]> = {
   ],
   'social-ads': [],
   'email-design': [],
-  'landing-pages': [],
+  'digital-craft': [],
   'personal': [],
 }
 
