@@ -74,7 +74,7 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
   const nextCollection = BRAND_COLLECTIONS[(currentIndex + 1) % BRAND_COLLECTIONS.length]
 
   const totalCanvasHeight = images.length > 0
-    ? 80 + images.length * 800 + 1600
+    ? 80 + images.length * 400 + 1600
     : 1600
 
   useEffect(() => {
