@@ -222,7 +222,7 @@ export const BRAND_COLLECTIONS: BrandCollection[] = [
     title: 'Email design',
     description: 'Email campaigns, drip sequences, and promotional design.',
     tags: ['Email marketing', 'Campaigns', 'Drip sequences'],
-    thumbnail: '/images/brand/email-design/thumbnail.jpg',
+    thumbnail: '/images/brand/email-design/thumbnail.png',
     imageDir: '/images/brand/email-design',
   },
   {
@@ -272,7 +272,18 @@ export const COLLECTION_IMAGES: Record<string, GalleryImage[]> = {
     { src: '/images/brand/five18/five18-08.png', alt: 'Five18 08', label: 'Five18 08', category: 'Brand' },
   ],
   'social-ads': [],
-  'email-design': [],
+  'email-design': [
+    { src: '/images/brand/email-design/email-design-01.png', alt: 'Email Design 01', label: 'Email Design 01', category: 'Brand' },
+    { src: '/images/brand/email-design/email-design-02.png', alt: 'Email Design 02', label: 'Email Design 02', category: 'Brand' },
+    { src: '/images/brand/email-design/email-design-03.png', alt: 'Email Design 03', label: 'Email Design 03', category: 'Brand' },
+    { src: '/images/brand/email-design/email-design-04.png', alt: 'Email Design 04', label: 'Email Design 04', category: 'Brand' },
+    { src: '/images/brand/email-design/email-design-05.png', alt: 'Email Design 05', label: 'Email Design 05', category: 'Brand' },
+    { src: '/images/brand/email-design/email-design-06.png', alt: 'Email Design 06', label: 'Email Design 06', category: 'Brand' },
+    { src: '/images/brand/email-design/email-design-07.png', alt: 'Email Design 07', label: 'Email Design 07', category: 'Brand' },
+    { src: '/images/brand/email-design/email-design-08.png', alt: 'Email Design 08', label: 'Email Design 08', category: 'Brand' },
+    { src: '/images/brand/email-design/email-design-09.png', alt: 'Email Design 09', label: 'Email Design 09', category: 'Brand' },
+    { src: '/images/brand/email-design/email-design-10.png', alt: 'Email Design 10', label: 'Email Design 10', category: 'Brand' },
+  ],
   'digital-craft': [],
   'personal': [],
 }
