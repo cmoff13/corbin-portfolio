@@ -83,7 +83,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: 'portfolio-nav-system',
     title: 'This Portfolio',
-    subtitle: 'Book navigation system — a self-initiated UX case study',
+    subtitle: 'Solving problems one vibe-code session at a time',
     primarySegment: 'ux',
     alsoIn: [],
     tags: ['UX', 'IA', 'Navigation design', 'Self-initiated'],
