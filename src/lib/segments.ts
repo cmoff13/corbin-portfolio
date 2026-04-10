@@ -204,7 +204,7 @@ export const BRAND_COLLECTIONS: BrandCollection[] = [
   {
     slug: 'five18-designs',
     title: 'Five18 Designs',
-    description: 'Logo marks and identity systems from my freelance design studio.',
+    description: 'Logo marks and identity systems at a design and print company.',
     tags: ['Logo marks', 'Brand identity', 'Identity systems'],
     thumbnail: '/images/brand/five18/thumbnail.png',
     imageDir: '/images/brand/five18',
