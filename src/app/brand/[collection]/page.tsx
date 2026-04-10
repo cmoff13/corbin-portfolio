@@ -74,7 +74,7 @@ export default function BrandCollectionPage({ params }: { params: Promise<{ coll
   const nextCollection = BRAND_COLLECTIONS[(currentIndex + 1) % BRAND_COLLECTIONS.length]
 
   const totalCanvasHeight = images.length > 0
-    ? Math.max(...parallaxImages.map(p => p.y)) + 1200
+    ? Math.max(...parallaxImages.map(p => p.y)) + 400
     : 1600
 
   useEffect(() => {
