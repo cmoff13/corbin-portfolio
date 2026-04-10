@@ -194,6 +194,22 @@ export interface BrandCollection {
 
 export const BRAND_COLLECTIONS: BrandCollection[] = [
   {
+    slug: 'email-design',
+    title: 'Email design',
+    description: 'Email campaigns, drip sequences, and promotional design.',
+    tags: ['Email marketing', 'Campaigns', 'Drip sequences'],
+    thumbnail: '/images/brand/email-design/thumbnail.png',
+    imageDir: '/images/brand/email-design',
+  },
+  {
+    slug: 'social-ads',
+    title: 'Social ads',
+    description: 'Paid social creative across Meta and Pinterest for DTC and ecom brands.',
+    tags: ['Meta ads', 'Pinterest', 'Paid social', 'Art direction'],
+    thumbnail: '/images/brand/social-ads/thumbnail.jpg',
+    imageDir: '/images/brand/social-ads',
+  },
+  {
     slug: 'northstar',
     title: 'Northstar',
     description: 'Print and digital art direction across a full creative engagement.',
@@ -208,22 +224,6 @@ export const BRAND_COLLECTIONS: BrandCollection[] = [
     tags: ['Logo marks', 'Brand identity', 'Identity systems'],
     thumbnail: '/images/brand/five18/thumbnail.png',
     imageDir: '/images/brand/five18',
-  },
-  {
-    slug: 'social-ads',
-    title: 'Social ads',
-    description: 'Paid social creative across Meta and Pinterest for DTC and ecom brands.',
-    tags: ['Meta ads', 'Pinterest', 'Paid social', 'Art direction'],
-    thumbnail: '/images/brand/social-ads/thumbnail.jpg',
-    imageDir: '/images/brand/social-ads',
-  },
-  {
-    slug: 'email-design',
-    title: 'Email design',
-    description: 'Email campaigns, drip sequences, and promotional design.',
-    tags: ['Email marketing', 'Campaigns', 'Drip sequences'],
-    thumbnail: '/images/brand/email-design/thumbnail.png',
-    imageDir: '/images/brand/email-design',
   },
   {
     slug: 'digital-craft',
