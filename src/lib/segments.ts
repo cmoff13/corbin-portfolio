@@ -206,7 +206,7 @@ export const BRAND_COLLECTIONS: BrandCollection[] = [
     title: 'Five18 Designs',
     description: 'Logo marks and identity systems from my freelance design studio.',
     tags: ['Logo marks', 'Brand identity', 'Identity systems'],
-    thumbnail: '/images/brand/five18/thumbnail.jpg',
+    thumbnail: '/images/brand/five18/thumbnail.png',
     imageDir: '/images/brand/five18',
   },
   {
@@ -245,7 +245,16 @@ export const COLLECTION_IMAGES: Record<string, GalleryImage[]> = {
     { src: '/images/brand/northstar/northstar-07.png', alt: 'Northstar 07', label: 'Northstar 07', category: 'Brand' },
     { src: '/images/brand/northstar/northstar-08.png', alt: 'Northstar 08', label: 'Northstar 08', category: 'Brand' },
   ],
-  'five18-designs': [],
+  'five18-designs': [
+    { src: '/images/brand/five18/five18-01.png', alt: 'Five18 01', label: 'Five18 01', category: 'Brand' },
+    { src: '/images/brand/five18/five18-02.png', alt: 'Five18 02', label: 'Five18 02', category: 'Brand' },
+    { src: '/images/brand/five18/five18-03.png', alt: 'Five18 03', label: 'Five18 03', category: 'Brand' },
+    { src: '/images/brand/five18/five18-04.png', alt: 'Five18 04', label: 'Five18 04', category: 'Brand' },
+    { src: '/images/brand/five18/five18-05.png', alt: 'Five18 05', label: 'Five18 05', category: 'Brand' },
+    { src: '/images/brand/five18/five18-06.png', alt: 'Five18 06', label: 'Five18 06', category: 'Brand' },
+    { src: '/images/brand/five18/five18-07.png', alt: 'Five18 07', label: 'Five18 07', category: 'Brand' },
+    { src: '/images/brand/five18/five18-08.png', alt: 'Five18 08', label: 'Five18 08', category: 'Brand' },
+  ],
   'graphic-design': [],
   'personal': [],
 }
