@@ -198,7 +198,7 @@ export const BRAND_COLLECTIONS: BrandCollection[] = [
     title: 'Northstar',
     description: 'Print and digital art direction across a full creative engagement.',
     tags: ['Art direction', 'Print', 'Digital'],
-    thumbnail: '/images/brand/northstar/thumbnail.jpg',
+    thumbnail: '/images/brand/northstar/thumbnail.png',
     imageDir: '/images/brand/northstar',
   },
   {
@@ -236,12 +236,14 @@ export interface GalleryImage {
 
 export const COLLECTION_IMAGES: Record<string, GalleryImage[]> = {
   'northstar': [
-    { src: '/images/brand/northstar/northstar-01.jpg', alt: 'Northstar 01', label: 'Northstar 01', category: 'Brand' },
-    { src: '/images/brand/northstar/northstar-02.jpg', alt: 'Northstar 02', label: 'Northstar 02', category: 'Brand' },
-    { src: '/images/brand/northstar/northstar-03.jpg', alt: 'Northstar 03', label: 'Northstar 03', category: 'Brand' },
-    { src: '/images/brand/northstar/northstar-04.jpg', alt: 'Northstar 04', label: 'Northstar 04', category: 'Brand' },
-    { src: '/images/brand/northstar/northstar-05.jpg', alt: 'Northstar 05', label: 'Northstar 05', category: 'Brand' },
-    { src: '/images/brand/northstar/northstar-06.jpg', alt: 'Northstar 06', label: 'Northstar 06', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-01.png', alt: 'Northstar 01', label: 'Northstar 01', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-02.png', alt: 'Northstar 02', label: 'Northstar 02', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-03.png', alt: 'Northstar 03', label: 'Northstar 03', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-04.png', alt: 'Northstar 04', label: 'Northstar 04', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-05.png', alt: 'Northstar 05', label: 'Northstar 05', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-06.png', alt: 'Northstar 06', label: 'Northstar 06', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-07.png', alt: 'Northstar 07', label: 'Northstar 07', category: 'Brand' },
+    { src: '/images/brand/northstar/northstar-08.png', alt: 'Northstar 08', label: 'Northstar 08', category: 'Brand' },
   ],
   'five18-designs': [],
   'graphic-design': [],
