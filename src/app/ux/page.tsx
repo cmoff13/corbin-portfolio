@@ -69,7 +69,7 @@ export default function UXPage() {
   const inViewContact  = useReveal(0)
 
   const visibleProjects = CASE_STUDIES.filter(
-    c => c.primarySegment === 'ux' && !c.hidden
+    c => c.primarySegment === 'ux' && !c.hidden && THUMBNAILS[c.slug]
   )
 
   const P = isMobile ? '24px' : 'clamp(24px, 6vw, 120px)'

@@ -206,7 +206,7 @@ export const BRAND_COLLECTIONS: BrandCollection[] = [
     title: 'Social ads',
     description: 'Paid social creative across Meta and Pinterest for DTC and ecom brands.',
     tags: ['Meta ads', 'Pinterest', 'Paid social', 'Art direction'],
-    thumbnail: '/images/brand/social-ads/thumbnail.jpg',
+    thumbnail: '/images/brand/social-ads/thumbnail.png',
     imageDir: '/images/brand/social-ads',
   },
   {
@@ -271,7 +271,18 @@ export const COLLECTION_IMAGES: Record<string, GalleryImage[]> = {
     { src: '/images/brand/five18/five18-07.png', alt: 'Five18 07', label: 'Five18 07', category: 'Brand' },
     { src: '/images/brand/five18/five18-08.png', alt: 'Five18 08', label: 'Five18 08', category: 'Brand' },
   ],
-  'social-ads': [],
+  'social-ads': [
+    { src: '/images/brand/social-ads/social-ads-01.png', alt: 'Social Ads 01', label: 'Social Ads 01', category: 'Brand' },
+    { src: '/images/brand/social-ads/social-ads-02.png', alt: 'Social Ads 02', label: 'Social Ads 02', category: 'Brand' },
+    { src: '/images/brand/social-ads/social-ads-03.png', alt: 'Social Ads 03', label: 'Social Ads 03', category: 'Brand' },
+    { src: '/images/brand/social-ads/social-ads-04.png', alt: 'Social Ads 04', label: 'Social Ads 04', category: 'Brand' },
+    { src: '/images/brand/social-ads/social-ads-05.png', alt: 'Social Ads 05', label: 'Social Ads 05', category: 'Brand' },
+    { src: '/images/brand/social-ads/social-ads-06.png', alt: 'Social Ads 06', label: 'Social Ads 06', category: 'Brand' },
+    { src: '/images/brand/social-ads/social-ads-07.png', alt: 'Social Ads 07', label: 'Social Ads 07', category: 'Brand' },
+    { src: '/images/brand/social-ads/social-ads-08.png', alt: 'Social Ads 08', label: 'Social Ads 08', category: 'Brand' },
+    { src: '/images/brand/social-ads/social-ads-09.png', alt: 'Social Ads 09', label: 'Social Ads 09', category: 'Brand' },
+    { src: '/images/brand/social-ads/social-ads-10.png', alt: 'Social Ads 10', label: 'Social Ads 10', category: 'Brand' },
+  ],
   'email-design': [
     { src: '/images/brand/email-design/email-design-01.png', alt: 'Email Design 01', label: 'Email Design 01', category: 'Brand' },
     { src: '/images/brand/email-design/email-design-02.png', alt: 'Email Design 02', label: 'Email Design 02', category: 'Brand' },

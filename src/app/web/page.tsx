@@ -83,7 +83,7 @@ export default function WebPage() {
 
   const visibleProjects = WEB_PROJECTS.filter(p => {
     const cs = CASE_STUDIES.find(c => c.slug === p.slug)
-    return cs && !cs.hidden
+    return cs && !cs.hidden && WEB_THUMBNAILS[p.slug]
   })
 
   const P = isMobile ? '24px' : 'clamp(24px, 6vw, 120px)'

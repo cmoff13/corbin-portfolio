@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { SEGMENTS, BRAND_COLLECTIONS } from '@/lib/segments'
+import { SEGMENTS, BRAND_COLLECTIONS, COLLECTION_IMAGES } from '@/lib/segments'
 import AmbientBlob from '@/components/AmbientBlob'
 import ProcessCards from '@/components/ProcessCards'
 import CaseStudyCard from '@/components/CaseStudyCard'
@@ -574,7 +574,7 @@ export default function BrandSegment() {
         gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
         gap: 12,
       }}>
-        {BRAND_COLLECTIONS.map((collection, i) => (
+        {BRAND_COLLECTIONS.filter(c => (COLLECTION_IMAGES[c.slug]?.length ?? 0) > 0).map((collection, i) => (
           <CaseStudyCard
             key={collection.slug}
             slug={collection.slug}

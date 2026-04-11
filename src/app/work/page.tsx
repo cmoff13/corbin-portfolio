@@ -140,6 +140,7 @@ export default function WorkPage() {
 
   const visibleProjects = CASE_STUDIES.filter(p => {
     if (p.hidden) return false
+    if (!THUMBNAILS[p.slug]) return false
     if (activeFilter === 'all') return true
     return p.primarySegment === activeFilter
   })
