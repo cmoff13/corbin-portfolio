@@ -593,7 +593,7 @@ export default function BrandSegment() {
             segmentLabel=""
             isMobile={isMobile}
             cardIndex={i}
-            ctaLabel="View collection →"
+            ctaLabel="View collection"
             onClick={() => router.push(`/brand/${collection.slug}`)}
           />
         ))}
