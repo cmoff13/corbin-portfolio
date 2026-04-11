@@ -500,10 +500,14 @@ export default function BrandSegment() {
 
   const P = isMobile ? '24px' : 'clamp(24px, 6vw, 120px)'
 
+  const sectionLabel = (text: string) => (
+    <div style={{ fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, fontWeight: 400, marginBottom: 28 }}>{text}</div>
+  )
+
   return (
     <div style={{ background: 'transparent', minHeight: '100vh', position: 'relative', cursor: 'none' }}>
       <AmbientBlob color={ACCENT} />
-      <main style={{ background: 'transparent' }}>
+      <div style={{ background: 'transparent' }}>
       <div style={{ position: 'relative', zIndex: 1 }}>
 
       {/* Hero */}
@@ -570,6 +574,8 @@ export default function BrandSegment() {
 
       {/* Collection cards */}
       <div style={{ padding: `52px ${P}` }}>
+      <div>
+      {sectionLabel('Selected work')}
       <div style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
@@ -593,14 +599,15 @@ export default function BrandSegment() {
         ))}
       </div>
       </div>
+      </div>
 
       <div style={{ borderTop: LINE }} />
 
       {/* Process section */}
       <div ref={inViewProcess.ref} style={inViewProcess.style}>
       <div style={{ padding: `52px ${P}` }}>
-        <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, fontWeight: 400, marginBottom: 28 }}>How I work</div>
-
+      <div>
+        {sectionLabel('How I work')}
         <ProcessCards
           steps={PROCESS_STEPS.map(s => ({ number: s.number, title: s.title, description: s.description }))}
           accent={ACCENT}
@@ -609,6 +616,7 @@ export default function BrandSegment() {
           onStepChange={setActiveStep}
         />
       </div>
+      </div>
       </div>{/* /inViewProcess */}
 
       <div style={{ borderTop: LINE }} />
@@ -616,6 +624,7 @@ export default function BrandSegment() {
       {/* Stats row */}
       <div ref={inViewStats.ref} style={inViewStats.style}>
       <div style={{ padding: `52px ${P}` }}>
+      <div>
       <div style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
@@ -649,7 +658,7 @@ export default function BrandSegment() {
             >
               <div style={{
                 fontFamily: "'Outfit', sans-serif",
-                fontSize: '52px',
+                fontSize: isMobile ? 36 : 52,
                 fontWeight: 300,
                 color: '#1a1a1a',
                 letterSpacing: '-0.05em',
@@ -716,6 +725,7 @@ export default function BrandSegment() {
         })}
       </div>
       </div>
+      </div>
       </div>{/* /inViewStats */}
 
       <div style={{ borderTop: LINE }} />
@@ -753,7 +763,9 @@ export default function BrandSegment() {
 
       {/* Contact */}
       <div style={{ borderTop: LINE }} />
-      <div ref={inViewCta.ref} style={{ ...inViewCta.style, padding: `72px ${P}` }}>
+      <div ref={inViewCta.ref} style={inViewCta.style}>
+      <div style={{ padding: `72px ${P}` }}>
+      <div>
         <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
           <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Let&apos;s build something worth looking at.</div>
@@ -780,9 +792,11 @@ export default function BrandSegment() {
           </div>
         </div>
       </div>
+      </div>
+      </div>
 
       </div>
-      </main>
+      </div>
     </div>
   )
 }
