@@ -566,9 +566,10 @@ export default function BrandSegment() {
         </div>
       </div>
 
+      <div style={{ borderTop: LINE }} />
+
       {/* Collection cards */}
-      <div style={{ padding: `0 ${P} 48px` }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{ padding: `52px ${P}` }}>
       <div style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
@@ -592,17 +593,12 @@ export default function BrandSegment() {
         ))}
       </div>
       </div>
-      </div>
+
+      <div style={{ borderTop: LINE }} />
 
       {/* Process section */}
       <div ref={inViewProcess.ref} style={inViewProcess.style}>
-      <div style={{
-        borderTop: LINE,
-        padding: `${isMobile ? '40px' : '64px'} ${P}`,
-        marginTop: '72px',
-        marginBottom: '64px',
-      }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{ padding: `52px ${P}` }}>
         <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, fontWeight: 400, marginBottom: 28 }}>How I work</div>
 
         <ProcessCards
@@ -612,22 +608,19 @@ export default function BrandSegment() {
           activeStep={activeStep}
           onStepChange={setActiveStep}
         />
-        </div>
       </div>
       </div>{/* /inViewProcess */}
 
+      <div style={{ borderTop: LINE }} />
+
       {/* Stats row */}
       <div ref={inViewStats.ref} style={inViewStats.style}>
-      <div style={{
-        borderTop: LINE,
-        borderBottom: LINE,
-        padding: `0 ${P}`,
-        marginTop: '64px',
-      }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+      <div style={{ padding: `52px ${P}` }}>
       <div style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+        borderTop: LINE,
+        borderBottom: LINE,
       }}>
         {[
           { number: '7',   label: 'Years of practice',  detail: 'Working in brand, web, and product since 2017.' },
@@ -723,15 +716,14 @@ export default function BrandSegment() {
         })}
       </div>
       </div>
-      </div>
       </div>{/* /inViewStats */}
+
+      <div style={{ borderTop: LINE }} />
 
       {/* Pull quote */}
       <div ref={inViewQuote.ref} style={inViewQuote.style}>
       <div style={{
-        borderTop: LINE,
-        padding: `${isMobile ? '40px' : '64px'} ${P}`,
-        marginTop: '80px',
+        padding: `52px ${P}`,
         textAlign: 'center',
       }}>
         <p style={{
@@ -760,7 +752,8 @@ export default function BrandSegment() {
       </div>{/* /inViewQuote */}
 
       {/* Contact */}
-      <div ref={inViewCta.ref} style={{ ...inViewCta.style, borderTop: LINE, padding: `72px ${P}` }}>
+      <div style={{ borderTop: LINE }} />
+      <div ref={inViewCta.ref} style={{ ...inViewCta.style, padding: `72px ${P}` }}>
         <div style={{ maxWidth: 560, margin: '0 auto', textAlign: 'center' }}>
           <div style={{ fontFamily: "'Inter', sans-serif", fontSize: 10, color: '#bbb', letterSpacing: '0.14em', textTransform: 'uppercase' as const, marginBottom: 20 }}>Get in touch</div>
           <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: isMobile ? 28 : 40, fontWeight: 300, color: '#1a1a1a', letterSpacing: '-0.04em', lineHeight: 1.05, marginBottom: 12 }}>Let&apos;s build something worth looking at.</div>
