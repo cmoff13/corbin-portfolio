@@ -503,7 +503,7 @@ export default function BrandSegment() {
   return (
     <div style={{ background: 'transparent', minHeight: '100vh', position: 'relative', cursor: 'none' }}>
       <AmbientBlob color={ACCENT} />
-      <main className="segment-page" style={{ background: 'transparent' }}>
+      <main style={{ background: 'transparent' }}>
       <div style={{ position: 'relative', zIndex: 1 }}>
 
       {/* Hero */}
