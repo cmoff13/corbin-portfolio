@@ -482,6 +482,28 @@ export default function SegmentGate() {
           maxWidth: '900px',
         }}
       >
+        <div style={{
+          ...fadeUp(0),
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '6px',
+          background: 'rgba(0,0,0,0.06)',
+          borderRadius: '999px',
+          padding: '4px 12px',
+          marginBottom: '20px',
+        }}>
+          <span style={{ fontSize: '13px' }}>⚡</span>
+          <span style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '11px',
+            fontWeight: 500,
+            color: 'rgba(0,0,0,0.45)',
+            letterSpacing: '0.01em',
+          }}>
+            vibe-coded — fueled by pipeline punch
+          </span>
+        </div>
+
         <div style={{ width: '100%', textAlign: 'center', marginBottom: '20px' }}>
           <div style={{
             fontFamily: "'Outfit', sans-serif",
