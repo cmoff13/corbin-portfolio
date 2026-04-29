@@ -500,7 +500,7 @@ export default function SegmentGate() {
             color: 'rgba(0,0,0,0.45)',
             letterSpacing: '0.01em',
           }}>
-            vibe-coded — fueled by pipeline punch
+            vibe-coded with Claude and Cursor
           </span>
         </div>
 
