@@ -629,10 +629,8 @@ export default function SegmentGate() {
               <line x1="13.1" y1="4.9" x2="4.9" y2="13.1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
             </svg>
             {/* Cursor logo */}
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-label="Cursor">
-              <rect width="18" height="18" rx="4" fill="#111"/>
-              <path d="M5 4L5 13L7.8 10.2L9.8 14L11.2 13.2L9.2 9.5L13 9.5L5 4Z" fill="white" fillOpacity="0.9"/>
-            </svg>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/cursor-logo.png" alt="Cursor" width="18" height="18" style={{ borderRadius: '4px', display: 'block' }} />
             {/* Vercel logo */}
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-label="Vercel">
               <rect width="18" height="18" rx="4" fill="#111"/>
