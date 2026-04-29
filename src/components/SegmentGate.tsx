@@ -584,47 +584,62 @@ export default function SegmentGate() {
           </button>
         </div>
 
+      </div>
+
+      {/* Bottom badge — fixed to viewport bottom */}
+      <div style={{
+        ...fadeUp(1160),
+        position: 'fixed',
+        bottom: '20px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 10,
+        display: 'flex',
+        justifyContent: 'center',
+      }}>
         <div style={{
-          ...fadeUp(1160),
-          marginTop: '32px',
-          display: 'flex',
-          justifyContent: 'center',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '8px',
+          background: 'rgba(255,255,255,0.72)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          border: '1px solid rgba(0,0,0,0.07)',
+          borderRadius: '999px',
+          padding: '5px 8px 5px 12px',
+          boxShadow: '0 1px 8px rgba(0,0,0,0.06)',
         }}>
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            background: 'rgba(0,0,0,0.05)',
-            borderRadius: '999px',
-            padding: '5px 8px 5px 12px',
+          <span style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: '11px',
+            fontWeight: 500,
+            color: 'rgba(0,0,0,0.4)',
+            letterSpacing: '0.01em',
+            whiteSpace: 'nowrap',
           }}>
-            <span style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: '11px',
-              fontWeight: 500,
-              color: 'rgba(0,0,0,0.4)',
-              letterSpacing: '0.01em',
-            }}>
-              vibe-coded with
-            </span>
-            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-              {/* Claude logo */}
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-label="Claude">
-                <rect width="18" height="18" rx="4" fill="#D97706"/>
-                <line x1="9" y1="3.5" x2="9" y2="14.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
-                <line x1="3.5" y1="9" x2="14.5" y2="9" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
-                <line x1="4.9" y1="4.9" x2="13.1" y2="13.1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
-                <line x1="13.1" y1="4.9" x2="4.9" y2="13.1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
-              </svg>
-              {/* Cursor logo */}
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-label="Cursor">
-                <rect width="18" height="18" rx="4" fill="#111"/>
-                <path d="M5 4L5 13L7.8 10.2L9.8 14L11.2 13.2L9.2 9.5L13 9.5L5 4Z" fill="white" fillOpacity="0.9"/>
-              </svg>
-            </div>
+            Vibe-coded with Claude, Cursor and Vercel
+          </span>
+          <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+            {/* Claude logo */}
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-label="Claude">
+              <rect width="18" height="18" rx="4" fill="#D97706"/>
+              <line x1="9" y1="3.5" x2="9" y2="14.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
+              <line x1="3.5" y1="9" x2="14.5" y2="9" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
+              <line x1="4.9" y1="4.9" x2="13.1" y2="13.1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
+              <line x1="13.1" y1="4.9" x2="4.9" y2="13.1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
+            </svg>
+            {/* Cursor logo */}
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-label="Cursor">
+              <rect width="18" height="18" rx="4" fill="#111"/>
+              <path d="M5 4L5 13L7.8 10.2L9.8 14L11.2 13.2L9.2 9.5L13 9.5L5 4Z" fill="white" fillOpacity="0.9"/>
+            </svg>
+            {/* Vercel logo */}
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-label="Vercel">
+              <rect width="18" height="18" rx="4" fill="#111"/>
+              <path d="M9 4.5L14.5 13.5H3.5L9 4.5Z" fill="white"/>
+            </svg>
           </div>
         </div>
-
       </div>
     </main>
   )
