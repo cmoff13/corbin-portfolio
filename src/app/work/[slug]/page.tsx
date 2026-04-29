@@ -835,6 +835,15 @@ export default function CaseStudy({ params }: { params: Promise<{ slug: string }
   }
 
   useEffect(() => {
+    if (project) {
+      document.title = `${project.title} — Corbin Moffitt`
+    }
+    return () => {
+      document.title = 'Corbin Moffitt — Designer'
+    }
+  }, [project])
+
+  useEffect(() => {
     const mq = window.matchMedia('(max-width: 768px)')
     setIsMobile(mq.matches)
     const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches)
