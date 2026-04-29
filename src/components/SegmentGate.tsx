@@ -482,28 +482,6 @@ export default function SegmentGate() {
           maxWidth: '900px',
         }}
       >
-        <div style={{
-          ...fadeUp(0),
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-          background: 'rgba(0,0,0,0.06)',
-          borderRadius: '999px',
-          padding: '4px 12px',
-          marginBottom: '20px',
-        }}>
-          <span style={{ fontSize: '13px' }}>⚡</span>
-          <span style={{
-            fontFamily: "'Inter', sans-serif",
-            fontSize: '11px',
-            fontWeight: 500,
-            color: 'rgba(0,0,0,0.45)',
-            letterSpacing: '0.01em',
-          }}>
-            vibe-coded with Claude and Cursor
-          </span>
-        </div>
-
         <div style={{ width: '100%', textAlign: 'center', marginBottom: '20px' }}>
           <div style={{
             fontFamily: "'Outfit', sans-serif",
@@ -604,6 +582,47 @@ export default function SegmentGate() {
           >
             See everything<span aria-hidden="true"> →</span>
           </button>
+        </div>
+
+        <div style={{
+          ...fadeUp(1160),
+          marginTop: '32px',
+          display: 'flex',
+          justifyContent: 'center',
+        }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: 'rgba(0,0,0,0.05)',
+            borderRadius: '999px',
+            padding: '5px 8px 5px 12px',
+          }}>
+            <span style={{
+              fontFamily: "'Inter', sans-serif",
+              fontSize: '11px',
+              fontWeight: 500,
+              color: 'rgba(0,0,0,0.4)',
+              letterSpacing: '0.01em',
+            }}>
+              vibe-coded with
+            </span>
+            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+              {/* Claude logo */}
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-label="Claude">
+                <rect width="18" height="18" rx="4" fill="#D97706"/>
+                <line x1="9" y1="3.5" x2="9" y2="14.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
+                <line x1="3.5" y1="9" x2="14.5" y2="9" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
+                <line x1="4.9" y1="4.9" x2="13.1" y2="13.1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
+                <line x1="13.1" y1="4.9" x2="4.9" y2="13.1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.9"/>
+              </svg>
+              {/* Cursor logo */}
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-label="Cursor">
+                <rect width="18" height="18" rx="4" fill="#111"/>
+                <path d="M5 4L5 13L7.8 10.2L9.8 14L11.2 13.2L9.2 9.5L13 9.5L5 4Z" fill="white" fillOpacity="0.9"/>
+              </svg>
+            </div>
+          </div>
         </div>
 
       </div>
